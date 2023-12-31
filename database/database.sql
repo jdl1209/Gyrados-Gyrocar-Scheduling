@@ -1,6 +1,6 @@
-IF DATABASE ROCHESTER EXISTS DROP ROCHESTER;
+DROP DATABASE IF EXISTS ROCHESTER;
 CREATE DATABASE ROCHESTER;
-
+USE ROCHESTER;
 /*
 TABLE roles
 stores role information
@@ -33,7 +33,7 @@ CREATE TABLE customer(
     state VARCHAR(2) NOT NULL,
     zip VARCHAR(5) NOT NULL,
     activated SMALLINT,
-    roleID INT,
+    roleID SMALLINT,
     FOREIGN KEY(roleID) REFERENCES roles(roleID)
 );
 
@@ -73,7 +73,7 @@ FK - roleID(roles)
 CREATE TABLE suspended_users(
 	userID INT PRIMARY KEY,
     suspended VARCHAR (3) NOT NULL,
-    FOREIGN KEY (userID) REFERENCES customers(customerID)
+    FOREIGN KEY (userID) REFERENCES customer(customerID)
 );
 
 /*
@@ -84,7 +84,7 @@ FK - roleID(roles)
 */
 CREATE TABLE employees(
 	employeeID INT PRIMARY KEY,
-    roleID INT NOT NULL,
+    roleID SMALLINT NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
     office VARCHAR(50),
     FOREIGN KEY (roleID) REFERENCES roles(roleID)
@@ -189,7 +189,7 @@ FK - carID, sublocationID
 */
 CREATE TABLE gps_location (
 	carID INT PRIMARY KEY,
-    sublocationID INT PRIMARY KEY,
+    sublocationID INT,
     gpsLat DOUBLE NOT NULL,
     gpsLong DOUBLE NOT NULL,
     FOREIGN KEY (carID) REFERENCES cars(carID),
