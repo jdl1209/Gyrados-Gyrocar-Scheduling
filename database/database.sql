@@ -1,6 +1,7 @@
 DROP DATABASE IF EXISTS ROCHESTER;
 CREATE DATABASE ROCHESTER;
 USE ROCHESTER;
+
 /*
 TABLE roles
 stores role information
@@ -184,7 +185,7 @@ CREATE TABLE reservation_history(
 /*
 TABLE gps_location
 stores gps location of cars
-PK - carID, sublocationID
+PK - carID
 FK - carID, sublocationID
 */
 CREATE TABLE gps_location (
