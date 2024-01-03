@@ -197,3 +197,10 @@ CREATE TABLE gps_location (
     FOREIGN KEY (carID) REFERENCES cars(carID),
     FOREIGN KEY (sublocationID) REFERENCES location(sublocationID)
 );
+
+INSERT INTO roles VALUES(1, "Customer", "Customers are basic roles with the ability to apply to the application.");
+INSERT INTO roles VALUES(2, "Employee", "Employees are employees of Gyrogogo and have the ability to approve customers, pull reports, and sign into the business pages.");
+INSERT INTO roles VALUES(3, "Mechanic", "Mechanics are employees that have the ability to pull reports on services and insert reports of services.");
+INSERT INTO roles VALUES(4, "Manager", "Managers are employees of Gryogogo that have the ability to do everything an employee does and can instruct Mechanics to move cars.");
+INSERT INTO roles VALUES(5, "Business Administrator", "Business Administrators are employees of Gyrogogo who have all abilities managers do, along with updating all cars and locations and making employee accounts.");
+INSERT INTO roles VALUES(6, "Systems Administrator", "System Administrators have the ability to view all services and monitor systems infrastructure, along with making the first busiroleIDness account.");
