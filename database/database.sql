@@ -16,11 +16,11 @@ CREATE TABLE roles(
 /*
 TABLE customer
 stores all customer information
-PK - customerID
+PK - customerID (auto incrementing)
 FK - roleID (roles)
 */
 CREATE TABLE customer(
-    customerID INT PRIMARY KEY,
+    customerID INT PRIMARY KEY AUTO_INCREMENT,
     fName VARCHAR(20) NOT NULL,
     mInitial VARCHAR(1),
     lName VARCHAR(50) NOT NULL,
@@ -49,6 +49,7 @@ CREATE TABLE customer_credit_info(
     hashedCreditNumber VARCHAR(200) NOT NULL,
     hashedSecurity VARCHAR(200) NOT NULL,
     hashedZipcode VARCHAR(200) NOT NULL,
+    hashedExpiration VARCHAR(200) NOT NULL,
     hashedDriversID VARCHAR (200) NOT NULL,
     FOREIGN KEY(customerID) REFERENCES customer(customerID)
 );
@@ -84,7 +85,7 @@ PK - employeeID
 FK - roleID(roles)
 */
 CREATE TABLE employees(
-	employeeID INT PRIMARY KEY,
+	employeeID INT PRIMARY KEY AUTO_INCREMENT,
     roleID SMALLINT NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
     office VARCHAR(50),
