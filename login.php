@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userProvidedPassword = $_POST["password"];
 
     // Query the database to check if the username exists
-    $sql = "SELECT * FROM customer WHERE username = '$username'";
+    $sql = "SELECT * FROM customer JOIN customer_password USING (customerID) WHERE username = '$username'";
     $result = $conn->query($sql);
 
     if (!$result) {
