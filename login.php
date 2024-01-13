@@ -37,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Check if the 'hashedPass' index is set in the fetched row
         if (isset($row["hashedPass"])) {
             $storedHashedPassword = $row["hashedPass"]; // Assuming "hashedPass" is the name of the column in your database
-        } else {
+        } 
+        else {
             // Handle the case where 'hashedPass' is not set
             echo "Error: 'hashedPass' not found in the result set.";
             exit;
@@ -56,7 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Check if the 'role' index is set in the fetched row
             if(isset($row['role'])){
                 $_SESSION['userRole'] = $row['role'];
-            } else {
+            } 
+            else {
                 // Handle the case where 'role' is not set
                 echo "Error: 'role' not found in the result set.";
                 exit;
@@ -64,21 +66,87 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirect the user to the appropriate page
             if ($_SESSION['userRole'] === '1') {
+                header("Location: register.php");
+            } 
+            elseif ($_SESSION['userRole'] === '2') {
                 header("Location: admin.php");
-            } elseif ($_SESSION['userRole'] === '3') {
-                header("Location: events.php");
-            } elseif ($_SESSION['userRole'] === '2') {
-                header("Location: attendee.php");
-            } else {
+            } 
+            elseif ($_SESSION['userRole'] === '3') {
+                header("Location: admin.php");
+            } 
+            else {
                 echo "Role not recognized"; // Handle any other roles accordingly
             }
-
             exit;
-        } else {
+        } 
+        else{
             // Password does not match
             echo "Incorrect password";
         }
-    } else {
+    } 
+    elseif($result->num_rows == 0){
+        // Query the database to check if the username exists
+        $sql = "SELECT * FROM employee JOIN employee_password USING (employeeID) WHERE username = '$username'";
+        $result = $conn->query($sql);
+
+        if (!$result) {
+
+            die("Query failed: " . mysqli_error($conn));
+
+        }
+
+        if ($result->num_rows == 1) {
+            $row = $result->fetch_assoc();
+    
+            // Check if the 'hashedPass' index is set in the fetched row
+            if (isset($row["hashedPass"])) {
+                $storedHashedPassword = $row["hashedPass"]; // Assuming "hashedPass" is the name of the column in your database
+            } 
+            else{
+                // Handle the case where 'hashedPass' is not set
+                echo "Error: 'hashedPass' not found in the result set.";
+                exit;
+            }
+    
+            // Hash the user-provided password for comparison
+            $hashedUserPassword = hash('sha256', $userProvidedPassword);
+    
+            // Compare the stored hash with the hash of the user-provided password
+            if ($hashedUserPassword === $storedHashedPassword) {
+                // Authentication successful
+                // Store user data in session variables
+                $_SESSION['loggedIn'] = true;
+                $_SESSION['username'] = $username;
+                
+                // Check if the 'role' index is set in the fetched row
+                if(isset($row['role'])){
+                    $_SESSION['userRole'] = $row['role'];
+                } else {
+                    // Handle the case where 'role' is not set
+                    echo "Error: 'role' not found in the result set.";
+                    exit;
+                }
+    
+                // Redirect the user to the appropriate page
+                if ($_SESSION['userRole'] === '1') {
+                    header("Location: register.php");
+                } elseif ($_SESSION['userRole'] === '2') {
+                    header("Location: admin.php");
+                } elseif ($_SESSION['userRole'] === '3') {
+                    header("Location: admin.php");
+                } else {
+                    echo "Role not recognized"; // Handle any other roles accordingly
+                }
+    
+                exit;
+            } 
+            else{
+                // Password does not match
+                echo "Incorrect password";
+            }
+        }
+    }
+    else {
         // Username not found
         echo "Username not found";
     }
