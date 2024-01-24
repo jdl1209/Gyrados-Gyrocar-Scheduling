@@ -105,19 +105,7 @@ class DB {
             return false;
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 
     // Add other methods for interacting with the database as needed
