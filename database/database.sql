@@ -88,6 +88,7 @@ CREATE TABLE employees(
 	employeeID INT PRIMARY KEY AUTO_INCREMENT,
     roleID SMALLINT NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
+    fullname VARCHAR(100) NOT NULL,
     office VARCHAR(50),
     FOREIGN KEY (roleID) REFERENCES roles(roleID)
 );
