@@ -1,4 +1,4 @@
-export const questions = [
+export const faqdata = [
     {
         question: "What do I need to sign up for GyroGoGo?",
         answer: "All you need to do is provide some basic information on yourself plus your driver's license information and a valid credit card. You will receive your approval within 24-72 hours.",
