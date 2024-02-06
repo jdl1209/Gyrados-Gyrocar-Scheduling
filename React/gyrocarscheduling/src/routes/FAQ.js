@@ -10,6 +10,7 @@ function FAQ() {
                 Our regular office hours are Monday through Friday, 8:00 AM - 8:00 PM in the eastern time zone. 
                 Members will receive a 24-hour emergency service number in their rental confirmation.</p>
 
+        {/* <p></p>
         <p></p>
         <p></p>
         <p></p>
@@ -17,9 +18,8 @@ function FAQ() {
         <p></p>
         <p></p>
         <p></p>
-        <p></p>
-        <p></p>
-                Q: What do I need to sign up for GyroGoGo?
+        <p></p> */}
+                {/* Q: What do I need to sign up for GyroGoGo?
                 A:  All you need to do is provide some basic information on yourself plus your driver's license information and a valid credit card. You will receive your approval within 24-72 hours.
                 Q: You declined my application for membership. What can I do about this?
                 A: When your application was declined, you were provided a reason for the decision. You need to rectify this problem. Most commonly this is because either a license or a credit card has expired. If you provide us with current credentials, we are happy to move your membership forward.
@@ -45,7 +45,7 @@ function FAQ() {
                 A: Yes, the gyrocars can be charged at any standard EV station. However, other vehicles cannot access the GyroGoGo chargers; the chargers have a deterrent feature that prevent such use.
                 Q: What do I do if there is a mechanical problem during my rental?
                 A: Just call our 800 Customer Service number and we will promptly send a mechanic with a replacement vehicle to assist you.
-            </p>
+            </p> */}
         </div>
     );
 }
