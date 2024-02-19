@@ -284,45 +284,67 @@ class DB {
     }
     
     // Check if the user is suspended
-    public function isSuspended($username) {
+    public function isSuspended($userID) {
         // Perform database query to check if the user is suspended
         // Return true if suspended, false otherwise
+
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM suspended_users WHERE userID = ?");
+            $stmt->bindParam(1, $userID, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+    
+            $count = $stmt->fetchColumn();
+    
+            // If count is equal to 0, the email is not in use
+            return $count === 0;
+    
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            // For example, you can log the error and return false
+            error_log("User is suspended: " . $e->getMessage());
+            return false;
+        }
+
     }
     
     // Check if the user is an employee
     public function isEmployee($username) {
-        // Call getRoleId to get the role ID
-        $roleId = $this->getRoleId($username);
-    
         // Check if the role ID corresponds to an employee role
         // Return true if an employee, false otherwise
-    }
-    
-    // Check if the user is a customer
-    public function isCustomer($username) {
-        // Call getRoleId to get the role ID
-        $roleId = $this->getRoleId($username);
-    
-        // Check if the role ID corresponds to a customer role
-        // Return true if a customer, false otherwise
-    }
-    
-    // Get roleId
-    public function getRoleId($username) {
         try {
             // Use prepared statement to prevent SQL injection
-            $stmt = $this->conn->prepare("SELECT roleID FROM users WHERE username = ?");
+            $stmt = $this->conn->prepare("SELECT roleID FROM employees WHERE username = ?");
             $stmt->bindParam(1, $username, PDO::PARAM_STR);
             $stmt->execute();
     
             $roleId = $stmt->fetchColumn();
     
             // Return the role ID
-            return $roleId;
+            return true;
         } catch (PDOException $e) {
             // Handle the exception, log or display an error message
             error_log("Error getting role ID: " . $e->getMessage());
-            return null;
+            return false;
+        }
+    }
+    
+    // Check if the user is a customer
+    public function isCustomer($username) {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT roleID FROM customer WHERE username = ?");
+            $stmt->bindParam(1, $username, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $roleId = $stmt->fetchColumn();
+    
+            // Return the role ID
+            return true;
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting role ID: " . $e->getMessage());
+            return false;
         }
     }
     
@@ -466,105 +488,6 @@ class DB {
 
     // Add your database-related functions here
 
-    public function getUserByName($username) {
-        try {
-            $stmt = $this->conn->prepare("SELECT * FROM customer WHERE username = ?");
-            $stmt->execute([$username]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            // Log or handle the error appropriately
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function addUser($fName, $mInitial, $lName, $suffix, $phoneNum, $username, $email, $address1, $address2, $city, $state, $zip, $roleID, $password) {
-        // Hash the password
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     
-        try {
-            // Begin a transaction
-            $this->conn->beginTransaction();
-    
-            // Insert into the customer table
-            $query = "INSERT INTO customer (fName, mInitial, lName, suffix, phoneNum, username, email, address1, address2, city, state, zip, roleID) VALUES (:fName, :mInitial, :lName, :suffix, :phoneNum, :username, :email, :address1, :address2, :city, :state, :zip, :roleID)";
-            $stmt = $this->conn->prepare($query);
-    
-            // Bind parameters
-            $stmt->bindParam(':fName', $fName);
-            $stmt->bindParam(':mInitial', $mInitial);
-            $stmt->bindParam(':lName', $lName);
-            $stmt->bindParam(':suffix', $suffix);
-            $stmt->bindParam(':phoneNum', $phoneNum);
-            $stmt->bindParam(':username', $username);
-            $stmt->bindParam(':email', $email);
-            $stmt->bindParam(':address1', $address1);
-            $stmt->bindParam(':address2', $address2);
-            $stmt->bindParam(':city', $city);
-            $stmt->bindParam(':state', $state);
-            $stmt->bindParam(':zip', $zip);
-            $stmt->bindParam(':roleID', $roleID);
-    
-            // Execute the query
-            if (!$stmt->execute()) {
-                throw new Exception("Error inserting into the customer table.");
-            }
-    
-            // Fetch the customerID immediately after insertion
-            $customerID = $this->conn->lastInsertId('customerID');
-    
-            if (!$customerID) {
-                throw new Exception("Error retrieving last inserted customerID.");
-            }
-    
-            // Insert the password using a separate method
-            if ($this->insertPassword($customerID, $hashedPassword)) {
-                // Commit the transaction
-                $this->conn->commit();
-                return true;
-            } else {
-                throw new Exception("Error inserting into the customer_password table.");
-            }
-        } catch (Exception $e) {
-            // An error occurred, rollback the transaction
-            $this->conn->rollBack();
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
-    }
-    
-    private function insertPassword($customerID, $hashedPassword) {
-        try {
-            // Insert into the customer_password table
-            $queryPass = "INSERT INTO customer_password (customerID, hashedPass) VALUES (:customerID, :hashedPassword)";
-            $stmtPass = $this->conn->prepare($queryPass);
-    
-            // Bind parameters for the password query
-            $stmtPass->bindParam(':customerID', $customerID);
-            $stmtPass->bindParam(':hashedPassword', $hashedPassword);
-    
-            // Execute the password insertion query
-            return $stmtPass->execute();
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
-    }
-
-    
-
-    // Add other methods for interacting with the database as needed
-
-    // Example function to fetch all roles
-    public function getAllRoles() {
-        try {
-            $stmt = $this->conn->query("SELECT * FROM roles");
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            // Log or handle the error appropriately
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
-    }
 }
 ?>
