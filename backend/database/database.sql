@@ -199,6 +199,14 @@ CREATE TABLE gps_location (
     FOREIGN KEY (sublocationID) REFERENCES location(sublocationID)
 );
 
+CREATE TABLE faq (
+    faqID INT PRIMARY KEY AUTO_INCREMENT,
+    faqQuestion VARCHAR (500),
+    faqAnswer VARCHAR (500),
+    employeeAdded INT,
+    FOREIGN KEY (employeeAdded) REFERENCES employee (employeeID)
+);
+
 INSERT INTO roles VALUES(1, "Customer", "Customers are basic roles with the ability to apply to the application.");
 INSERT INTO roles VALUES(2, "Employee", "Employees are employees of Gyrogogo and have the ability to approve customers, pull reports, and sign into the business pages.");
 INSERT INTO roles VALUES(3, "Mechanic", "Mechanics are employees that have the ability to pull reports on services and insert reports of services.");

@@ -332,13 +332,24 @@ class DB {
     //                                  FAQ/Email
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
+    public function getFAQ() {
 
+        // Get all the FAQ lines from the database
 
+        try {
+            $array = array();
+            $stmt = $this->conn->query("SELECT * FROM faq");
+            $array = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $array;
 
+        } catch (PDOException $e) {
 
+            // Log or handle the error appropriately
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
 
-
-
+    }
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
@@ -369,100 +380,7 @@ class DB {
     //                                  Edit Account
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
-    public function editAccount($userID, $fName, $mInitial, $lName, $suffix, $phoneNum, $email, $address1, $address2, $city, $state, $zip, $password, $creditCardNumber, $securityCode, $cardZip, $expirationDate) {
-        // Check if the user exists
-        if ($this->userExists($userID)) {
-            // Update user information
-            if ($this->updateUserInfo($userID, $fName, $mInitial, $lName, $suffix, $phoneNum, $email, $address1, $address2, $city, $state, $zip)) {
-                // Check if the user has credit card information
-                if ($this->hasCreditCardInfo($userID)) {
-                    // Update existing credit card information
-                    if ($this->updateCreditCardInfo($userID, $creditCardNumber, $securityCode, $cardZip, $expirationDate)) {
-                        echo "Account updated successfully!";
-                    } else {
-                        echo "Error updating credit card information.";
-                    }
-                } else {
-                    // Insert new credit card information
-                    if ($this->insertCreditCardInfo($userID, $creditCardNumber, $securityCode, $cardZip, $expirationDate)) {
-                        echo "Account updated successfully!";
-                    } else {
-                        echo "Error inserting credit card information.";
-                    }
-                }
-    
-                // Check if the password is provided and update password
-                if (!empty($password)) {
-                    if ($this->updatePassword($userID, $password)) {
-                        echo "Password updated successfully!";
-                    } else {
-                        echo "Error updating password.";
-                    }
-                }
-            } else {
-                echo "Error updating user information.";
-            }
-        } else {
-            echo "User not found.";
-        }
-    }
-    
-    // Check if the user exists
-    public function userExists($userID) {
-        // Perform database query to check if the user with the given ID exists
-        // Return true if user exists, false otherwise
-    }
-    
-    // Update user information
-    public function updateUserInfo($userID, $fName, $mInitial, $lName, $suffix, $phoneNum, $email, $address1, $address2, $city, $state, $zip) {
-        // Perform database update to modify user information
-        // Return true if update successful, false otherwise
-    }
-    
-    // Check if the user has credit card information
-    public function hasCreditCardInfo($userID) {
-        // Perform database query to check if the user has credit card information
-        // Return true if credit card information exists, false otherwise
-    }
-    
-    // Update existing credit card information
-    public function updateCreditCardInfo($userID, $creditCardNumber, $securityCode, $cardZip, $expirationDate) {
-        // Perform database update to modify credit card information
-        // Return true if update successful, false otherwise
-    }
-    
-    // Insert new credit card information
-    public function insertCustomerCreditInfo($creditCardNumber, $securityCode, $cardZip, $expirationDate) {
-        try {
-            // Insert into the customer_credit_info table
-            $queryCreditInfo = "INSERT INTO customer_credit_info (credit_card_number, security_code, card_zip, expiration_date) VALUES (:creditCardNumber, :securityCode, :cardZip, :expirationDate)";
-            $stmtCreditInfo = $this->conn->prepare($queryCreditInfo);
-    
-            // Bind parameters for the customer_credit_info table query
-            $stmtCreditInfo->bindParam(':creditCardNumber', $creditCardNumber);
-            $stmtCreditInfo->bindParam(':securityCode', $securityCode);
-            $stmtCreditInfo->bindParam(':cardZip', $cardZip);
-            $stmtCreditInfo->bindParam(':expirationDate', $expirationDate);
-    
-            // Execute the customer_credit_info table insertion query
-            $stmtCreditInfo->execute();
-    
-            return true;
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-            return false;
-        }
-    }
-    
-    // Update password
-    public function updatePassword($userID, $password) {
-        // Hash the new password
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    
-        // Perform database update to modify user password
-        // Return true if update successful, false otherwise
-    }
-    
+
 
 
 
