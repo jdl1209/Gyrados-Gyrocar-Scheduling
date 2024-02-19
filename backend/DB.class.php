@@ -35,9 +35,7 @@ class DB {
     //                                  Sign-up
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
-    public function signUpCustomer($fName, $mInitial, $lName, $suffix, $phoneNum, $username, $email, $address1, $address2, $city, $state, $zip, $roleID, $password, $license, $creditCardNumber, 
-    $securityCode, $cardZip, $expirationDate) {
-        
+    public function signUpCustomer($fName, $mInitial, $lName, $suffix, $phoneNum, $username, $email, $address1, $address2, $city, $state, $zip, $roleID, $password, $license, $creditCardNumber, $securityCode, $cardZip, $expirationDate) {
         // Check the email
         if ($this->checkEmail($email)) {
             // Email is not in use, continue checking phone
@@ -45,20 +43,38 @@ class DB {
                 // Phone is not in use, continue checking license
                 if ($this->checkLicense($license)) {
                     // License is not in use, proceed with the inserts
-
+    
                     // Add the information to the databases
                     // Perform database inserts here...
-
+    
                     //customer insert
-
-                    //customer_credit_info insert
-
-                    //customer_password insert
-
-                    //customer_license insert
-
-                    echo "Registration successful!";
-
+                    if ($this->insertCustomerInfo($fName, $mInitial, $lName, $suffix, $phoneNum, $username, $email, $address1, $address2, $city, $state, $zip)) {
+                        
+                        // Get the customer ID from the last inserted row
+                        $customerID = $this->conn->lastInsertId();
+    
+                        //customer_credit_info insert
+                        if ($this->insertCustomerCreditInfo($creditCardNumber, $securityCode, $cardZip, $expirationDate)) {
+    
+                            //customer_password insert
+                            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                            if ($this->insertCustomerPassword($customerID, $hashedPassword)) {
+    
+                                //customer_license insert
+                                if ($this->insertCustomerLicense($license)) {
+                                    echo "Registration successful!";
+                                } else {
+                                    echo "Error inserting customer license.";
+                                }
+                            } else {
+                                echo "Error inserting customer password.";
+                            }
+                        } else {
+                            echo "Error inserting customer credit info.";
+                        }
+                    } else {
+                        echo "Error inserting customer info.";
+                    }
                 } else {
                     echo "License is already in use.";
                 }
@@ -69,6 +85,7 @@ class DB {
             echo "Email is already in use.";
         }
     }
+    
 
 
     public function checkEmail($email) {
@@ -171,21 +188,73 @@ class DB {
             return false;
         }
     }
+
+    public function insertCustomerCreditInfo($creditCardNumber, $securityCode, $cardZip, $expirationDate) {
+        try {
+            // Insert into the customer_credit_info table
+            $queryCreditInfo = "INSERT INTO customer_credit_info (credit_card_number, security_code, card_zip, expiration_date) VALUES (:creditCardNumber, :securityCode, :cardZip, :expirationDate)";
+            $stmtCreditInfo = $this->conn->prepare($queryCreditInfo);
     
+            // Bind parameters for the customer_credit_info table query
+            $stmtCreditInfo->bindParam(':creditCardNumber', $creditCardNumber);
+            $stmtCreditInfo->bindParam(':securityCode', $securityCode);
+            $stmtCreditInfo->bindParam(':cardZip', $cardZip);
+            $stmtCreditInfo->bindParam(':expirationDate', $expirationDate);
     
+            // Execute the customer_credit_info table insertion query
+            $stmtCreditInfo->execute();
+    
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
     
 
-    public function insertCustomerCreditInfo() {
-        
+    public function insertCustomerLicense($licenseNumber) {
+        try {
+            // Hash the provided license number
+            $hashedLicenseNumber = hash('sha256', $licenseNumber);
+    
+            // Insert into the customer_license table
+            $queryLicense = "INSERT INTO customer_license (hashed_licenseID) VALUES (:hashedLicenseNumber)";
+            $stmtLicense = $this->conn->prepare($queryLicense);
+    
+            // Bind parameters for the customer_license table query
+            $stmtLicense->bindParam(':hashedLicenseNumber', $hashedLicenseNumber);
+    
+            // Execute the customer_license table insertion query
+            $stmtLicense->execute();
+    
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
     }
+    
 
-    public function insertCustomerLicense() {
-        
+    public function insertCustomerPassword($customerID, $hashedPassword) {
+        try {
+            // Insert into the customer_password table
+            $queryPassword = "INSERT INTO customer_password (customerID, hashedPass) VALUES (:customerID, :hashedPassword)";
+            $stmtPassword = $this->conn->prepare($queryPassword);
+    
+            // Bind parameters for the customer_password table query
+            $stmtPassword->bindParam(':customerID', $customerID);
+            $stmtPassword->bindParam(':hashedPassword', $hashedPassword);
+    
+            // Execute the customer_password table insertion query
+            $stmtPassword->execute();
+    
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
     }
-
-    public function insertCustomerPassword() {
-        
-    }
+    
     
     
 
@@ -194,38 +263,69 @@ class DB {
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
 
-    public function loginUser() {
-
-        //Check if suspended
-
-        //Check if employee
-
-        //Check if customer
-
-        //If pass those checks, log the user in 
-
+    public function loginUser($username, $password) {
+        // Check if the user is suspended
+        if ($this->isSuspended($username)) {
+            echo "User is suspended. Please contact support.";
+        } else {
+            // Check if the user is an employee
+            if ($this->isEmployee($username)) {
+                // Log in as an employee
+                echo "Logged in as an employee.";
+            } elseif ($this->isCustomer($username)) {
+                // Check if the user is a customer
+                // Log in as a customer
+                echo "Logged in as a customer.";
+            } else {
+                // User not found or other conditions
+                echo "Invalid username or password.";
+            }
+        }
     }
-
-    //Check if the user us suspended
-    public function isSuspended() {
-
+    
+    // Check if the user is suspended
+    public function isSuspended($username) {
+        // Perform database query to check if the user is suspended
+        // Return true if suspended, false otherwise
     }
-
-    //Check if the user is an employee
-    public function isEmployee() {
-        //Call getRoleId
-        
+    
+    // Check if the user is an employee
+    public function isEmployee($username) {
+        // Call getRoleId to get the role ID
+        $roleId = $this->getRoleId($username);
+    
+        // Check if the role ID corresponds to an employee role
+        // Return true if an employee, false otherwise
     }
-
-    //Check if the user is a customer
-    public function isCustomer() {
-
+    
+    // Check if the user is a customer
+    public function isCustomer($username) {
+        // Call getRoleId to get the role ID
+        $roleId = $this->getRoleId($username);
+    
+        // Check if the role ID corresponds to a customer role
+        // Return true if a customer, false otherwise
     }
-
-    //Get roleId
-    public function getRoleId() {
-
+    
+    // Get roleId
+    public function getRoleId($username) {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT roleID FROM users WHERE username = ?");
+            $stmt->bindParam(1, $username, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $roleId = $stmt->fetchColumn();
+    
+            // Return the role ID
+            return $roleId;
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting role ID: " . $e->getMessage());
+            return null;
+        }
     }
+    
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
@@ -269,7 +369,100 @@ class DB {
     //                                  Edit Account
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
-
+    public function editAccount($userID, $fName, $mInitial, $lName, $suffix, $phoneNum, $email, $address1, $address2, $city, $state, $zip, $password, $creditCardNumber, $securityCode, $cardZip, $expirationDate) {
+        // Check if the user exists
+        if ($this->userExists($userID)) {
+            // Update user information
+            if ($this->updateUserInfo($userID, $fName, $mInitial, $lName, $suffix, $phoneNum, $email, $address1, $address2, $city, $state, $zip)) {
+                // Check if the user has credit card information
+                if ($this->hasCreditCardInfo($userID)) {
+                    // Update existing credit card information
+                    if ($this->updateCreditCardInfo($userID, $creditCardNumber, $securityCode, $cardZip, $expirationDate)) {
+                        echo "Account updated successfully!";
+                    } else {
+                        echo "Error updating credit card information.";
+                    }
+                } else {
+                    // Insert new credit card information
+                    if ($this->insertCreditCardInfo($userID, $creditCardNumber, $securityCode, $cardZip, $expirationDate)) {
+                        echo "Account updated successfully!";
+                    } else {
+                        echo "Error inserting credit card information.";
+                    }
+                }
+    
+                // Check if the password is provided and update password
+                if (!empty($password)) {
+                    if ($this->updatePassword($userID, $password)) {
+                        echo "Password updated successfully!";
+                    } else {
+                        echo "Error updating password.";
+                    }
+                }
+            } else {
+                echo "Error updating user information.";
+            }
+        } else {
+            echo "User not found.";
+        }
+    }
+    
+    // Check if the user exists
+    public function userExists($userID) {
+        // Perform database query to check if the user with the given ID exists
+        // Return true if user exists, false otherwise
+    }
+    
+    // Update user information
+    public function updateUserInfo($userID, $fName, $mInitial, $lName, $suffix, $phoneNum, $email, $address1, $address2, $city, $state, $zip) {
+        // Perform database update to modify user information
+        // Return true if update successful, false otherwise
+    }
+    
+    // Check if the user has credit card information
+    public function hasCreditCardInfo($userID) {
+        // Perform database query to check if the user has credit card information
+        // Return true if credit card information exists, false otherwise
+    }
+    
+    // Update existing credit card information
+    public function updateCreditCardInfo($userID, $creditCardNumber, $securityCode, $cardZip, $expirationDate) {
+        // Perform database update to modify credit card information
+        // Return true if update successful, false otherwise
+    }
+    
+    // Insert new credit card information
+    public function insertCustomerCreditInfo($creditCardNumber, $securityCode, $cardZip, $expirationDate) {
+        try {
+            // Insert into the customer_credit_info table
+            $queryCreditInfo = "INSERT INTO customer_credit_info (credit_card_number, security_code, card_zip, expiration_date) VALUES (:creditCardNumber, :securityCode, :cardZip, :expirationDate)";
+            $stmtCreditInfo = $this->conn->prepare($queryCreditInfo);
+    
+            // Bind parameters for the customer_credit_info table query
+            $stmtCreditInfo->bindParam(':creditCardNumber', $creditCardNumber);
+            $stmtCreditInfo->bindParam(':securityCode', $securityCode);
+            $stmtCreditInfo->bindParam(':cardZip', $cardZip);
+            $stmtCreditInfo->bindParam(':expirationDate', $expirationDate);
+    
+            // Execute the customer_credit_info table insertion query
+            $stmtCreditInfo->execute();
+    
+            return true;
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+    
+    // Update password
+    public function updatePassword($userID, $password) {
+        // Hash the new password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    
+        // Perform database update to modify user password
+        // Return true if update successful, false otherwise
+    }
+    
 
 
 
