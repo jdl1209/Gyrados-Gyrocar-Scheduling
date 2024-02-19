@@ -284,45 +284,67 @@ class DB {
     }
     
     // Check if the user is suspended
-    public function isSuspended($username) {
+    public function isSuspended($userID) {
         // Perform database query to check if the user is suspended
         // Return true if suspended, false otherwise
+
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM suspended_users WHERE userID = ?");
+            $stmt->bindParam(1, $userID, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+    
+            $count = $stmt->fetchColumn();
+    
+            // If count is equal to 0, the email is not in use
+            return $count === 0;
+    
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            // For example, you can log the error and return false
+            error_log("User is suspended: " . $e->getMessage());
+            return false;
+        }
+
     }
     
     // Check if the user is an employee
     public function isEmployee($username) {
-        // Call getRoleId to get the role ID
-        $roleId = $this->getRoleId($username);
-    
         // Check if the role ID corresponds to an employee role
         // Return true if an employee, false otherwise
-    }
-    
-    // Check if the user is a customer
-    public function isCustomer($username) {
-        // Call getRoleId to get the role ID
-        $roleId = $this->getRoleId($username);
-    
-        // Check if the role ID corresponds to a customer role
-        // Return true if a customer, false otherwise
-    }
-    
-    // Get roleId
-    public function getRoleId($username) {
         try {
             // Use prepared statement to prevent SQL injection
-            $stmt = $this->conn->prepare("SELECT roleID FROM users WHERE username = ?");
+            $stmt = $this->conn->prepare("SELECT roleID FROM employees WHERE username = ?");
             $stmt->bindParam(1, $username, PDO::PARAM_STR);
             $stmt->execute();
     
             $roleId = $stmt->fetchColumn();
     
             // Return the role ID
-            return $roleId;
+            return true;
         } catch (PDOException $e) {
             // Handle the exception, log or display an error message
             error_log("Error getting role ID: " . $e->getMessage());
-            return null;
+            return false;
+        }
+    }
+    
+    // Check if the user is a customer
+    public function isCustomer($username) {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT roleID FROM customer WHERE username = ?");
+            $stmt->bindParam(1, $username, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $roleId = $stmt->fetchColumn();
+    
+            // Return the role ID
+            return true;
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting role ID: " . $e->getMessage());
+            return false;
         }
     }
     
