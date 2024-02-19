@@ -401,7 +401,200 @@ class DB {
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Edit Account
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
+    
     // Update User Username
+
+    public function updateCustomerUsername($customerID, $username){
+
+        // Update username based on the ID
+        try{
+
+            $stmt = $this->conn->query("UPDATE customer SET username = ? WHERE customerID = $customerID");
+            $stmt->bindParam(1, $username, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+    // Update User Password
+
+    public function updateCustomerPassword($customerID, $password){
+
+        // Update username based on the ID
+        try{
+
+            $hashedPass = hash('sha256', $password);
+            $stmt = $this->conn->query("UPDATE customer_password SET hashedPass = ? WHERE customerID = $customerID");
+            $stmt->bindParam(1, $$hashedPass, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Update User Email
+
+    public function updateCustomerEmail($customerID, $email){
+
+        // Update username based on the ID
+        try{
+
+            $stmt = $this->conn->query("UPDATE customer SET email = ? WHERE customerID = $customerID");
+            $stmt->bindParam(1, $email, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Update Address
+
+    public function updateCustomerAddress($customerID, $address1, $address2, $city, $state, $zip){
+
+        // Update username based on the ID
+        try{
+
+            $stmt = $this->conn->query("UPDATE customer SET address1 = ?, address2 = ?, city = ?, state = ?, zip = ? WHERE customerID = $customerID");
+            $stmt->bindParam(1, $address1, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->bindParam(2, $address2, PDO::PARAM_STR);
+            $stmt->bindParam(3, $city, PDO::PARAM_STR);
+            $stmt->bindParam(4, $state, PDO::PARAM_STR);
+            $stmt->bindParam(5, $zip, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Update Credit Information
+
+    public function updateCustomerCreditInfo($customerID, $username){
+
+        // Update username based on the ID
+        try{
+
+            $stmt = $this->conn->query("UPDATE customer SET phoneNum = ? WHERE customerID = $customerID");
+            $stmt->bindParam(1, $phonenum, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Update Phone Number
+
+    public function updateCustomerPhone($customerID, $phonenum){
+
+        // Update username based on the ID
+        try{
+
+            $stmt = $this->conn->query("UPDATE customer SET phonenum= ? WHERE customerID = $customerID");
+            $stmt->bindParam(1, $phonenum, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Update Employee Username
+
+    public function updateEmployeeUsername($employeeID, $username){
+
+        // Update username based on the ID
+        try{
+
+            $stmt = $this->conn->query("UPDATE employees SET username = ? WHERE employeeID = $employeeID");
+            $stmt->bindParam(1, $username, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Update Employee Name
+
+    public function updateEmployeeName($employeeID, $name){
+
+        // Update username based on the ID
+        try{
+
+            $stmt = $this->conn->query("UPDATE employees SET fullname = ? WHERE employeeID = $employeeID");
+            $stmt->bindParam(1, $name, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Update Employee Password
+
+    public function updateEmployeePassword($employeeID, $epassword){
+
+        // Update username based on the ID
+        try{
+
+            $hashedPass = hash('sha256', $epassword);
+            $stmt = $this->conn->query("UPDATE employee_password SET hashedPass = ? WHERE employeeID = $employeeID");
+            $stmt->bindParam(1, $$hashedPass, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
 
     
 
