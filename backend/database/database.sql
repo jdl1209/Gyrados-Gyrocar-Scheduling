@@ -111,8 +111,9 @@ stores data for locations for each car stop
 PK - sublocationID
 */
 CREATE TABLE location(
-	sublocationID INT PRIMARY KEY,
+	sublocationID INT PRIMARY KEY AUTO_INCREMENT,
     sublocationName VARCHAR(30) NOT NULL UNIQUE,
+    address VARCHAR(400) NOT NULL UNIQUE,
     cityName VARCHAR (30) NOT NULL,
     zip VARCHAR(5) NOT NULL
 );

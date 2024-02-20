@@ -367,7 +367,7 @@ class DB {
         } catch (PDOException $e) {
 
             // Log or handle the error appropriately
-            echo "Error: " . $e->getMessage();
+            echo "Error getting FAQ questions: " . $e->getMessage();
             return false;
         }
 
@@ -409,7 +409,7 @@ class DB {
         // Update customer username based on the ID
         try{
 
-            $stmt = $this->conn->query("UPDATE customer SET username = ? WHERE customerID = $customerID");
+            $stmt = $this->conn->prepare("UPDATE customer SET username = ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $username, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
             return true;
@@ -422,6 +422,7 @@ class DB {
         }
 
     }
+
     // Update Customer Password
 
     public function updateCustomerPassword($customerID, $password){
@@ -430,7 +431,7 @@ class DB {
         try{
 
             $hashedPass = hash('sha256', $password); // hashes the password provided
-            $stmt = $this->conn->query("UPDATE customer_password SET hashedPass = ? WHERE customerID = $customerID");
+            $stmt = $this->conn->prepare("UPDATE customer_password SET hashedPass = ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $$hashedPass, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
             return true;
@@ -451,7 +452,7 @@ class DB {
         // Update the customer email based on the customerID
         try{
 
-            $stmt = $this->conn->query("UPDATE customer SET email = ? WHERE customerID = $customerID");
+            $stmt = $this->conn->prepare("UPDATE customer SET email = ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $email, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
             return true;
@@ -472,7 +473,7 @@ class DB {
         // Update the customer address based on the customerID
         try{
 
-            $stmt = $this->conn->query("UPDATE customer SET address1 = ?, address2 = ?, city = ?, state = ?, zip = ? WHERE customerID = $customerID");
+            $stmt = $this->conn->prepare("UPDATE customer SET address1 = ?, address2 = ?, city = ?, state = ?, zip = ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $address1, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->bindParam(2, $address2, PDO::PARAM_STR);
             $stmt->bindParam(3, $city, PDO::PARAM_STR);
@@ -501,7 +502,7 @@ class DB {
             $hashedSecurity = hash('sha256', $security);
             $hashedCardZip = hash("sha256", $cardZip);
             $hashedExpiration = hash("sha256", $expirationDate);
-            $stmt = $this->conn->query("UPDATE customer_credit_info SET hashedCreditNumber = ?, hashedSecurity = ?, hashedZipcode = ?, hashedExpiration = ? WHERE customerID = $customerID");
+            $stmt = $this->conn->prepare("UPDATE customer_credit_info SET hashedCreditNumber = ?, hashedSecurity = ?, hashedZipcode = ?, hashedExpiration = ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $hashedCreditNumber, PDO::PARAM_STR);
             $stmt->bindParam(2, $hashedSecurity, PDO::PARAM_STR); 
             $stmt->bindParam(3, $hashedCardZip, PDO::PARAM_STR); 
@@ -525,7 +526,7 @@ class DB {
         // Update the customer phone number based on the customerID
         try{
 
-            $stmt = $this->conn->query("UPDATE customer SET phonenum= ? WHERE customerID = $customerID");
+            $stmt = $this->conn->prepare("UPDATE customer SET phonenum= ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $phonenum, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
             return true;
@@ -546,7 +547,7 @@ class DB {
         // Update username based on the ID
         try{
 
-            $stmt = $this->conn->query("UPDATE employees SET username = ? WHERE employeeID = $employeeID");
+            $stmt = $this->conn->prepare("UPDATE employees SET username = ? WHERE employeeID = $employeeID");
             $stmt->bindParam(1, $username, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
             return true;
@@ -567,7 +568,7 @@ class DB {
         // Update username based on the ID
         try{
 
-            $stmt = $this->conn->query("UPDATE employees SET fullname = ? WHERE employeeID = $employeeID");
+            $stmt = $this->conn->prepare("UPDATE employees SET fullname = ? WHERE employeeID = $employeeID");
             $stmt->bindParam(1, $name, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
             return true;
@@ -596,14 +597,12 @@ class DB {
 
         }catch(PDOException $e){
 
-            echo "Error: " . $e->getMessage();
+            echo "Error updating the employee password in employees table: " . $e->getMessage();
             return false;
 
         }
 
     }
-
-    
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Reports
@@ -650,7 +649,7 @@ class DB {
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
-    //                                  Add Cars
+    //                                  Insert Cars
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
 
@@ -671,18 +670,74 @@ class DB {
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
-    //                                  Add Locations
+    //                                  Insert/Get/Delete Locations
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
+    // Insert location to the location table
 
+    public function insertLocation($sublocationName, $address, $cityName, $zip){
 
+        try{
 
+            $stmt = $this->conn->prepare("INSERT INTO location(sublocationName, address, cityName, zip) VALUES (?, ?, ?, ?)");
+            $stmt->bindParam(1, $sublocationName, PDO::PARAM_STR);
+            $stmt->bindParam(2, $address, PDO::PARAM_STR);
+            $stmt->bindParam(3, $cityName, PDO::PARAM_STR);
+            $stmt->bindParam(4, $zip, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
 
+        }catch(PDOException $e){
 
+            echo "Error inserting into location table: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Get locations from the location table
+
+    public function getLocation($sublocationID){
+
+        try{
+
+            $stmt = $this->conn->query("SELECT sublocationName, address, cityName, zip FROM location WHERE sublocationID = ? ");
+            $stmt->bindParam(1, $sublocationID, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        }catch(PDOException $e){
+
+            echo "Error getting locations:". $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    // Delete Locations from the location table
+    public function deleteLocation($sublocationID){
+    
+        try{
+
+            $stmt = $this->conn->prepare("DELETE FROM location WHERE sublocationID = ?");
+            $stmt->bindParam(1, $sublocationID, PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error deleting a location in the location table: " . $e->getMessage();
+            return false;
+        
+        }
+
+    }
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
-    //                                  Add Employees
+    //                                  Insert Employees
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
 
