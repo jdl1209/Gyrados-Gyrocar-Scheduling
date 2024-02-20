@@ -19,6 +19,11 @@ function HomePage() {
                 Yes, jogging or biking to work may be healthy, but how do you look (and smell!) on arrival?
                 Do you really want to risk your high end auto in traffic like this?
             </p>
+
+            <img
+                src={require("../images/gyrogogomaps.png")}
+                alt="test"
+            />
         </div>
     );
 }
