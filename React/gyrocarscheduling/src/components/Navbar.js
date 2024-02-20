@@ -15,10 +15,14 @@ function Navbar() {
         <>
             <IconContext.Provider value={{ color: "undefined" }}>
                 <div className="navbar">
+                    
                     <Link to="#" className="menu-bars">
                         <FaIcons.FaBars onClick={showSidebar} />
                     </Link>
+                <a href="homepage.js"><img src={require("../images/logo.png")} alt="test" id="logo"/></a>
+
                 </div>
+
                 <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
                     <ul className="nav-menu-items" onClick={showSidebar}>
                         <li className="navbar-toggle">
