@@ -255,8 +255,6 @@ class DB {
         }
     }
     
-    
-    
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Login
@@ -348,8 +346,6 @@ class DB {
         }
     }
     
-
-
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  FAQ/Email
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
@@ -378,13 +374,104 @@ class DB {
     //                                  Reserve/Available Cars
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
+    // Available Cars - A Mapview of Available cars. You can click on one to see more information about. 
+    // The function will look at a location and get all the cars associated with that location.
 
+    //Function to get all the cars by location.
+
+
+
+    public function getCarsByLocation($sublocationID) {
+        //Get all of the cars by the specificed location
+        $count = 0;
+
+        try {
+
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT COUNT(*) FROM cars");
+            $stmt->execute();
+
+            $count = $stmt->fetchColumn();
+            $carsNotReserved = array();
+
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $carID = $row['carID'];
     
+                if ($this->isReserved($carID)) {
+                    echo 'The car with ID ' . $carID . ' is already reserved.';
+                } else {
+                    array_push($carsNotReserved, $carID);
+                }
+            }
 
+            return $carsNotReserved;
 
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting role ID: " . $e->getMessage());
+            return false;
+        }
+    }
 
+    //Function to check if the car is reserved.
 
+    public function isReserved($carID) {
+        //Check if the car is reserved.
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT reserved FROM cars WHERE reserved = 1");
+            $stmt->execute();
+    
+            $carID = $stmt->fetchColumn();
+    
+            // Return the role ID
+            return true;
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting role ID: " . $e->getMessage());
+            return false;
+        }
+    }
 
+    // Reserve Car - Click on the car you want to reserve -> take you to the payment page -> you pay for it -> the car will then be updated as "reserved"
+    // You will also have the car in your account as reserved.
+
+    // Function to update the reserved table.
+
+    // update the cars table with the car being reserved -> and that car to the reserved table.
+
+    public function updateCarReserved($carID) {
+
+        // Update the reserved table. 
+
+        // Update username based on the ID
+         try {
+            $stmt = $this->conn->query("UPDATE cars SET reserved = 1 WHERE carID = $carID");
+            $stmt->execute();
+            return true;
+
+        } catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function updateReserved($carID) {
+
+        // Update the reserved table. 
+
+        // Update username based on the ID
+
+        try {
+            $stmt = $this->conn->query("UPDATE cars SET reserved = 1 WHERE carID = $carID");
+            $stmt->execute();
+            return true;
+
+        } catch(PDOException $e){
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Payment
@@ -394,13 +481,13 @@ class DB {
 
 
 
-
-
-
-
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Edit Account
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
+
+
+
+
     
     // Update Customer Username
 
@@ -604,6 +691,10 @@ class DB {
 
     }
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Reports
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
