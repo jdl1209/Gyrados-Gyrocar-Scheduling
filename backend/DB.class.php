@@ -360,7 +360,7 @@ class DB {
 
         try {
             $array = array();
-            $stmt = $this->conn->query("SELECT * FROM faq");
+            $stmt = $this->conn->query("SELECT faqQuestion, faqAnswer FROM faq");
             $array = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $array;
 
@@ -402,11 +402,11 @@ class DB {
     //                                  Edit Account
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     
-    // Update User Username
+    // Update Customer Username
 
     public function updateCustomerUsername($customerID, $username){
 
-        // Update username based on the ID
+        // Update customer username based on the ID
         try{
 
             $stmt = $this->conn->query("UPDATE customer SET username = ? WHERE customerID = $customerID");
@@ -422,14 +422,14 @@ class DB {
         }
 
     }
-    // Update User Password
+    // Update Customer Password
 
     public function updateCustomerPassword($customerID, $password){
 
-        // Update username based on the ID
+        // Update customer password based on the ID
         try{
 
-            $hashedPass = hash('sha256', $password);
+            $hashedPass = hash('sha256', $password); // hashes the password provided
             $stmt = $this->conn->query("UPDATE customer_password SET hashedPass = ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $$hashedPass, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
@@ -444,11 +444,11 @@ class DB {
 
     }
 
-    // Update User Email
+    // Update Customer Email
 
     public function updateCustomerEmail($customerID, $email){
 
-        // Update username based on the ID
+        // Update the customer email based on the customerID
         try{
 
             $stmt = $this->conn->query("UPDATE customer SET email = ? WHERE customerID = $customerID");
@@ -465,11 +465,11 @@ class DB {
 
     }
 
-    // Update Address
+    // Update Customer Address
 
     public function updateCustomerAddress($customerID, $address1, $address2, $city, $state, $zip){
 
-        // Update username based on the ID
+        // Update the customer address based on the customerID
         try{
 
             $stmt = $this->conn->query("UPDATE customer SET address1 = ?, address2 = ?, city = ?, state = ?, zip = ? WHERE customerID = $customerID");
@@ -492,13 +492,20 @@ class DB {
 
     // Update Credit Information
 
-    public function updateCustomerCreditInfo($customerID, $username){
+    public function updateCustomerCreditInfo($customerID, $creditNumber, $security, $cardZip, $expirationDate){
 
-        // Update username based on the ID
+        // Hashes the information that is taken in and update the information
         try{
 
-            $stmt = $this->conn->query("UPDATE customer SET phoneNum = ? WHERE customerID = $customerID");
-            $stmt->bindParam(1, $phonenum, PDO::PARAM_STR); // Use 1 as the parameter placeholder
+            $hashedCreditNumber = hash('sha256', $creditNumber);
+            $hashedSecurity = hash('sha256', $security);
+            $hashedCardZip = hash("sha256", $cardZip);
+            $hashedExpiration = hash("sha256", $expirationDate);
+            $stmt = $this->conn->query("UPDATE customer_credit_info SET hashedCreditNumber = ?, hashedSecurity = ?, hashedZipcode = ?, hashedExpiration = ? WHERE customerID = $customerID");
+            $stmt->bindParam(1, $hashedCreditNumber, PDO::PARAM_STR);
+            $stmt->bindParam(2, $hashedSecurity, PDO::PARAM_STR); 
+            $stmt->bindParam(3, $hashedCardZip, PDO::PARAM_STR); 
+            $stmt->bindParam(4, $hashedExpiration, PDO::PARAM_STR); 
             $stmt->execute();
             return true;
 
@@ -511,11 +518,11 @@ class DB {
 
     }
 
-    // Update Phone Number
+    // Update Customer Phone Number
 
     public function updateCustomerPhone($customerID, $phonenum){
 
-        // Update username based on the ID
+        // Update the customer phone number based on the customerID
         try{
 
             $stmt = $this->conn->query("UPDATE customer SET phonenum= ? WHERE customerID = $customerID");

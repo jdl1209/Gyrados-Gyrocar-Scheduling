@@ -199,6 +199,12 @@ CREATE TABLE gps_location (
     FOREIGN KEY (sublocationID) REFERENCES location(sublocationID)
 );
 
+/*
+TABLE faq
+stores the faq questions for the FAQ page and can be dynamically updated
+PK - faqID
+FK - employeeAdded
+*/
 CREATE TABLE faq (
     faqID INT PRIMARY KEY AUTO_INCREMENT,
     faqQuestion VARCHAR (500),
