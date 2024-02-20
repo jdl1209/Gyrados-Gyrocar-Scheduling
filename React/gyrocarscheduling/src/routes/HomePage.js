@@ -18,6 +18,8 @@ function HomePage() {
                 When the bus line is a mile away, enjoy door to door transportation to your destination.
                 Yes, jogging or biking to work may be healthy, but how do you look (and smell!) on arrival?
                 Do you really want to risk your high end auto in traffic like this?
+
+                
             </p>
 
             <img
