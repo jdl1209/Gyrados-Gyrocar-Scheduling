@@ -610,7 +610,7 @@ class DB {
         // Update the customer phone number based on the customerID
         try{
 
-            $stmt = $this->conn->prepare("UPDATE customer SET phonenum= ? WHERE customerID = $customerID");
+            $stmt = $this->conn->prepare("UPDATE customer SET phonenum = ? WHERE customerID = $customerID");
             $stmt->bindParam(1, $phonenum, PDO::PARAM_STR); // Use 1 as the parameter placeholder
             $stmt->execute();
             return true;
