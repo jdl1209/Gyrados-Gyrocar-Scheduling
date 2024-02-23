@@ -734,13 +734,49 @@ class DB {
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
-    //                                  Insert Cars
+    //                                  Insert/Delete Cars
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
+    //Insert car into car table
 
-    //Jake
+    public function insertCar($carType, $sublocationID){
+
+        try{
+
+            $stmt = $this->conn->prepare("INSERT INTO cars(carType, battery, status, reserved, sublocationID) VALUES (?, 100.00, 'active', 0, ?)");
+            $stmt->bindParam(1, $carType, PDO::PARAM_STR);
+            $stmt->bindParam(2, $sublocationID, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error inserting into cars table: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
 
 
+    // Delete a car from the cars table
+    public function deleteCar($carID){
+    
+        try{
+
+            $stmt = $this->conn->prepare("DELETE FROM cars WHERE carID = ?");
+            $stmt->bindParam(1, $carID, PDO::PARAM_INT);
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error deleting a car in the cars table: " . $e->getMessage();
+            return false;
+        
+        }
+
+    }
 
 
 
@@ -748,8 +784,29 @@ class DB {
     //                                  Make a Report
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
+    // Insert into jobs table
+    public function insertJobs($employeeID, $carID, $task, $notes){
 
-    //Jake
+        try{
+
+            $stmt = $this->conn->prepare("INSERT INTO jobs(employeeID, carID, task, notes, jTime, jDate) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bindParam(1, $employeeID, PDO::PARAM_INT);
+            $stmt->bindParam(2, $carID, PDO::PARAM_INT);
+            $stmt->bindParam(3, $task, PDO::PARAM_STR);
+            $stmt->bindParam(4, $notes, PDO::PARAM_STR);
+            $stmt->bindParam(5, date("h:i:s"),PDO::PARAM_STR);
+            $stmt->bindParam(6, date("Y-m-d"),PDO::PARAM_STR);
+            $stmt->execute();
+            return true;
+
+        }catch(PDOException $e){
+
+            echo "Error inserting into location table: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
 
 
 

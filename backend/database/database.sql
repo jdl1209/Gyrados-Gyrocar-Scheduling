@@ -125,7 +125,7 @@ PK - carID
 FK - sublocationID
 */
 CREATE TABLE cars(
-	carID INT PRIMARY KEY,
+	carID INT PRIMARY KEY AUTO_INCREMENT,
     carType VARCHAR(20) NOT NULL,
     battery DECIMAL(5,2) NOT NULL,
     status VARCHAR(20),
@@ -141,12 +141,15 @@ PK - employeeID
 FK - carID
 */
 CREATE TABLE jobs(
-	employeeID INT PRIMARY KEY,
+	taskID INT AUTO_INCREMENT PRIMARY KEY,
+    employeeID INT,
     carID INT NOT NULL,
     task VARCHAR(20) NOT NULL,
     notes VARCHAR(500) NULL,
-    jtime TIME NOT NULL,
-    FOREIGN KEY (carID) REFERENCES cars(carID)
+    jTime TIME NOT NULL,
+    jDate DATE NOT NULL,
+    FOREIGN KEY (carID) REFERENCES cars(carID),
+    FOREIGN KEY (employeeID) REFERENCES employees(employeeID)
 );
 
 /*
