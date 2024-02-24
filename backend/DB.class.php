@@ -695,6 +695,7 @@ class DB {
 
     //Erich
 
+    
 
 
 
@@ -706,7 +707,26 @@ class DB {
 
 
     //Erich
-
+    
+    function fetchAndDisplayNotApprovedCustomersPDO($conn) {
+        $notApprovedCustomers = array();
+    
+        $query = "SELECT customerID, fName, mInitial, lName, activated FROM customer WHERE activated IS NULL";
+    
+        try {
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
+    
+            $notApprovedCustomers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Display not approved customers
+            foreach ($notApprovedCustomers as $customer) {
+                echo "Customer ID: " . $customer["customerID"] . ", Name: " . $customer["fName"] . " " . $customer["mInitial"] . " " . $customer["lName"] . ", Approval Status: Not Approved\n";
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 
 
 
