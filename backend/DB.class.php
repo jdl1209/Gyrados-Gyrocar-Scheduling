@@ -718,6 +718,25 @@ class DB {
 
     //Erich
 
+    public function getAllCustomers() {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT fName, lName, phoneNum, address1, city, state, zip FROM customer");
+            $stmt->execute();
+
+            // Fetch all results as an associative array
+            $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Return the array of customers
+            return $customers;
+
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting all customers: " . $e->getMessage());
+            return [];
+        }
+    }
+
     
 
 
