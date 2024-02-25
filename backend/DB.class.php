@@ -265,6 +265,8 @@ class DB {
         // Check if the user is suspended
         if ($this->isSuspended($username)) {
             echo "User is suspended. Please contact support.";
+        } elseif (!$this->isUserApproved($username)) {
+            echo "User is not approved. Please wait for approval.";
         } else {
             // Check if the user is an employee
             if ($this->isEmployee($username)) {
@@ -280,6 +282,7 @@ class DB {
             }
         }
     }
+    
     
     // Check if the user is suspended
     public function isSuspended($userID) {
@@ -342,6 +345,26 @@ class DB {
         } catch (PDOException $e) {
             // Handle the exception, log or display an error message
             error_log("Error getting role ID: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Check if the user is approved
+    public function isUserApproved($username) {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT activated FROM customer WHERE username = ?");
+            $stmt->bindParam(1, $username, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $activatedStatus = $stmt->fetchColumn();
+    
+            // Return true if the user is approved (activated = 1), false otherwise
+            return $activatedStatus == 1;
+
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting user activation status: " . $e->getMessage());
             return false;
         }
     }
@@ -707,7 +730,7 @@ class DB {
 
 
     //Erich
-    
+
     function fetchAndDisplayNotApprovedCustomersPDO($conn) {
         $notApprovedCustomers = array();
     
@@ -727,9 +750,6 @@ class DB {
             echo "Error: " . $e->getMessage();
         }
     }
-
-
-
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Customer Service
