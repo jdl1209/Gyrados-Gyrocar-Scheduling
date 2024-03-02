@@ -16,7 +16,10 @@ import Reserve from "./routes/Reserve";
 import Trips from "./routes/Trips";
 import FAQ from './routes/FAQ';
 import Contact from './routes/Contact';
+import LogIn from './routes/LogIn';
+
 import AboutUs from './routes/AboutUs';
+
 import "./App.css";
 import reportWebVitals from './reportWebVitals';
 
