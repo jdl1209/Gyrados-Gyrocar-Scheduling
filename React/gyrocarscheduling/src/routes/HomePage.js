@@ -6,19 +6,21 @@ function HomePage() {
             <section class="header">
 
                 <nav>
-                    
-                    
+                    <a href="homepage.js"><img src={require("../images/logo.png")} alt="test" id="logo"/></a>
+
                 </nav>
                 <div class="text-box">
 
-                    <h1>Rent an easy-to-drive gyrocar for your local commuting needs.</h1>
+                    <h1>It's easy.</h1>
+                    <h1>It's convenient.</h1>
+                    <h1>It's cost effective.</h1>
+                    <h1>It's GyroGoGo!.</h1>
                         <br></br>
-                        <h2>Become a GyroGoGo member and enjoy the very best way to get around town!</h2>
                         <br></br> <br></br>
                        
                         <br></br>
             
-                <a href="" class="join-btn">Become A Member Now</a>
+                <a href="" class="join-btn">Apply Now</a>
                 </div>
 
             </section>

@@ -6,6 +6,11 @@ import { IoMdContact } from "react-icons/io";
 
 export const SidebarData = [
     {
+        title: "Log In",
+        path: "/LogIn",
+        icon: <IoMdContact />,
+        cName: "nav-text",
+    },{
         title: "Member",
         path: "/member",
         icon: <IoMdContact />,

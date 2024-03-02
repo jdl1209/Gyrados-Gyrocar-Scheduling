@@ -19,7 +19,6 @@ function Navbar() {
                     <Link to="#" className="menu-bars">
                         <FaIcons.FaBars onClick={showSidebar} />
                     </Link>
-                <a href="homepage.js"><img src={require("../images/logo.png")} alt="test" id="logo"/></a>
 
                 </div>
 
