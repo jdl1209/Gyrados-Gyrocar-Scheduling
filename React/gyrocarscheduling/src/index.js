@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 import { createRoot } from "react-dom/client";
 import {
   createBrowserRouter,
   RouterProvider,
   Route,
-  Link,
   Outlet,
   createRoutesFromElements,
 } from "react-router-dom";
@@ -14,17 +13,19 @@ import Member from "./routes/Member";
 import HomePage from "./routes/HomePage";
 import Reserve from "./routes/Reserve";
 import Trips from "./routes/Trips";
-import FAQ from './routes/FAQ';
-import Contact from './routes/Contact';
-import LogIn from './routes/LogIn';
-
-import AboutUs from './routes/AboutUs';
-
+import FAQ from "./routes/FAQ";
+import Contact from "./routes/Contact";
+import AboutUs from "./routes/AboutUs";
 import "./App.css";
-import reportWebVitals from './reportWebVitals';
+import "./responsive.css";
+import reportWebVitals from "./reportWebVitals";
+import LogIn from "./routes/LogIn";
 
 const AppLayout = () => (
-  <div>
+  <div
+    className="main-section"
+    style={{ display: "flex", position: "relative" }}
+  >
     <Navbar />
     <Outlet />
   </div>
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "aboutus",
         element: <AboutUs />,
+      },
+      {
+        path: "login",
+        element: <LogIn />,
       },
     ],
   },
