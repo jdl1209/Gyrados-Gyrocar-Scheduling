@@ -217,6 +217,41 @@ CREATE TABLE faq (
     FOREIGN KEY (employeeAdded) REFERENCES employee (employeeID)
 );
 
+/*
+TABLE car_calendar
+stores a calendar object for each car
+PK - calendarID
+FK - associatedCarID
+*/
+CREATE TABLE car_calendar(
+    calendarID INT PRIMARY KEY AUTO_INCREMENT,
+    calendarName VARCHAR(100),
+    timezone VARCHAR(3),
+    associatedCarID INT NOT NULL,
+    FOREIGN KEY (associatedCarID) REFERENCES cars(carID)
+);
+
+/*
+TABLE car_reservation
+stores each reservation in a seperate table but associated with a calendar for each car
+PK - reservationID
+FK - calendarID, sublocationTakenID, sublocationReturnedID
+*/
+CREATE TABLE car_reservation(
+    reservationID INT PRIMARY KEY AUTO_INCREMENT,
+    calendarID INT NOT NULL,
+    dateStart DATE NOT NULL,
+    timeStart TIMESTAMP NOT NULL,
+    dateEnd DATE NOT NULL,
+    timeEnd TIMESTAMP NOT NULL,
+    carID INT NOT NULL,
+    sublocationTakenID INT NOT NULL,
+    sublocationReturnedID INT NOT NULL,
+    FOREIGN KEY (calendarID) REFERENCES car_calendar(calendarID),
+    FOREIGN KEY (sublocationTakenID) REFERENCES sublocationID(sublocationID),
+    FOREIGN KEY (sublocationReturnedID) REFERENCES sublocation(sublocationID)
+);
+
 INSERT INTO roles VALUES(1, "Customer", "Customers are basic roles with the ability to apply to the application.");
 INSERT INTO roles VALUES(2, "Employee", "Employees are employees of Gyrogogo and have the ability to approve customers, pull reports, and sign into the business pages.");
 INSERT INTO roles VALUES(3, "Mechanic", "Mechanics are employees that have the ability to pull reports on services and insert reports of services.");
