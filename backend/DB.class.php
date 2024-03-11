@@ -265,6 +265,8 @@ class DB {
         // Check if the user is suspended
         if ($this->isSuspended($username)) {
             echo "User is suspended. Please contact support.";
+        } elseif (!$this->isUserApproved($username)) {
+            echo "User is not approved. Please wait for approval.";
         } else {
             // Check if the user is an employee
             if ($this->isEmployee($username)) {
@@ -280,6 +282,7 @@ class DB {
             }
         }
     }
+    
     
     // Check if the user is suspended
     public function isSuspended($userID) {
@@ -342,6 +345,26 @@ class DB {
         } catch (PDOException $e) {
             // Handle the exception, log or display an error message
             error_log("Error getting role ID: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Check if the user is approved
+    public function isUserApproved($username) {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT activated FROM customer WHERE username = ?");
+            $stmt->bindParam(1, $username, PDO::PARAM_STR);
+            $stmt->execute();
+    
+            $activatedStatus = $stmt->fetchColumn();
+    
+            // Return true if the user is approved (activated = 1), false otherwise
+            return $activatedStatus == 1;
+
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting user activation status: " . $e->getMessage());
             return false;
         }
     }
@@ -695,6 +718,26 @@ class DB {
 
     //Erich
 
+    public function getAllCustomers() {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->prepare("SELECT fName, lName, phoneNum, address1, city, state, zip FROM customer");
+            $stmt->execute();
+
+            // Fetch all results as an associative array
+            $customers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // Return the array of customers
+            return $customers;
+
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting all customers: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    
 
 
 
@@ -707,9 +750,25 @@ class DB {
 
     //Erich
 
-
-
-
+    function fetchAndDisplayNotApprovedCustomersPDO($conn) {
+        $notApprovedCustomers = array();
+    
+        $query = "SELECT customerID, fName, mInitial, lName, activated FROM customer WHERE activated IS NULL";
+    
+        try {
+            $stmt = $conn->prepare($query);
+            $stmt->execute();
+    
+            $notApprovedCustomers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Display not approved customers
+            foreach ($notApprovedCustomers as $customer) {
+                echo "Customer ID: " . $customer["customerID"] . ", Name: " . $customer["fName"] . " " . $customer["mInitial"] . " " . $customer["lName"] . ", Approval Status: Not Approved\n";
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
     //                                  Customer Service
