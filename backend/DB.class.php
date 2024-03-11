@@ -728,9 +728,41 @@ class DB {
 
     //Jake
 
+    public function getSingleCars($carID){
 
+        try{
 
+            $stmt = $this->conn->query("SELECT carType, battery, status, reserved, sublocationID FROM cars WHERE carID = ?");
+            $stmt->bindParam(1, $carID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
 
+        }catch(PDOException $e){
+
+            echo "Error getting locations:". $e->getMessage();
+            return false;
+
+        }
+
+    }
+
+    public function getCars($sublocationID){
+
+        try{
+
+            $stmt = $this->conn->query("SELECT cars, address, cityName, zip FROM location WHERE sublocationID = ? ");
+            $stmt->bindParam(1, $sublocationID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        }catch(PDOException $e){
+
+            echo "Error getting locations:". $e->getMessage();
+            return false;
+
+        }
+
+    }
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
@@ -789,13 +821,11 @@ class DB {
 
         try{
 
-            $stmt = $this->conn->prepare("INSERT INTO jobs(employeeID, carID, task, notes, jTime, jDate) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $this->conn->prepare("INSERT INTO jobs(employeeID, carID, task, notes, jTime, jDate) VALUES (?, ?, ?, ?, date('h:i:s'), date('Y-m-d'))");
             $stmt->bindParam(1, $employeeID, PDO::PARAM_INT);
             $stmt->bindParam(2, $carID, PDO::PARAM_INT);
             $stmt->bindParam(3, $task, PDO::PARAM_STR);
             $stmt->bindParam(4, $notes, PDO::PARAM_STR);
-            $stmt->bindParam(5, date("h:i:s"),PDO::PARAM_STR);
-            $stmt->bindParam(6, date("Y-m-d"),PDO::PARAM_STR);
             $stmt->execute();
             return true;
 
