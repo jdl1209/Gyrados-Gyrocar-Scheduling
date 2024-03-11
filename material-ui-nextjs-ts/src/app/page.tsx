@@ -1,3 +1,6 @@
+//this is needed because some mui functions expecet "client" things like being able to use hooks.
+'use client'
+
 import * as React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -6,10 +9,12 @@ import Link from '@mui/material/Link';
 import NextLink from 'next/link';
 import ProTip from '@/components/ProTip';
 import Copyright from '@/components/Copyright';
+import ResponsiveAppBar from '@/components/ResponseiveAppBar';
 
 export default function Home() {
   return (
-    <Container maxWidth="lg">
+    <React.Fragment>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <Box
         sx={{
           my: 4,
@@ -28,6 +33,6 @@ export default function Home() {
         <ProTip />
         <Copyright />
       </Box>
-    </Container>
+    </React.Fragment>
   );
 }

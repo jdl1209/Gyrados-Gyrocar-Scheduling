@@ -1,3 +1,6 @@
+//this is needed because some mui functions expecet "client" things like being able to use hooks.
+'use client'
+
 import * as React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -6,10 +9,12 @@ import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import ProTip from '@/components/ProTip';
 import Copyright from '@/components/Copyright';
+import ResponsiveAppBar from '@/components/ResponseiveAppBar';
 
 export default function About() {
   return (
-    <Container maxWidth="lg">
+    <Container disableGutters>
+      <ResponsiveAppBar></ResponsiveAppBar>
       <Box
         sx={{
           my: 4,
