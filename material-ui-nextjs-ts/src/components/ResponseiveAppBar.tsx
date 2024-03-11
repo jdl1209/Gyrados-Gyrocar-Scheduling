@@ -22,8 +22,8 @@ const pages = ['Home', 'About Us', 'Contact Us', 'Sign-In/Sign-Up'];
 //these was probably a better way to do this but ¯\_(ツ)_/¯ it works
 const pagelinks = new Map();
 pagelinks.set("Home", ""),
-pagelinks.set('About Us', "About"),
-pagelinks.set("Contact Us", "Contact"),
+pagelinks.set('About Us', "about"),
+pagelinks.set("Contact Us", "contact"),
 pagelinks.set('Sign-In/Sign-Up', "signin")
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
