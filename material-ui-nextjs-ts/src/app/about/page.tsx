@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link';
-import ProTip from '@/components/ProTip';
-import Copyright from '@/components/Copyright';
+import ProTip from '@/components/Dashboard Components/ProTip';
+import Copyright from '@/components/Dashboard Components/Copyright';
 import ResponsiveAppBar from '@/components/ResponseiveAppBar';
 
 export default function About() {
