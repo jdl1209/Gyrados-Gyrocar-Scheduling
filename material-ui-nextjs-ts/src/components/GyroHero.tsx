@@ -23,7 +23,7 @@ export default function ProductHero() {
       >
         <Typography
           component="h2"
-          variant="h2"
+          variant="h1"
           sx={{
             width: { sm: "100%", md: "87%" },
             height: { sm: "100%", md: "78%" },
