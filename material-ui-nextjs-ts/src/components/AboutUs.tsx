@@ -71,7 +71,8 @@ export default function AboutUs() {
       </Typography>
       <Typography variant="h4">
         It’s easy. It’s convenient. It’s cost effective.
-        <Typography
+      </Typography>
+      <Typography
           variant="h4"
           sx={{
             textAlign: { sm: "left", md: "center" },
@@ -79,8 +80,7 @@ export default function AboutUs() {
             fontWeight: "medium",
           }}
         >
-          GyroGoGo!
-        </Typography>
+        GyroGoGo!
       </Typography>
     </>
   );

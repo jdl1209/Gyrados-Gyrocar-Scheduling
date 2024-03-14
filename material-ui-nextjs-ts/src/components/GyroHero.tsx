@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper } from "@mui/material";
-import Image from "mui-image";
+//import Image from "mui-image";
 
 export default function ProductHero() {
   return (
@@ -45,16 +45,16 @@ export default function ProductHero() {
           <br /> It’s convenient.
           <br /> It’s cost effective.
           <br />
-          <Typography
-            variant="h4"
-            sx={{
-              textAlign: { sm: "left", md: "left" },
-              fontStyle: "italic",
-              fontWeight: "medium",
-            }}
-          >
-            GyroGoGo!
-          </Typography>
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            textAlign: { sm: "left", md: "left" },
+            fontStyle: "italic",
+            fontWeight: "medium",
+          }}
+        >
+          GyroGoGo!
         </Typography>
         <Box
           component="img"
