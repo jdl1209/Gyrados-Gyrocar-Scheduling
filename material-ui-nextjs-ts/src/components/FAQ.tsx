@@ -34,12 +34,24 @@ export default function FAQ() {
         variant="h4"
         color="text.primary"
         sx={{
-          width: { sm: "100%", md: "60%" },
-          textAlign: { sm: "left", md: "center" },
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignSelf: "center",
+          textAlign: "center",
         }}
       >
-        Frequently Asked Questions
-      </Typography>
+        Frequently Asked&nbsp;
+      
+      <Typography
+          component="span"
+          variant="h4"
+          sx={{
+            color: "#34adad",
+          }}
+        >
+          Questions
+        </Typography>
+        </Typography>
       <Box sx={{ width: "100%" }}>
         <Accordion
           expanded={expanded === "panel1"}

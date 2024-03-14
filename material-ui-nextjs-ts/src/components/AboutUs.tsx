@@ -40,7 +40,7 @@ export default function AboutUs() {
         variant="body1"
         textAlign="center"
         color="text.secondary"
-        sx={{ maxWidth: { sm: "100%", md: "65%" }}}
+        sx={{ maxWidth: { sm: "100%", md: "65%" } }}
       >
         Gyrocars are easy to drive because internal gyroscopes balance the cars
         for you. You don’t need any special training to drive a gyrocar, just
@@ -73,13 +73,14 @@ export default function AboutUs() {
         It’s easy. It’s convenient. It’s cost effective.
       </Typography>
       <Typography
-          variant="h4"
-          sx={{
-            textAlign: { sm: "left", md: "center" },
-            fontStyle: "italic",
-            fontWeight: "medium",
-          }}
-        >
+        variant="h4"
+        sx={{
+          textAlign: { sm: "left", md: "center" },
+          fontStyle: "italic",
+          fontWeight: "medium",
+          color: "#34adad",
+        }}
+      >
         GyroGoGo!
       </Typography>
     </>

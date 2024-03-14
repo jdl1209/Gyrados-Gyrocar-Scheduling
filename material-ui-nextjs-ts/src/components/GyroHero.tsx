@@ -14,14 +14,14 @@ export default function ProductHero() {
       <Paper
         sx={{
           bgcolor: "#34adad",
-          height: "60vh",
+          height: "50vh",
           display: "flex",
           flexDirection: "column",
           //justifyContent: "center",
           //alignItems: "left",
         }}
       >
-        <Typography
+        {/* <Typography
           component="h2"
           variant="h1"
           sx={{
@@ -32,7 +32,23 @@ export default function ProductHero() {
           }}
         >
           GyroGoGo
-        </Typography>
+        </Typography> */}
+        <Box
+          component="img"
+          sx={{
+            height: "233px",
+            width: "350px",
+            maxHeight: { xs: 233, md: 267 },
+            maxWidth: { xs: 350, md: 450 },
+            alignItems: "left",
+            display: "inline-flex",
+            ml: "7%",
+            mt: "2%",
+            mb: "2%"
+          }}
+          alt="Logo"
+          src="/assets/images/GyroGoGo Logo blue on clear for light background 440px.png"
+        />
         <Typography
           variant="h4"
           sx={{
@@ -71,6 +87,7 @@ export default function ProductHero() {
             textAlign: { sm: "left", md: "center" },
             fontStyle: "italic",
             fontWeight: "medium",
+            color: "white",
           }}
         >
           GyroGoGo!
@@ -103,6 +120,7 @@ export default function ProductHero() {
             alignItems: "right",
             display: "inline-flex",
             ml: "75%",
+            mt: "-6%",
           }}
           alt="Car"
           src="/assets/images/car clear background.png"
