@@ -9,42 +9,41 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AddIcon from '@mui/icons-material/Add';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Help } from '@mui/icons-material';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/account'>
       <ListItemIcon>
-        <DashboardIcon />
+        <AccountCircleIcon />
       </ListItemIcon>
-      <ListItemText primary="Dashboard" />
+      <ListItemText primary="My Account" />
+    </ListItemButton>
+    <ListItemButton href='/dashboard/trips'>
+      <ListItemIcon>
+        <CalendarMonthIcon />
+      </ListItemIcon>
+      <ListItemText primary="My Trips" />
+    </ListItemButton>
+    <ListItemButton href='/dashboard/book'>
+      <ListItemIcon>
+        <AddIcon />
+      </ListItemIcon>
+      <ListItemText primary="New Trip" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <Help />
       </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
+      <ListItemText primary="Help" />
     </ListItemButton>
   </React.Fragment>
 );
 
+//TODO: try to find a way to pin these to the bottom maybe?
 export const secondaryListItems = (
   <React.Fragment>
     <ListSubheader component="div" inset>
