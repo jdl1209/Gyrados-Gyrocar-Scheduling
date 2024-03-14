@@ -67,7 +67,7 @@ export default function ProductHero() {
           alt="Car"
           src="car clear background.png"
         />
-        <img src="car clear background.png" />
+        <img src="/assets/images/car clear background.png" />
       </Paper>
     </AppBar>
   );
