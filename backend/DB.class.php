@@ -35,6 +35,24 @@ class DB {
     //                                  Sign-up
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
 
+    //Method for getting the employees
+    public function getAllEmployees(){
+
+        try{
+
+            $stmt = $this->conn->query("SELECT employeeID, roleID, username, fullname, office FROM employees");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        }catch(PDOException $e){
+
+            echo "Error getting employees: " . $e->getMessage();
+            return false;
+
+        }
+
+    }
+
     public function signUpCustomer($fName, $mInitial, $lName, $suffix, $phoneNum, $username, $email, $address1, $address2, $city, $state, $zip, $roleID, $password, $license, $creditCardNumber, $securityCode, $cardZip, $expirationDate) {
         // Check the email
         if ($this->checkEmail($email)) {
@@ -436,6 +454,27 @@ class DB {
         }
     }
 
+    public function getAllCars() {
+        try {
+            // Use prepared statement to prevent SQL injection
+            $stmt = $this->conn->query("SELECT carID FROM cars");
+            $cars = array();
+    
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $carID = $row['carID'];
+                array_push($cars, $carID);
+            }
+    
+            return $cars;
+    
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting all cars: " . $e->getMessage());
+            return false;
+        }
+    }
+    
+
     //Function to check if the car is reserved.
 
     public function isReserved($carID) {
@@ -737,6 +776,32 @@ class DB {
         }
     }
 
+    public function getCustomerFNameById($customerId = null) {
+        try {
+            if ($customerId !== null) {
+                // If customer ID is provided, fetch details of the specific customer
+                $stmt = $this->conn->prepare("SELECT fName FROM customer WHERE customerID = :customerID");
+                $stmt->bindParam(':customerID', $customerId);
+            } else {
+                // If no customer ID is provided, return an empty array
+                return [];
+            }
+            $stmt->execute();
+    
+            // Fetch the first name of the customer
+            $customerFName = $stmt->fetchColumn();
+    
+            // Return the first name of the customer
+            return $customerFName;
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting customer's first name: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    
+
     
 
 
@@ -806,22 +871,17 @@ class DB {
     }
 
     public function getCars($sublocationID){
-
-        try{
-
-            $stmt = $this->conn->query("SELECT cars, address, cityName, zip FROM location WHERE sublocationID = ? ");
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM cars WHERE sublocationID = ?");
             $stmt->bindParam(1, $sublocationID, PDO::PARAM_INT);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-
-        }catch(PDOException $e){
-
-            echo "Error getting locations:". $e->getMessage();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo "Error getting cars: " . $e->getMessage();
             return false;
-
         }
-
     }
+    
 
 
     //////  //////  //////  //////  //////  //////  //////  //////  //////  //////
@@ -930,23 +990,30 @@ class DB {
     // Get locations from the location table
 
     public function getLocation($sublocationID){
-
-        try{
-
-            $stmt = $this->conn->query("SELECT sublocationName, address, cityName, zip FROM location WHERE sublocationID = ? ");
-            $stmt->bindParam(1, $sublocationID, PDO::PARAM_STR);
+        try {
+            $stmt = $this->conn->prepare("SELECT sublocationName, address, cityName, zip FROM location WHERE sublocationID = ?");
+            $stmt->bindParam(1, $sublocationID, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
-
-        }catch(PDOException $e){
-
-            echo "Error getting locations:". $e->getMessage();
+        } catch(PDOException $e) {
+            error_log("Error getting locations: " . $e->getMessage());
             return false;
-
         }
-
     }
+    
 
+    //get all Locations
+    public function getAllLocations(){
+        try{
+            $stmt = $this->conn->query("SELECT sublocationName, address, cityName, zip FROM location");
+            $locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $locations;
+        } catch(PDOException $e){
+            echo "Error getting locations: " . $e->getMessage();
+            return false;
+        }
+    }
+    
     // Delete Locations from the location table
     public function deleteLocation($sublocationID){
     
@@ -993,23 +1060,48 @@ class DB {
 
     }
 
-    //Method for getting the employees
-    public function getEmployees(){
-
-        try{
-
-            $stmt = $this->conn->query("SELECT employeeID, roleID, username, fullname, office FROM employees");
+    public function getEmployeeById($employeeId = null) {
+        try {
+            if ($employeeId !== null) {
+                // If employee ID is provided, fetch details of the specific employee
+                $stmt = $this->conn->prepare("SELECT fullname, username, office FROM employees WHERE employeeID = :employeeId");
+                $stmt->bindParam(':employeeId', $employeeId);
+            } else {
+                // If no employee ID is provided, return empty array
+                return [];
+            }
             $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        }catch(PDOException $e){
-
-            echo "Error getting employees: " . $e->getMessage();
-            return false;
-
+    
+            // Fetch results as an associative array
+            $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Return the employee details
+            return $employee;
+        } catch (PDOException $e) {
+            // Handle the exception, log or display an error message
+            error_log("Error getting employee details: " . $e->getMessage());
+            return [];
         }
-
     }
+    
+
+    // //Method for getting the employees
+    // public function getAllEmployees(){
+
+    //     try{
+
+    //         $stmt = $this->conn->query("SELECT employeeID, roleID, username, fullname, office FROM employees");
+    //         $stmt->execute();
+    //         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    //     }catch(PDOException $e){
+
+    //         echo "Error getting employees: " . $e->getMessage();
+    //         return false;
+
+    //     }
+
+    // }
 
     //Method for deleting a specific employee
     public function deleteEmployee($employeeID){
@@ -1034,4 +1126,115 @@ class DB {
 
     
 }
+
+// Include the database connection file
+include 'db_connection.php';
+
+// Create an instance of the DB class
+$db = new DB();
+
+
+// Define the routing logic
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['endpoint'])) {
+        if ($_GET['endpoint'] === 'employees') {
+            // Call the method to get all employees
+            echo json_encode($db->getAllEmployees());
+        } elseif ($_GET['endpoint'] === 'customers') {
+            // Call the method to get all customers
+            echo json_encode($db->getAllCustomers());
+        } elseif ($_GET['endpoint'] === 'employee') {
+            // Check if employeeID parameter is provided
+            if (isset($_GET['employeeID'])) {
+                // Call the method to get employee by ID
+                $employeeId = $_GET['employeeID'];
+                echo json_encode($db->getEmployeeById($employeeId));
+            } else {
+                // Handle missing employeeID parameter
+                http_response_code(400);
+                echo json_encode(array("message" => "Employee ID parameter is missing"));
+            }
+        } elseif ($_GET['endpoint'] === 'customer') {
+            // Check if customerID parameter is provided
+            if (isset($_GET['customerID'])) {
+                // Call the method to get customer by ID
+                $customerId = $_GET['customerID'];
+                echo json_encode($db->getCustomerFNameById($customerId));
+            } else {
+                // Handle missing customerID parameter
+                http_response_code(400);
+                echo json_encode(array("message" => "Customer ID parameter is missing"));
+            }
+        } elseif ($_GET['endpoint'] === 'locations') {
+            // Call the method to get all locations
+            echo json_encode($db->getAllLocations());
+        } elseif ($_GET['endpoint'] === 'location') {
+            // Check if sublocationID parameter is provided
+            if (isset($_GET['sublocationID'])) {
+                // Call the method to get location by ID
+                $sublocationID = $_GET['sublocationID'];
+                echo json_encode($db->getLocation($sublocationID));
+            } else {
+                // Handle missing sublocationID parameter
+                http_response_code(400);
+                echo json_encode(array("message" => "Sublocation ID parameter is missing"));
+            }
+        } elseif ($_GET['endpoint'] === 'car') {
+            // Check if sublocationID parameter is provided
+            if (isset($_GET['sublocationID'])) {
+                // Call the method to get cars by location
+                $sublocationID = $_GET['sublocationID'];
+                echo json_encode($db->getCars($sublocationID));
+            } else {
+                // Handle missing sublocationID parameter
+                http_response_code(400);
+                echo json_encode(array("message" => "Sublocation ID parameter is missing"));
+            }
+        } elseif ($_GET['endpoint'] === 'cars') {
+            // Call the method to get all cars
+            echo json_encode($db->getAllCars());
+        } else {
+            // Handle unknown endpoint
+            http_response_code(404);
+            echo json_encode(array("message" => "Endpoint not found"));
+        }
+    } else {
+        // Handle missing endpoint parameter
+        http_response_code(400);
+        echo json_encode(array("message" => "Endpoint parameter is missing"));
+    }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Read the raw POST data
+    $postData = json_decode(file_get_contents("php://input"), true);
+
+    // Check if the endpoint is for customer signup
+    if (isset($postData['endpoint']) && $postData['endpoint'] === 'signup_customer') {
+        // Ensure required parameters are present
+        $required_params = ['fName', 'mInitial', 'lName', 'phoneNum', 'username', 'email', 'address1', 'city', 'state', 'zip', 'roleID', 'password', 'license', 'creditCardNumber', 'securityCode', 'cardZip', 'expirationDate'];
+        $missing_params = array_diff($required_params, array_keys($postData));
+        if (!empty($missing_params)) {
+            // Handle missing parameters
+            http_response_code(400);
+            echo json_encode(array("message" => "Missing parameters: " . implode(', ', $missing_params)));
+            exit;
+        }
+        
+        // Call the signUpCustomer method with provided parameters
+        // You may need to instantiate $db first if not already done
+        $result = $db->signUpCustomer($postData['fName'], $postData['mInitial'], $postData['lName'], $postData['suffix'] ?? '', $postData['phoneNum'], $postData['username'], $postData['email'], $postData['address1'], $postData['address2'] ?? '', $postData['city'], $postData['state'], $postData['zip'], $postData['roleID'], $postData['password'], $postData['license'], $postData['creditCardNumber'], $postData['securityCode'], $postData['cardZip'], $postData['expirationDate']);
+        // Output the result
+        echo json_encode(array("message" => $result));
+    } else {
+        // Handle unknown endpoint
+        http_response_code(404);
+        echo json_encode(array("message" => "Endpoint not found"));
+    }
+} else {
+    // Handle unsupported HTTP methods
+    http_response_code(405);
+    echo json_encode(array("message" => "Method Not Allowed"));
+}
+
+
+
 ?>
