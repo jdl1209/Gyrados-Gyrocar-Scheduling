@@ -4,7 +4,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -30,9 +29,6 @@ function Copyright(props: any) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 export default function SignUp() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,10 +42,9 @@ export default function SignUp() {
   return (
     //TODO: remove this themeprovider? It should already be provided by layout
     //Also idk what purpose the component="main" container has
-    <ThemeProvider theme={defaultTheme}>
+    <Container disableGutters> 
       <ResponsiveAppBar></ResponsiveAppBar>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
@@ -132,8 +127,8 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
-    </ThemeProvider>
+    <Copyright sx={{ mt: 5 }} />
+    </Container>
   );
 }
