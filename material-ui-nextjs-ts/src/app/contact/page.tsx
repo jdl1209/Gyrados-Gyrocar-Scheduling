@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import NextLink from 'next/link';
-import ProTip from '@/components/Dashboard Components/ProTip';
 import Copyright from '@/components/Dashboard Components/Copyright';
 import ResponsiveAppBar from '@/components/ResponseiveAppBar';
 
@@ -27,7 +26,6 @@ export default function Contact() {
         <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
           This is the Contact Page!!
         </Typography>
-        <ProTip />
         <Copyright />
       </Box>
     </React.Fragment>
