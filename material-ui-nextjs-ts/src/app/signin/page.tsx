@@ -41,7 +41,7 @@ export default function SignIn() {
 
   return (
     //idk what purpose the component="main" container has
-    <Container disableGutters> 
+    <React.Fragment> 
       <ResponsiveAppBar></ResponsiveAppBar>
       <Container component="main" maxWidth="xs">
         <Box
@@ -107,6 +107,6 @@ export default function SignIn() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-    </Container>
+    </React.Fragment>
   );
 }
