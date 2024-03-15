@@ -12,9 +12,10 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { Link } from "@mui/material";
 
 //this sets up the buttons in the navbar
-const pages = ["Home", "About Us", "Contact Us", "Sign-In/Sign-Up"];
+const pages = ["Home", "About Us", "Contact Us"];
 
 //set page links
 //these have to have the same name as the pages or it doesn't work
@@ -23,10 +24,15 @@ const pages = ["Home", "About Us", "Contact Us", "Sign-In/Sign-Up"];
 const pagelinks = new Map();
 pagelinks.set("Home", "/"),
   pagelinks.set("About Us", "about"),
-  pagelinks.set("Contact Us", "contact"),
-  pagelinks.set("Sign-In/Sign-Up", "signin");
+  pagelinks.set("Contact Us", "contact")
+  pagelinks.set("Dashboard", "dashboard")
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+//declare necesarry variables
+//this will later be overridden by a check from the backend
+//it set to false by default because it's a better fail state to assume the user isn't signed in
+var isSignedIn = true;
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -58,6 +64,7 @@ function ResponsiveAppBar() {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          {/* logo and name */}
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -77,6 +84,8 @@ function ResponsiveAppBar() {
             GyroGoGo
           </Typography>
 
+          {/* left side options */}
+          {/* small size */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -113,6 +122,8 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
+          
+          {/* big size */}
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -145,35 +156,63 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: "45px" }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+          {/* Right Side Button */}
+          {/* example of inline conditional rendering */}
+          {isSignedIn ? (
+            //true condition
+            <Box sx={{ flexGrow: 0 }}>
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+            
+              <Menu
+                sx={{ mt: "45px" }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {settings.map((setting) => (
+                  <MenuItem
+                    key={setting}
+                    //the following function makes it move to a page if a page exists for that and if not it doesn't try, which would result in an error page not found
+                    onClick={ () => 
+                      //this is a gross way to handle this but we can fix it later if we want
+                      {if (pagelinks.get(setting).toString() == "undefined") {
+                        handleCloseUserMenu
+                      } else {
+                        window.location.href = pagelinks.get(setting)}
+                      }
+                    }
+                  >
+                    <Typography textAlign="center">{setting}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          ) : (
+            //false condition
+            <Button
+              key={"Sign-In/Sign-Up"}
+              href={"signin"}
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "white", display: "block" }}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+              {"Sign-In/Sign-Up"}
+            </Button>
+          )}
+          
         </Toolbar>
       </Container>
     </AppBar>
