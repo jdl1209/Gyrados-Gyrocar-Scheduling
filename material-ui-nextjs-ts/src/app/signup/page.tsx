@@ -42,7 +42,7 @@ export default function SignUp() {
   return (
     //TODO: remove this themeprovider? It should already be provided by layout
     //Also idk what purpose the component="main" container has
-    <Container disableGutters> 
+    <React.Fragment> 
       <ResponsiveAppBar></ResponsiveAppBar>
       <Container component="main" maxWidth="xs">
         <Box
@@ -129,6 +129,6 @@ export default function SignUp() {
         </Box>
       </Container>
     <Copyright sx={{ mt: 5 }} />
-    </Container>
+    </React.Fragment>
   );
 }
