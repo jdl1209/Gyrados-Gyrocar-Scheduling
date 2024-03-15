@@ -112,10 +112,13 @@ PK - sublocationID
 */
 CREATE TABLE location(
 	sublocationID INT PRIMARY KEY AUTO_INCREMENT,
-    sublocationName VARCHAR(30) NOT NULL UNIQUE,
-    address VARCHAR(400) NOT NULL UNIQUE,
+    locationName VARCHAR(400) NOT NULL UNIQUE,
+    sublocationName VARCHAR(100) NOT NULL UNIQUE,
+    address VARCHAR(400),
     cityName VARCHAR (30) NOT NULL,
-    zip VARCHAR(5) NOT NULL
+    state VARCHAR(2) NOT NULL,
+    lat DECIMAL(9,6),
+    lon DECIMAL(9,6)
 );
 
 /*
@@ -146,8 +149,7 @@ CREATE TABLE jobs(
     carID INT NOT NULL,
     task VARCHAR(20) NOT NULL,
     notes VARCHAR(500) NULL,
-    jTime TIME NOT NULL,
-    jDate DATE NOT NULL,
+    jTimeDate DATETIME NOT NULL,
     FOREIGN KEY (carID) REFERENCES cars(carID),
     FOREIGN KEY (employeeID) REFERENCES employees(employeeID)
 );
@@ -214,7 +216,7 @@ CREATE TABLE faq (
     faqQuestion VARCHAR (500),
     faqAnswer VARCHAR (500),
     employeeAdded INT,
-    FOREIGN KEY (employeeAdded) REFERENCES employee (employeeID)
+    FOREIGN KEY (employeeAdded) REFERENCES employees(employeeID)
 );
 
 /*
@@ -248,13 +250,7 @@ CREATE TABLE car_reservation(
     sublocationTakenID INT NOT NULL,
     sublocationReturnedID INT NOT NULL,
     FOREIGN KEY (calendarID) REFERENCES car_calendar(calendarID),
-    FOREIGN KEY (sublocationTakenID) REFERENCES sublocationID(sublocationID),
-    FOREIGN KEY (sublocationReturnedID) REFERENCES sublocation(sublocationID)
+    FOREIGN KEY (sublocationTakenID) REFERENCES location(sublocationID),
+    FOREIGN KEY (sublocationReturnedID) REFERENCES location(sublocationID)
 );
 
-INSERT INTO roles VALUES(1, "Customer", "Customers are basic roles with the ability to apply to the application.");
-INSERT INTO roles VALUES(2, "Employee", "Employees are employees of Gyrogogo and have the ability to approve customers, pull reports, and sign into the business pages.");
-INSERT INTO roles VALUES(3, "Mechanic", "Mechanics are employees that have the ability to pull reports on services and insert reports of services.");
-INSERT INTO roles VALUES(4, "Manager", "Managers are employees of Gryogogo that have the ability to do everything an employee does and can instruct Mechanics to move cars.");
-INSERT INTO roles VALUES(5, "Business Administrator", "Business Administrators are employees of Gyrogogo who have all abilities managers do, along with updating all cars and locations and making employee accounts.");
-INSERT INTO roles VALUES(6, "Systems Administrator", "System Administrators have the ability to view all services and monitor systems infrastructure, along with making the first busiroleIDness account.");

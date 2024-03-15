@@ -18,13 +18,13 @@ class DB {
     public function __construct(){
         try {
             // Connect to the database (adjust these values based on your server configuration)
-            $dsn = "mysql:host=localhost;dbname=eds5997";
+            $dsn = "mysql:host=localhost;dbname=rochester";
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ];
 
-            $this->conn = new PDO($dsn, 'eds5997', 'Records7^muraenidae', $options);
+            $this->conn = new PDO($dsn, 'admin', 'password', $options);
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
             die(); // Stop script execution on connection failure
@@ -1032,6 +1032,5 @@ class DB {
 
     // Add your database-related functions here
 
-    
 }
 ?>
