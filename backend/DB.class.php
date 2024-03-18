@@ -18,7 +18,7 @@ class DB {
     public function __construct(){
         try {
             // Connect to the database (adjust these values based on your server configuration)
-            $dsn = "mysql:host=localhost;dbname=rochester";
+            $dsn = "mysql:host=localhost;dbname=ROCHESTER";
             $options = [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_EMULATE_PREPARES => false,
