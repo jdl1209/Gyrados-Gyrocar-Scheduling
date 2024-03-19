@@ -1,5 +1,5 @@
 // //this is needed because some mui functions expecet "client" things like being able to use hooks. In this case we need it for the theming
-'use client'
+"use client";
 
 // import * as React from 'react';
 // import Avatar from '@mui/material/Avatar';
@@ -42,7 +42,7 @@
 //   return (
 //     //TODO: remove this themeprovider? It should already be provided by layout
 //     //Also idk what purpose the component="main" container has
-//     <Container disableGutters> 
+//     <Container disableGutters>
 //       <ResponsiveAppBar></ResponsiveAppBar>
 //       <Container component="main" maxWidth="xs">
 //         <Box
@@ -133,9 +133,9 @@
 //   );
 // }
 
-import React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import zxcvbn from 'zxcvbn';
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import zxcvbn from "zxcvbn";
 import {
   Avatar,
   Button,
@@ -150,11 +150,11 @@ import {
   Typography,
   ThemeProvider,
   createTheme,
-} from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Copyright from '@/components/Dashboard Components/Copyright';
-import PasswordStrengthBar from 'react-password-strength-bar';
-import ResponsiveAppBar from '@/components/ResponseiveAppBar';
+} from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Copyright from "@/components/Dashboard Components/Copyright";
+import PasswordStrengthBar from "react-password-strength-bar";
+import ResponsiveAppBar from "@/components/ResponseiveAppBar";
 
 interface IFormInput {
   name: string;
@@ -168,168 +168,210 @@ interface IFormInput {
   licenseNumber: string;
 }
 
-const SignInSide: React.FC = () => {
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormInput>();
+const SignUp: React.FC = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     console.log(data);
   };
 
-  const password = watch('password');
+  const password = watch("password");
   const passwordStrength = password ? zxcvbn(password) : { score: 0 };
 
   return (
-    //TODO: remove this themeprovider? It should already be provided by layout
-    //Also idk what purpose the component="main" container has
-    <React.Fragment> 
+    <>
       <ResponsiveAppBar></ResponsiveAppBar>
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            backgroundImage: "url('/assets/images/car front view.jpg')",
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }} />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+      <ThemeProvider theme={createTheme()}>
+        <Grid container component="main" sx={{ height: "100vh" }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
             sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              backgroundImage: "url('/assets/images/car front view.jpg')",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
+          />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Application Form
-            </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 1 }}>
-              <TextField
-                style={{
-                  borderRadius: 10,
-                  color: "#000180",
-                }}
-                {...register('name')}
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="Name"
-                autoComplete="name"
-                autoFocus />
-              <TextField
-                {...register('address1')}
-                margin="normal"
-                required
-                fullWidth
-                id="address1"
-                label="Address Line 1"
-                autoComplete="address" />
-              <TextField
-                {...register('address2')}
-                margin="normal"
-                fullWidth
-                id="address2"
-                label="Address Line 2"
-                autoComplete="address" />
-              <TextField
-                {...register('phone')}
-                margin="normal"
-                required
-                fullWidth
-                id="phone"
-                label="Phone"
-                autoComplete="phone" />
-              <TextField
-                {...register('city')}
-                margin="normal"
-                required
-                fullWidth
-                id="city"
-                label="City"
-                autoComplete="city" />
-              <TextField
-                {...register('state')}
-                margin="normal"
-                required
-                fullWidth
-                id="state"
-                label="State"
-                autoComplete="state" />
-              <TextField
-                {...register('licenseNumber')}
-                margin="normal"
-                required
-                fullWidth
-                id="licenseNumber"
-                label="Driver's License ID"
-                autoComplete="licenseNumber" />
-              <TextField
-                {...register('email')}
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                autoComplete="email" />
-              <TextField
-                {...register('password')}
-                margin="normal"
-                required
-                fullWidth
-                id="password"
-                label="Password"
-                type="password"
-                autoComplete="new-password" />
-              {/* const { password } = this.state; */}
-              <PasswordStrengthBar password={password} />
-              {/* {password && (
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <Avatar sx={{ m: 1, bgcolor: "#34adad" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Application Form
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit(onSubmit)}
+                sx={{ mt: 1 }}
+              >
+                <TextField
+                  style={{
+                    borderRadius: 10,
+                    color: "#000180",
+                  }}
+                  {...register("name")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  autoComplete="name"
+                  autoFocus
+                />
+                <TextField
+                  {...register("address1")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="address1"
+                  label="Address Line 1"
+                  autoComplete="address"
+                />
+                <TextField
+                  {...register("address2")}
+                  margin="normal"
+                  fullWidth
+                  id="address2"
+                  label="Address Line 2"
+                  autoComplete="address"
+                />
+                <TextField
+                  {...register("phone")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="phone"
+                  label="Phone"
+                  autoComplete="phone"
+                />
+                <TextField
+                  {...register("city")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="city"
+                  label="City"
+                  autoComplete="city"
+                />
+                <TextField
+                  {...register("state")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="state"
+                  label="State"
+                  autoComplete="state"
+                />
+                <TextField
+                  {...register("licenseNumber")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="licenseNumber"
+                  label="Driver's License ID"
+                  autoComplete="licenseNumber"
+                />
+                <TextField
+                  {...register("email")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email"
+                  autoComplete="email"
+                />
+                <TextField
+                  {...register("password")}
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="password"
+                  label="Password"
+                  type="password"
+                  autoComplete="new-password"
+                />
+                {/* const { password } = this.state; */}
+                <PasswordStrengthBar password={password} />
+                {/* {password && (
       <Typography variant="caption" color={passwordStrength.score < 3 ? 'error' : 'inherit'}>
         Password strength: {passwordStrength.score} ({passwordStrength.feedback.warning})
       </Typography>
     )} */}
-              <FormControlLabel
-                control={<Checkbox {...register('remember')} value="remember" color="primary" />}
-                label="Remember me" />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                style={{
-                  borderRadius: 10,
-                  backgroundColor: "#000180",
-                }}
-              >
-                Apply
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      {...register("remember")}
+                      value="remember"
+                      color="primary"
+                    />
+                  }
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  style={{
+                    borderRadius: 10,
+                    backgroundColor: "#000180",
+                  }}
+                >
+                  Apply
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link href="#" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link href="#" variant="body2">
+                      {"Already have an account? Sign In"}
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Already have an account? Sign In"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Box mt={5}>
-                <Copyright />
+                <Box mt={5}>
+                  <Copyright />
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </Box>
-      </Container>
-    <Copyright sx={{ mt: 5 }} />
-    </React.Fragment>
+          </Grid>
+        </Grid>
+      </ThemeProvider>
+    </>
   );
 };
 
-export default SignInSide;
+export default SignUp;
