@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
 //this sets up the buttons in the navbar
-const pages = ["Home", "About Us", "Contact Us", "Sign-In/Sign-Up"];
+const pages = ["Home", "About Us", "Contact Us", "Login", "Logout"];
 
 //set page links
 //these have to have the same name as the pages or it doesn't work
@@ -24,7 +24,8 @@ const pagelinks = new Map();
 pagelinks.set("Home", "/"),
   pagelinks.set("About Us", "about"),
   pagelinks.set("Contact Us", "contact"),
-  pagelinks.set("Sign-In/Sign-Up", "signin");
+  pagelinks.set("Login", "/api/auth/login"),
+  pagelinks.set("Logout", "/api/auth/logout");
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 

@@ -23,6 +23,8 @@ import { mainListItems, secondaryListItems } from './Dashboard Components/listIt
 import Chart from './Dashboard Components/Chart';
 import Deposits from './Dashboard Components/Deposits';
 import Orders from './Dashboard Components/Orders';
+import { useUser } from '@auth0/nextjs-auth0/client';
+
 
 function Copyright(props: any) {
   return (
