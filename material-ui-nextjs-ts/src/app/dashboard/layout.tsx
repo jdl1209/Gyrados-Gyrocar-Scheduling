@@ -108,7 +108,7 @@ export default function DashboardLayout({
         <section>
             {/* Include shared UI here e.g. a header or sidebar */}
             <Box sx={{ display: 'flex' }}>
-                <AppBar position="absolute" open={open}>
+                <AppBar position="absolute" open={open} style={{background: '#34adad'}}>
                     <Toolbar
                         sx={{
                             pr: '24px', // keep right padding when drawer closed
