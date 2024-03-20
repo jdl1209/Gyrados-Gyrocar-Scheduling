@@ -16,7 +16,7 @@ export class DB {
         // const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
         const host = "localhost";
         const user = "root";
-        const password = "Samson@4656";
+        const password = "";
         const port = 3306;
         const database = "ROCHESTER";
         
@@ -53,7 +53,7 @@ export class DB {
 
 
 
-    
+
 }
 
 // function locationModel(sequelize: Sequelize) {
