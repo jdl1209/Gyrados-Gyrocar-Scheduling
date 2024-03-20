@@ -51,62 +51,11 @@ export default withPageAuthRequired(async function AccountDashboard() {
         <p>Role: {user?.app_metadata?.authorization?.roles}</p> {/* Display user's roles */}
       </div>
       <h1>LocationIDs</h1>
-      <div>
-        {/* Render your data */}
-        {data.map((item: any, idx: number) => (
-          <div key={idx}>
-            {item.zip}
-          </div>
-        ))}
-      </div>
-      <h1>Customers</h1>
-      <div>
-        {/* Render your data */}
-        {data2.map((item: any, idx: number) => (
-          <div key={idx}>
-            {item.zip}
-            {item.fName}
-          </div>
-        ))}
-      </div>
-      <h1>Employees</h1>
-      <div>
-        {/* Render your data */}
-        {data3.map((item: any, idx: number) => (
-          <div key={idx}>
-            {item.username}
-            {item.employeeID}
-          </div>
-        ))}
-      </div>
-      <h1>Cars</h1>
-      <div>
-        {/* Render your data */}
-        {data4.map((item: any, idx: number) => (
-          <div key={idx}>
-            {item.carID}
-            {item.carType}
-          </div>
-        ))}
-      </div>
-      <h1>FAQ</h1>
-      <div>
-        {/* Render your data */}
-        {data5.map((item: any, idx: number) => (
-          <div key={idx}>
-            {item.faqID}
-            {item.faqQuestion}
-          </div>
-        ))}
-      </div>
-      <div>
-        {/* <CreateLocation /> */}
-      </div>
 
-      <div>
-        <CreateEmployee />
-      </div>
-      
+
+
+
+
 
      
     </>
