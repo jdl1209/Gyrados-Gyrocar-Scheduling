@@ -14,7 +14,8 @@ export default function ProductHero() {
       <Paper
         sx={{
           bgcolor: "#34adad",
-          height: "50vh",
+          // height: "50vh",
+          height: "auto",
           display: "flex",
           flexDirection: "column",
           //justifyContent: "center",
@@ -36,7 +37,8 @@ export default function ProductHero() {
         <Box
           component="img"
           sx={{
-            height: "233px",
+            // height: "200px",
+            height: "20%",
             width: "350px",
             maxHeight: { xs: 233, md: 267 },
             maxWidth: { xs: 350, md: 450 },
@@ -44,7 +46,8 @@ export default function ProductHero() {
             display: "inline-flex",
             ml: "7%",
             mt: "2%",
-            mb: "2%"
+            mb: "2%",
+            position: "relative"
           }}
           alt="Logo"
           src="/assets/images/GyroGoGo Logo blue on clear for light background 440px.png"
@@ -52,9 +55,15 @@ export default function ProductHero() {
         <Typography
           variant="h4"
           sx={{
-            width: { sm: "100%", md: "21.3%" },
-            height: { sm: "100%", md: "98%" },
-            textAlign: { sm: "center", md: "center" },
+            //width: { sm: "50%", md: "21.3%" },
+            //height: { sm: "50%", md: "98%" },
+            textAlign: { sm: "left", md: "left" },
+            alignItems: "left",
+            display: "inline-flex",
+            ml: "7%",
+            // mt: "2%",
+            // mb: "2%",
+            position: "relative"
           }}
         >
           It’s easy.
@@ -62,9 +71,17 @@ export default function ProductHero() {
         <Typography
           variant="h4"
           sx={{
-            width: { sm: "100%", md: "27%" },
-            height: { sm: "100%", md: "100%" },
-            textAlign: { sm: "left", md: "center" },
+            //width: { sm: "50%", md: "27%" },
+            //height: { sm: "50%", md: "50%" },
+            textAlign: { sm: "left", md: "left" },
+            //maxHeight: { xs: 233, md: 267 },
+            //maxWidth: { xs: 350, md: 450 },
+            alignItems: "left",
+            display: "inline-flex",
+            ml: "7%",
+            // mt: "2%",
+            // mb: "2%",
+            position: "relative"
           }}
         >
           It’s convenient.
@@ -74,7 +91,11 @@ export default function ProductHero() {
           sx={{
             width: { sm: "100%", md: "29.4%" },
             height: { sm: "100%", md: "98%" },
-            textAlign: { sm: "center", md: "center" },
+            textAlign: { sm: "left", md: "left" },
+            alignItems: "left",
+            display: "inline-flex",
+            ml: "7%",
+            position: "relative"
           }}
         >
           It’s cost effective.
@@ -84,10 +105,16 @@ export default function ProductHero() {
           sx={{
             width: { sm: "100%", md: "23.2%" },
             height: { sm: "100%", md: "100%" },
-            textAlign: { sm: "left", md: "center" },
+            textAlign: { sm: "left", md: "left" },
             fontStyle: "italic",
             fontWeight: "medium",
             color: "white",
+            alignItems: "left",
+            display: "inline-flex",
+            ml: "7%",
+            mt: "2%",
+            mb: "2%",
+            position: "relative"
           }}
         >
           GyroGoGo!
@@ -101,8 +128,8 @@ export default function ProductHero() {
           }}
           variant="contained"
           sx={{
-            width: { sm: "100%", md: "15%" },
-            textAlign: { sm: "left", md: "center" },
+            width: { xs: "40%",sm: "30%", md: "20%" },
+            textAlign: { xs: "center", sm: "center", md: "center" },
             display: "inline-flex",
             ml: "7%",
             mt: "2%",
@@ -119,8 +146,12 @@ export default function ProductHero() {
             maxWidth: { xs: 350, md: 450 },
             alignItems: "right",
             display: "inline-flex",
-            ml: "75%",
-            mt: "-6%",
+            marginRight: {xs: "30%" },
+            marginLeft: { md: "65%"},
+            marginTop: {md: "-6%"}
+            //ml: "75%",
+            //mr: "3em",
+            //mt: "-6%",
           }}
           alt="Car"
           src="/assets/images/car clear background.png"
