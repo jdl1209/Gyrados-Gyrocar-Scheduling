@@ -23,7 +23,7 @@
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-hook-form": "^7.51.0",
+    "react-hook-form": "^7.51.1",
     "react-password-strength-bar": "^0.4.1",
     "sequelize": "^6.37.1",
     "zxcvbn": "^4.4.2"
