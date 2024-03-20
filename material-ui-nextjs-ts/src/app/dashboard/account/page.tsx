@@ -100,13 +100,13 @@ export default withPageAuthRequired(async function AccountDashboard() {
         ))}
       </div>
       <div>
-        <CreateLocation />
+        {/* <CreateLocation /> */}
       </div>
-{/* 
+
       <div>
         <CreateEmployee />
       </div>
-       */}
+      
 
      
     </>
