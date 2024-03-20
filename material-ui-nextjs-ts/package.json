@@ -21,6 +21,7 @@
     "mui-image": "^1.0.7",
     "mysql2": "^3.9.2",
     "next": "latest",
+    "pigeon-maps": "^0.21.4",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "^7.51.1",
