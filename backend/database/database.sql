@@ -220,37 +220,45 @@ CREATE TABLE faq (
 );
 
 /*
-TABLE car_calendar
-stores a calendar object for each car
+TABLE calendar
+stores the calendar id and number and days associated with that calendar
 PK - calendarID
-FK - associatedCarID
 */
-CREATE TABLE car_calendar(
+CREATE TABLE calendar(
     calendarID INT PRIMARY KEY AUTO_INCREMENT,
-    calendarName VARCHAR(100),
-    timezone VARCHAR(3),
-    associatedCarID INT NOT NULL,
-    FOREIGN KEY (associatedCarID) REFERENCES cars(carID)
+    calendarNum INT NOT NULL,
+    day DATE NOT NULL
 );
 
 /*
-TABLE car_reservation
-stores each reservation in a seperate table but associated with a calendar for each car
-PK - reservationID
-FK - calendarID, sublocationTakenID, sublocationReturnedID
+TABLE sublocation_calendar
+lookup table for calendar and sublocation
+PK - sublocationID
+FK - sublocationID, calendarNum
 */
-CREATE TABLE car_reservation(
-    reservationID INT PRIMARY KEY AUTO_INCREMENT,
-    calendarID INT NOT NULL,
-    dateStart DATE NOT NULL,
-    timeStart TIMESTAMP NOT NULL,
-    dateEnd DATE NOT NULL,
-    timeEnd TIMESTAMP NOT NULL,
-    carID INT NOT NULL,
-    sublocationTakenID INT NOT NULL,
-    sublocationReturnedID INT NOT NULL,
-    FOREIGN KEY (calendarID) REFERENCES car_calendar(calendarID),
-    FOREIGN KEY (sublocationTakenID) REFERENCES location(sublocationID),
-    FOREIGN KEY (sublocationReturnedID) REFERENCES location(sublocationID)
+CREATE TABLE sublocation_calendar (
+    sublocationID INT PRIMARY KEY NOT NULL,
+    calendarNum INT NOT NULL,
+    FOREIGN KEY (sublocationID) REFERENCES location(sublocation),
+    FOREIGN KEY (calendarNum) REFERENCES calendar(calendarNum)
 );
 
+/*
+TABLE reservation
+stores the reservation for the car in the calendar
+PK - reservationID
+FK - customerID, carID, calendarNum, day
+*/
+CREATE TABLE reservation(){
+    reservationID INT PRIMARY KEY AUTO_INCREMENT,
+    customerID INT NOT NULL,
+    carID INT NOT NULL,
+    calendarNum INT NOT NULL,
+    day DATE NOT NULL,
+    timeBegin DATETIME NOT NULL,
+    timeEnd DATETIME NOT NULL,
+    FOREIGN KEY (customerID) REFERENCES customer(customerID),
+    FOREIGN KEY (carID) REFERENCES cars(carID),
+    FOREIGN KEY (calendarNum) REFERENCES calendar(calendarNum),
+    FOREIGN KEY (day) REFERENCES calendar(day)
+}
