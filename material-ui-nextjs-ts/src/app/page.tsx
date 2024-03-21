@@ -28,8 +28,11 @@ export default function Home() {
           alignItems: "center",
         }}
       >
+        <div id="Testimonials" />
         <Testimonials />
+        <div id="AboutUs" />
         <AboutUs />
+        <div id="FAQ" />
         <FAQ />
         {/* leave this bit in for now I think? Not sure what to do with it */}
         <Container>
