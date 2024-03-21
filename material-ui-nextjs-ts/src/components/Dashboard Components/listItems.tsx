@@ -19,25 +19,25 @@ import Divider from '@mui/material/Divider';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton href='/dashboard/account'>
+    <ListItemButton href='/dashboard/customer/account'>
       <ListItemIcon>
         <AccountCircleIcon />
       </ListItemIcon>
       <ListItemText primary="My Account" />
     </ListItemButton>
-    <ListItemButton href='/dashboard/trips'>
+    <ListItemButton href='/dashboard/customer/trips'>
       <ListItemIcon>
         <CalendarMonthIcon />
       </ListItemIcon>
       <ListItemText primary="My Trips" />
     </ListItemButton>
-    <ListItemButton href='/dashboard/book'>
+    <ListItemButton href='/dashboard/customer/book'>
       <ListItemIcon>
         <AddIcon />
       </ListItemIcon>
       <ListItemText primary="New Trip" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/customer/help'>
       <ListItemIcon>
         <Help />
       </ListItemIcon>
@@ -59,19 +59,19 @@ export const secondaryListItems = (
       </Typography>
     </ListSubheader>
     */}
-    <ListItemButton>
+    <ListItemButton href='/dashboard/admin/users'>
       <ListItemIcon>
         <People />
       </ListItemIcon>
       <ListItemText primary="Users" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/admin/database'>
       <ListItemIcon>
         <People />
       </ListItemIcon>
       <ListItemText primary="Database" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/admin/monitoring'>
       <ListItemIcon>
         <MonitorHeart />
       </ListItemIcon>
@@ -87,13 +87,13 @@ export const secondaryListItems = (
     <Divider sx={{backgroundColor: "#DEDEDE"}}>
       Customer Service Items
     </Divider>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/customerService'>
       <ListItemIcon>
         <Email />
       </ListItemIcon>
       <ListItemText primary="Customer Service" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/customerService/applications'>
       <ListItemIcon>
         <HistoryEdu />
       </ListItemIcon>
@@ -103,13 +103,13 @@ export const secondaryListItems = (
     <Divider sx={{backgroundColor: "#DEDEDE"}}>
       Mechanic Items
     </Divider>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/mechanic/locateCar'>
       <ListItemIcon>
         <Explore />
       </ListItemIcon>
       <ListItemText primary="Locate A Car" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton href='/dashboard/mechanic/reports'>
       <ListItemIcon>
         <SummarizeIcon />
       </ListItemIcon>

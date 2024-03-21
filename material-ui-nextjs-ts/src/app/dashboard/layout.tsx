@@ -181,6 +181,9 @@ export default function DashboardLayout({
                         {mainListItems}
                         {isAdmin ? (
                             <React.Fragment>
+                                <Divider sx={{ my: 1 }}>
+                                    Admin Items
+                                </Divider>
                                 {secondaryListItems}
                             </React.Fragment>
                         ) : (
