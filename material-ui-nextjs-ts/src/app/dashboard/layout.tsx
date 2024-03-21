@@ -122,6 +122,7 @@ export default function DashboardLayout({
         <section>
             {/* Include shared UI here e.g. a header or sidebar */}
             <Box sx={{ display: 'flex' }}>
+                {/* this gives an error but I have no idea why because it works perfectly ¯\_(ツ)_/¯ */}
                 <AppBar position="absolute" open={open} color={themeToUse()}>
                     <Toolbar
                         sx={{
@@ -180,9 +181,6 @@ export default function DashboardLayout({
                         {mainListItems}
                         {isAdmin ? (
                             <React.Fragment>
-                                <Divider sx={{ my: 1 }}>
-                                    Admin Items
-                                </Divider>
                                 {secondaryListItems}
                             </React.Fragment>
                         ) : (
