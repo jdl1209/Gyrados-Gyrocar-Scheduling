@@ -61,7 +61,8 @@ function ResponsiveAppBar() {
   return (
     <AppBar
       position="static"
-      style={{ background: "#34adad", marginBottom: "0px" }}
+      style={{marginBottom: "0px" }}
+
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>

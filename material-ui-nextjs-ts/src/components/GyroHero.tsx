@@ -122,7 +122,7 @@ export default function ProductHero() {
         <Button
           style={{
             borderRadius: 10,
-            backgroundColor: "#000180",
+            //backgroundColor: "#000180",
             padding: "18px 36px",
             fontSize: "18px",
           }}
