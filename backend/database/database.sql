@@ -237,10 +237,10 @@ PK - sublocationID
 FK - sublocationID, calendarNum
 */
 CREATE TABLE sublocation_calendar (
-    sublocationID INT PRIMARY KEY NOT NULL,
-    calendarNum INT NOT NULL,
-    FOREIGN KEY (sublocationID) REFERENCES location(sublocation),
-    FOREIGN KEY (calendarNum) REFERENCES calendar(calendarNum)
+    sublocationID INT,
+    calendarID INT,
+    FOREIGN KEY (sublocationID) REFERENCES location(sublocationID),
+    FOREIGN KEY (calendarID) REFERENCES calendar(calendarID)
 );
 
 /*
@@ -249,16 +249,15 @@ stores the reservation for the car in the calendar
 PK - reservationID
 FK - customerID, carID, calendarNum, day
 */
-CREATE TABLE reservation(){
+CREATE TABLE reservation (
     reservationID INT PRIMARY KEY AUTO_INCREMENT,
     customerID INT NOT NULL,
     carID INT NOT NULL,
-    calendarNum INT NOT NULL,
+    calendarID INT NOT NULL,
     day DATE NOT NULL,
     timeBegin DATETIME NOT NULL,
     timeEnd DATETIME NOT NULL,
     FOREIGN KEY (customerID) REFERENCES customer(customerID),
     FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (calendarNum) REFERENCES calendar(calendarNum),
-    FOREIGN KEY (day) REFERENCES calendar(day)
-}
+    FOREIGN KEY (calendarID) REFERENCES calendar(calendarID)
+);
