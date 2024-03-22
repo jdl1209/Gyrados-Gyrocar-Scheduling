@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import ResponsiveAppBar from '@/components/ResponsiveAppBar';
+import { getSession } from '@auth0/nextjs-auth0';
 
 function Copyright(props: any) {
   return (
@@ -29,6 +30,13 @@ function Copyright(props: any) {
   );
 }
 
+const session = await getSession();
+const isSignedIn = !!session && !!session.user; // Set isSignedIn based on session
+if (!session || !session.user) {
+  console.log("invalid session");
+}
+
+
 export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,7 +50,7 @@ export default function SignIn() {
   return (
     //idk what purpose the component="main" container has
     <React.Fragment> 
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar isSignedIn={isSignedIn}></ResponsiveAppBar>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{

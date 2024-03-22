@@ -13,11 +13,23 @@ import FAQ from "@/components/FAQ";
 import GyroHero from "@/components/GyroHero";
 import Testimonials from "@/components/Testimonials";
 import AboutUs from "@/components/AboutUs";
+import { getSession } from '@auth0/nextjs-auth0';
 
-export default function Home() {
+export default async function Home() {
+
+  const session = await getSession();
+  const isSignedIn = !!session && !!session.user; // Set isSignedIn based on session
+  if (!session || !session.user) {
+    console.log("invalid session");
+  }
+
+  // const user = session.user;
+  // console.log(user.picture);
+
   return (
+    
     <React.Fragment>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar isSignedIn={isSignedIn}></ResponsiveAppBar>
       <GyroHero />
       <Box
         sx={{

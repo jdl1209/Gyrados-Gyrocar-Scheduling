@@ -2,9 +2,7 @@ import { Metadata } from 'next';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { getSession } from '@auth0/nextjs-auth0';
 import { DB } from '@/lib/db';
-import CreateEmployee from '../../../components/AdminControls/createEmployee';
-import CreateCar from '../../../components/AdminControls/createCar';
-import CreateLocation from '@/components/AdminControls/createLocation';
+
 
 
 // Define your roles and their corresponding privileges
@@ -57,4 +55,4 @@ export default withPageAuthRequired(async function AccountDashboard() {
       </div>
     </>
   );
-}, { returnTo: '/dashboard/account' });
+}, { returnTo: '/dashboard/customer/account' });

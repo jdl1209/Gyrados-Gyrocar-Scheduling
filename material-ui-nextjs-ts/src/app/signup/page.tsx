@@ -155,6 +155,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Copyright from "@/components/Dashboard Components/Copyright";
 import PasswordStrengthBar from "react-password-strength-bar";
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { getSession } from '@auth0/nextjs-auth0';
 
 interface IFormInput {
   name: string;
@@ -168,7 +170,7 @@ interface IFormInput {
   licenseNumber: string;
 }
 
-const SignUp: React.FC = () => {
+const SignUp: React.FC = async () => {
   const {
     register,
     handleSubmit,
@@ -177,19 +179,25 @@ const SignUp: React.FC = () => {
   } = useForm<IFormInput>();
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    const res = await fetch("http://localhost:3001/api/register", { method: "POST", body: JSON.stringify(data)});
+    const res = await fetch("http://localhost:3000/api/register", { method: "POST", body: JSON.stringify(data)});
     if (!res.ok) { console.log(res.statusText) };
     const json = await res.json();
     
     console.log(json);
   };
+  const session = await getSession();
+  const isSignedIn = !!session && !!session.user; // Set isSignedIn based on session
+  if (!session || !session.user) {
+    console.log("invalid session");
+  }
+
 
   const password = watch("password");
   const passwordStrength = password ? zxcvbn(password) : { score: 0 };
 
   return (
     <>
-      <ResponsiveAppBar></ResponsiveAppBar>
+      <ResponsiveAppBar isSignedIn={isSignedIn}></ResponsiveAppBar>
       <ThemeProvider theme={createTheme()}>
         <Grid container component="main" sx={{ height: "100vh" }}>
           <CssBaseline />
