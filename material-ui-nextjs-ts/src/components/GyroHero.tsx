@@ -66,7 +66,7 @@ export default function ProductHero() {
             position: "relative"
           }}
         >
-          It’s easy.
+          It's easy.
         </Typography>
         <Typography
           variant="h4"
@@ -84,7 +84,7 @@ export default function ProductHero() {
             position: "relative"
           }}
         >
-          It’s convenient.
+          It's convenient.
         </Typography>
         <Typography
           variant="h4"
@@ -98,7 +98,7 @@ export default function ProductHero() {
             position: "relative"
           }}
         >
-          It’s cost effective.
+          It's cost effective.
         </Typography>
         <Typography
           variant="h4"
@@ -122,7 +122,7 @@ export default function ProductHero() {
         <Button
           style={{
             borderRadius: 10,
-            backgroundColor: "#000180",
+            //backgroundColor: "#000180",
             padding: "18px 36px",
             fontSize: "18px",
           }}

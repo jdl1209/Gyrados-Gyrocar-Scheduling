@@ -15,7 +15,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { Link } from "@mui/material";
 
 //this sets up the buttons in the navbar
-const pages = ["Home", "About Us", "Contact Us"];
+const pages = ["Home", "About Us", "FAQ", "Contact Us"];
 
 //set page links
 //these have to have the same name as the pages or it doesn't work
@@ -23,7 +23,8 @@ const pages = ["Home", "About Us", "Contact Us"];
 //these was probably a better way to do this but ¯\_(ツ)_/¯ it works
 const pagelinks = new Map();
 pagelinks.set("Home", "/"),
-  pagelinks.set("About Us", "about"),
+  pagelinks.set("About Us", "#AboutUs"),
+  pagelinks.set("FAQ", "#FAQ"),
   pagelinks.set("Contact Us", "contact")
   pagelinks.set("Dashboard", "dashboard")
   pagelinks.set("Logout", "/api/auth/logout");
@@ -58,10 +59,12 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  //TODO: figure out why "FAQ" isn't center justified in it's button
   return (
     <AppBar
       position="static"
-      style={{ background: "#34adad", marginBottom: "0px" }}
+      style={{marginBottom: "0px" }}
+
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>

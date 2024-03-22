@@ -22,6 +22,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { mainListItems, secondaryListItems } from '@/components/Dashboard Components/listItems';
+import { useTheme } from '@mui/material/styles';
 
 //dashboard layout
 import CustomerDashboard from "@/components/CustomerDashboard"
@@ -39,6 +40,19 @@ function Copyright(props: any) {
             {'.'}
         </Typography>
     );
+}
+
+// TODO: make this check if user is an admin account
+//rn it's just set up as a declared boolean for testing
+const isAdmin = true;
+
+//set up refernce for theme color
+function themeToUse() {
+    if (isAdmin) {
+        return ("admin")
+    } else {
+        return ("primary")
+    }
 }
 
 
@@ -108,7 +122,8 @@ export default function DashboardLayout({
         <section>
             {/* Include shared UI here e.g. a header or sidebar */}
             <Box sx={{ display: 'flex' }}>
-                <AppBar position="absolute" open={open} style={{background: '#34adad'}}>
+                {/* this gives an error but I have no idea why because it works perfectly ¯\_(ツ)_/¯ */}
+                <AppBar position="absolute" open={open} color={themeToUse()}>
                     <Toolbar
                         sx={{
                             pr: '24px', // keep right padding when drawer closed
@@ -155,11 +170,26 @@ export default function DashboardLayout({
                             <ChevronLeftIcon />
                         </IconButton>
                     </Toolbar>
-                    <Divider />
+                    <Divider>
+                    {isAdmin ? (
+                        "Customer Items"
+                    ) : (
+                        ""
+                    )}
+                    </Divider>
                     <List component="nav">
                         {mainListItems}
-                        <Divider sx={{ my: 1 }} />
-                        {secondaryListItems}
+                        {isAdmin ? (
+                            <React.Fragment>
+                                <Divider sx={{ my: 1 }}>
+                                    Admin Items
+                                </Divider>
+                                {secondaryListItems}
+                            </React.Fragment>
+                        ) : (
+                            ""
+                        )}
+                        
                     </List>
                 </Drawer>
                 <Box

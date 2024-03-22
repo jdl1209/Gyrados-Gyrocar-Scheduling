@@ -14,7 +14,7 @@
 // import Typography from '@mui/material/Typography';
 // import Container from '@mui/material/Container';
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import ResponsiveAppBar from '@/components/ResponseiveAppBar';
+// import ResponsiveAppBar from '@/components/ResponsiveAppBar';
 
 // function Copyright(props: any) {
 //   return (
@@ -154,7 +154,7 @@ import {
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Copyright from "@/components/Dashboard Components/Copyright";
 import PasswordStrengthBar from "react-password-strength-bar";
-import ResponsiveAppBar from "@/components/ResponseiveAppBar";
+import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 
 interface IFormInput {
   name: string;
