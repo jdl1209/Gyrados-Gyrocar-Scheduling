@@ -39,9 +39,6 @@ export default withPageAuthRequired(async function AccountDashboard() {
   const data4: any[] = await db.getAllCars() as any[];
   const data5: any[] = await db.getAllFAQ() as any[];
 
-
-
-  
   return (
     <>
       <div>
@@ -51,13 +48,13 @@ export default withPageAuthRequired(async function AccountDashboard() {
         <p>Role: {user?.app_metadata?.authorization?.roles}</p> {/* Display user's roles */}
       </div>
       <h1>LocationIDs</h1>
-
-
-
-
-
-
-     
+      <div>
+        {data.map((item: any, idx: number) => (
+          <div key={idx}>
+            {item.zip}
+          </div>
+        ))}
+      </div>
     </>
   );
 }, { returnTo: '/dashboard/account' });

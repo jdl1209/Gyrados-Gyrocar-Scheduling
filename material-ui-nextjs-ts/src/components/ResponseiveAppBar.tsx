@@ -33,7 +33,7 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 //declare necesarry variables
 //this will later be overridden by a check from the backend
 //it set to false by default because it's a better fail state to assume the user isn't signed in
-var isSignedIn = true;
+var isSignedIn = false;
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
