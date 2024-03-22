@@ -12,41 +12,25 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { Link } from "@mui/material";
 
-//this sets up the buttons in the navbar
-const pages = ["Home", "About Us", "FAQ", "Contact Us"];
+// Define the props interface
+interface ResponsiveAppBarProps {
+  isSignedIn: boolean;
+  userPicture?: string; // Optional user picture prop
+}
 
-//set page links
-//these have to have the same name as the pages or it doesn't work
-//the first entry is the text in the button in the navbar, the second is the page it links to
-//these was probably a better way to do this but ¯\_(ツ)_/¯ it works
-const pagelinks = new Map();
-pagelinks.set("Home", "/"),
-  pagelinks.set("About Us", "#AboutUs"),
-  pagelinks.set("FAQ", "#FAQ"),
-  pagelinks.set("Contact Us", "contact")
-  pagelinks.set("Dashboard", "dashboard")
-  pagelinks.set("Logout", "/api/auth/logout");
+// Define the component
+const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPicture }) => {  console.log("isSignedIn:", isSignedIn); // Console log the value of isSignedIn
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+  // State hooks
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-//declare necesarry variables
-//this will later be overridden by a check from the backend
-//it set to false by default because it's a better fail state to assume the user isn't signed in
-var isSignedIn = false;
-
-function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  );
-
+  // Event handlers
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -59,16 +43,26 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
-  //TODO: figure out why "FAQ" isn't center justified in it's button
-  return (
-    <AppBar
-      position="static"
-      style={{marginBottom: "0px" }}
+  // Pages and page links
+  const pages = ["Home", "About Us", "FAQ", "Contact Us", "Logout"];
+  const pagelinks = new Map<string, string>([
+    ["Home", "/"],
+    ["About Us", "#AboutUs"],
+    ["FAQ", "#FAQ"],
+    ["Contact Us", "contact"],
+    ["Dashboard", "dashboard"],
+    ["Logout", "/api/auth/logout"]
+  ]);
 
-    >
+  // Settings
+  const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+  // Render
+  return (
+    <AppBar position="static" style={{ marginBottom: "0px" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          {/* logo and name */}
+          {/* Logo and name */}
           <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -88,8 +82,8 @@ function ResponsiveAppBar() {
             GyroGoGo
           </Typography>
 
-          {/* left side options */}
-          {/* small size */}
+          {/* Left side options */}
+          {/* Small size */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -126,8 +120,8 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
-          
-          {/* big size */}
+
+          {/* Big size */}
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
@@ -161,16 +155,16 @@ function ResponsiveAppBar() {
           </Box>
 
           {/* Right Side Button */}
-          {/* example of inline conditional rendering */}
+          {/* Example of inline conditional rendering */}
           {isSignedIn ? (
-            //true condition
+            // True condition
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Avatar alt="Remy Sharp" src={userPicture} />
                 </IconButton>
               </Tooltip>
-            
+
               <Menu
                 sx={{ mt: "45px" }}
                 id="menu-appbar"
@@ -190,13 +184,15 @@ function ResponsiveAppBar() {
                 {settings.map((setting) => (
                   <MenuItem
                     key={setting}
-                    //the following function makes it move to a page if a page exists for that and if not it doesn't try, which would result in an error page not found
-                    onClick={ () => 
-                      //this is a gross way to handle this but we can fix it later if we want
-                      {if (pagelinks.get(setting).toString() == "undefined") {
-                        handleCloseUserMenu
-                      } else {
-                        window.location.href = pagelinks.get(setting)}
+                    // The following function makes it move to a page if a page exists for that and if not it doesn't try, which would result in an error page not found
+                    onClick={() =>
+                      // This is a gross way to handle this but we can fix it later if we want
+                      {
+                        if (pagelinks.get(setting) === undefined) {
+                          handleCloseUserMenu();
+                        } else {
+                          window.location.href = pagelinks.get(setting) as string;
+                        }
                       }
                     }
                   >
@@ -206,7 +202,7 @@ function ResponsiveAppBar() {
               </Menu>
             </Box>
           ) : (
-            //false condition
+            // False condition
             <Button
               key={"Sign-In/Sign-Up"}
               href={"/api/auth/login"}
@@ -216,10 +212,11 @@ function ResponsiveAppBar() {
               {"Sign-In/Sign-Up"}
             </Button>
           )}
-          
+
         </Toolbar>
       </Container>
     </AppBar>
   );
-}
+};
+
 export default ResponsiveAppBar;

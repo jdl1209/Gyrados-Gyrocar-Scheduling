@@ -99,6 +99,7 @@ export class DB {
                     customer.lName,
                     customer.suffix,
                     customer.phoneNum,
+                    customer.loginId,
                     customer.username,
                     customer.email,
                     customer.address1,
@@ -120,7 +121,7 @@ export class DB {
                 }
     
                 this.connection.execute(
-                    'INSERT INTO customer (fName, mInitial, lName, suffix, phoneNum, username, email, address1, address2, city, state, zip, roleID, activated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    'INSERT INTO customer (fName, mInitial, lName, suffix, phoneNum, loginId, username, email, address1, address2, city, state, zip, roleID, activated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     values,
                     function (err: any, results: any, fields: any) {
                         if (err) {
@@ -295,6 +296,7 @@ export interface Customer {
     lName: string;
     suffix: string;
     phoneNum: string;
+    loginId: string,
     username: string;
     email: string;
     address1: string;

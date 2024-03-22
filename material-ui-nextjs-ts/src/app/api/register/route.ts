@@ -1,5 +1,5 @@
 // import type { Request, NextApiResponse } from 'next'
-
+"use server";
 import { DB } from "@/lib/db";
 
  
@@ -26,7 +26,8 @@ export async function POST(
         state: data.state,
         zip: data.licenseNumber,
         email: data.email,
-        suffix: "sdv"
+        suffix: "sdv",
+        loginId: data.user.sub
     });
     console.log(result);
     return Response.json({  })
