@@ -1,2 +1,10 @@
 
 .DS_Store
+/material-ui-nextjs-ts/node_modules
+/material-ui-nextjs-ts/node_modules
+material-ui-nextjs-ts/.DS_Store
+material-ui-nextjs-ts/src/.DS_Store
+material-ui-nextjs-ts/src/app/.DS_Store
+material-ui-nextjs-ts/.DS_Store
+material-ui-nextjs-ts/src/.DS_Store
+material-ui-nextjs-ts/src/app/.DS_Store
