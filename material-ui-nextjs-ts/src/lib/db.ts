@@ -39,7 +39,7 @@ export class DB {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT sublocationName, address, cityName, zip, sublocationID FROM location',
+                    'SELECT sublocationName, address, cityName, sublocationID FROM location',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -325,7 +325,7 @@ interface Car {
     sublocationName: string;
     address: string;
     cityName: string;
-    // zip: string;
+    zip: string;
   }
   
 
