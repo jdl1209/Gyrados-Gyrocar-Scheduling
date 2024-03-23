@@ -1,5 +1,6 @@
 //this is needed because some mui functions expecet "client" things like being able to use hooks.
-"use client";
+//"use client";
+//commented out because aysnc/await is not supported in client components
 
 import * as React from "react";
 import Container from "@mui/material/Container";
