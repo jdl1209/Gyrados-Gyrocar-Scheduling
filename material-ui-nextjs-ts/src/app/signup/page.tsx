@@ -178,18 +178,20 @@ const SignUp: React.FC = async () => {
     formState: { errors },
   } = useForm<IFormInput>();
 
+  const session = await getSession();
+  const isSignedIn = !!session && !!session.user; // Set isSignedIn based on session
+  if (!session || !session.user) {
+    console.log("invalid session" + session?.user);
+  }
+
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    const res = await fetch("http://localhost:3000/api/register", { method: "POST", body: JSON.stringify(data)});
+    const res = await fetch("http://localhost:3000/api/register", { method: "POST", body: JSON.stringify(data, session?.user.sub)});
     if (!res.ok) { console.log(res.statusText) };
     const json = await res.json();
     
     console.log(json);
   };
-  const session = await getSession();
-  const isSignedIn = !!session && !!session.user; // Set isSignedIn based on session
-  if (!session || !session.user) {
-    console.log("invalid session");
-  }
+  
 
 
   const password = watch("password");

@@ -41,6 +41,7 @@ export default async function Home() {
         }}
       >
         <div id="Testimonials" />
+        <h1>{session?.user.name}</h1>
         <Testimonials />
         <div id="AboutUs" />
         <AboutUs />
