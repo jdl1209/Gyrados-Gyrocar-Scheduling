@@ -325,7 +325,7 @@ interface Car {
     sublocationName: string;
     address: string;
     cityName: string;
-    zip: string;
+    // zip: string;
   }
   
 
