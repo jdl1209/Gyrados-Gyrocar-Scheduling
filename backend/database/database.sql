@@ -129,7 +129,7 @@ FK - sublocationID
 */
 CREATE TABLE cars(
 	carID INT PRIMARY KEY AUTO_INCREMENT,
-    carType VARCHAR(20) NOT NULL,
+    carType VARCHAR(20),
     battery DECIMAL(5,2) NOT NULL,
     status VARCHAR(20),
     reserved SMALLINT NOT NULL,
@@ -152,22 +152,6 @@ CREATE TABLE jobs(
     jTimeDate DATETIME NOT NULL,
     FOREIGN KEY (carID) REFERENCES cars(carID),
     FOREIGN KEY (employeeID) REFERENCES employees(employeeID)
-);
-
-/*
-TABLE reserved
-stores information for each car that is reserved
-PK - carID
-FK - customerID, sublocationID
-*/
-CREATE TABLE reserved(
-	carID INT PRIMARY KEY,
-    customerID INT NOT NULL,
-    sublocationID INT NOT NULL,
-    rTime TIME NOT NULL,
-    rDate DATE NOT NULL,
-    FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (sublocationID) REFERENCES location(sublocationID)
 );
 
 /*
@@ -220,44 +204,36 @@ CREATE TABLE faq (
 );
 
 /*
-TABLE calendar
-stores the calendar id and number and days associated with that calendar
-PK - calendarID
-*/
-CREATE TABLE calendar(
-    calendarID INT PRIMARY KEY AUTO_INCREMENT,
-    calendarNum INT NOT NULL,
-    day DATE NOT NULL
-);
-
-/*
-TABLE sublocation_calendar
-lookup table for calendar and sublocation
-PK - sublocationID
-FK - sublocationID, calendarNum
-*/
-CREATE TABLE sublocation_calendar (
-    sublocationID INT,
-    calendarID INT,
-    FOREIGN KEY (sublocationID) REFERENCES location(sublocationID),
-    FOREIGN KEY (calendarID) REFERENCES calendar(calendarID)
-);
-
-/*
 TABLE reservation
 stores the reservation for the car in the calendar
 PK - reservationID
-FK - customerID, carID, calendarNum, day
+FK - customerID, carID, locationID, locationIDToReturn
 */
 CREATE TABLE reservation (
     reservationID INT PRIMARY KEY AUTO_INCREMENT,
     customerID INT NOT NULL,
     carID INT NOT NULL,
-    calendarID INT NOT NULL,
-    day DATE NOT NULL,
+    dateCreated INT NOT NULL,
+    locationID INT NOT NULL,
+    locationIDToReturn INT NOT NULL,
     timeBegin DATETIME NOT NULL,
     timeEnd DATETIME NOT NULL,
+    paid BOOLEAN NOT NULL,
     FOREIGN KEY (customerID) REFERENCES customer(customerID),
     FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (calendarID) REFERENCES calendar(calendarID)
+    FOREIGN KEY (locationID) REFERENCES location(sublocationID),
+    FOREIGN KEY (locationIDToReturn) REFERENCES location(sublocationID)
 );
+
+/*
+CREATE TABLE car_schedule (
+	scheduleID INT PRIMARY KEY AUTO_INCREMENT,
+    carID INT NOT NULL,
+    day DATETIME NOT NULL,
+    locationStart INT NOT NULL,
+    locationEnd INT NOT NULL,
+    FOREIGN KEY (carID) REFERENCES cars(carID),
+    FOREIGN KEY (locationStart) REFERENCES location(sublocationID),
+    FOREIGN KEY (locationEnd) REFERENCES location(
+);
+*/
