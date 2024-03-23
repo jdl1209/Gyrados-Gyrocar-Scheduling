@@ -49,7 +49,7 @@ export default withPageAuthRequired(async function AccountDashboard() {
       <div>
         {data.map((item: any, idx: number) => (
           <div key={idx}>
-            {item.zip}
+            {item.cityName}
           </div>
         ))}
       </div>
