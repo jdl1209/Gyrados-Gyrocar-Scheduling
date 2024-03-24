@@ -1,0 +1,6 @@
+USE ROCHESTER;
+
+SELECT CAST(CURRENT_DATE() AS CHAR(50)) INTO @today;
+CALL loadDays(@today,30);
+
+SELECT * FROM days;

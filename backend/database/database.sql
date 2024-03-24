@@ -237,3 +237,44 @@ CREATE TABLE car_schedule (
     FOREIGN KEY (locationEnd) REFERENCES location(
 );
 */
+
+/*
+TABLE days
+stores the days that are available for booking
+PK - dayID
+*/
+CREATE TABLE days(
+	dayID INT PRIMARY KEY AUTO_INCREMENT,
+    day DATE NOT NULL
+);
+
+DELIMITER $$
+/*
+TABLE days
+insert a given day into the days table
+PK - dayID
+*/
+CREATE PROCEDURE insertDays(dt DATE)
+BEGIN
+   INSERT INTO days(day)
+   VALUES(dt);
+END$$
+
+/*
+STORED PROCEDURE loadDays
+A procedure to call loadDays, which will while loop the amount of days and call the insertDays procedure
+*/
+CREATE PROCEDURE loadDays(
+   startDate DATE,
+   day INT
+)
+BEGIN
+   DECLARE counter INT DEFAULT 1;
+   DECLARE dt DATE DEFAULT startDate;
+   WHILE counter <= day DO
+       CALL insertDays(dt);
+       SET counter = counter + 1;
+       SET dt = DATE_ADD(dt,INTERVAL 1 day);
+   END WHILE;
+END$$
+DELIMITER ;
