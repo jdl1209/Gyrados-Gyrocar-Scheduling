@@ -45,8 +45,8 @@ type Values = {
 
 export default function BookingPage() {
   //set up values for form
-  const [pickupTime, setPickupTime] = React.useState<Dayjs | null>(dayjs());
-  const [dropoffTime, setDropoffTime] = React.useState<Dayjs | null>(dayjs().add(1, 'hour'));
+  const [pickupTime, setPickupTime] = React.useState<Dayjs | null>(dayjs().add(1, 'hour'));
+  const [dropoffTime, setDropoffTime] = React.useState<Dayjs | null>(dayjs().add(2, 'hour'));
   const [pickupLocation, setPickupLocation] = React.useState<string | null>(options[0]);
   const [dropoffLocation, setDropoffLocation] = React.useState<string | null>(options[0]);
 
