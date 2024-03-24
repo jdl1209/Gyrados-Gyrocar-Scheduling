@@ -42,7 +42,7 @@ export const mainListItems = (
         <Help />
       </ListItemIcon>
       <ListItemText primary="Help" />
-    </ListItemButton>
+    </ListItemButton >
   </React.Fragment>
 );
 
