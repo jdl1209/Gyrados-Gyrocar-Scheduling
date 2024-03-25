@@ -19,7 +19,7 @@ export class DB {
         // const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
         const host = "localhost";
         const user = "root";
-        const password = "";
+        const password = "Samson@4656";
         const port = 3306;
         const database = "ROCHESTER";
         
@@ -274,22 +274,24 @@ export class DB {
     }
 
     async getAllFAQ() {
-        return new Promise(async (resolve: any, reject: any) => {
+        return new Promise(async (resolve, reject) => {
             try {
                 this.connection.query(
                     'SELECT * FROM faq',
-                    function (err: any, results: any, fields: any) {
+                    function (err, results, fields) {
                         if (err) {
-                            reject(err);
+                            reject(err); // Reject with the error
+                        } else {
+                            resolve(results); // Resolve with the results
                         }
-                        resolve(results);
                     }
                 );
             } catch (err) {
-                reject(err);
+                reject(err); // Reject if an error occurs synchronously
             }
-        })
+        });
     }
+    
 
 }
 
@@ -314,6 +316,13 @@ export interface Employee {
     fullname: string;
     office?: string | null; // Optional field
 }
+
+interface FAQ {
+    faqID: number;
+    faqQuestion: string | null;
+    faqAnswer: string | null;
+    employeeAdded: number | null;
+  }
 
 interface Car {
     carType: string;

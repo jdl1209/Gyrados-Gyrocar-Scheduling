@@ -1,0 +1,20 @@
+// import type { Request, NextApiResponse } from 'next'
+
+import { DB } from "@/lib/db";
+
+ 
+type ResponseData = {
+  message: string
+}
+
+ 
+export async function GET(
+  req: Request, 
+  res: Response
+) {
+    const data = await req.json();
+    const db = new DB();
+    const result = await db.getAllFAQ();
+    console.log(result);
+    return Response.json({  })
+}

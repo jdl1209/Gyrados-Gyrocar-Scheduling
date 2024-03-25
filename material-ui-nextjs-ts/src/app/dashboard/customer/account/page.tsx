@@ -33,7 +33,7 @@ export default withPageAuthRequired(async function AccountDashboard() {
   console.log('Session:', session);
 
   const db = new DB();
-  const datad: any[] = await db.getCustomerByID(session.user.sub) as any[];
+  // const datad: any[] = await db.getCustomerByID(session.user.sub) as any[];
   const data: any[] = await db.getAllLocations() as any[];
   const data2: any[] = await db.getAllCustomers() as any[];
   const data3: any[] = await db.getAllEmployees() as any[];
@@ -49,7 +49,7 @@ export default withPageAuthRequired(async function AccountDashboard() {
         <p>Role: {user?.app_metadata?.authorization?.roles}</p> {/* Display user's roles */}
       </div>
       <h1>LocationIDs</h1>
-      <div>
+      {/* <div>
         {datad.map((item: any, idx: number) => (
           <div key={idx}>
             <p>Name: {item.fName} {item.mInitial} {item.lName} {item.suffix}</p>
@@ -64,7 +64,7 @@ export default withPageAuthRequired(async function AccountDashboard() {
             <p>Zip: {item.zip}</p>
           </div>
         ))}
-      </div>
+      </div> */}
     </>
   );
 }, { returnTo: '/dashboard/customer/account' });
