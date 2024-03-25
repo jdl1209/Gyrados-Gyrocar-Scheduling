@@ -6,6 +6,9 @@ import mysql from 'mysql2';
 const { serverRuntimeConfig } = getConfig();
 
 export class DB {
+    map(arg0: (item: any, idx: number) => import("react").JSX.Element): import("react").ReactNode {
+      throw new Error('Method not implemented.');
+    }
 
     public connection:any;
     public sequelize:any;
@@ -158,7 +161,7 @@ export class DB {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT fName, lName, phoneNum, username, address1, city, state, zip, customerID FROM customer WHERE customerID = ?',
+                    'SELECT fName, lName, phoneNum, username, address1, city, state, zip, customerID FROM customer WHERE loginId = ?',
                     [customerId],
                     function (err: any, results: any, fields: any) {
                         if (err) {
