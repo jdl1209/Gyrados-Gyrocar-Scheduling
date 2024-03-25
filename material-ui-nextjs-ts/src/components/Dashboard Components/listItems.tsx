@@ -17,8 +17,23 @@ import { Explore, Help, MonitorHeart, HistoryEdu, Email, People, DataObject} fro
 import { List, ListItem, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
+//TODO replace this with something not hardcoded which actually checks if the customer has applied/been approved to use the service
+const hasNotApplied = true
+
 export const mainListItems = (
+  
   <React.Fragment>
+    {/* TODO @Erich Make this only show if the customer hasn't applied/been approved to use the service */}
+    {hasNotApplied ? (
+      <ListItemButton href='/dashboard/customer/apply'>
+        <ListItemIcon>
+          <AccountCircleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Apply" />
+      </ListItemButton>
+    ) : (
+        ""
+    )}
     <ListItemButton href='/dashboard/customer/account'>
       <ListItemIcon>
         <AccountCircleIcon />
