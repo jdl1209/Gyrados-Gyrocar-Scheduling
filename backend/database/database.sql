@@ -254,12 +254,15 @@ TABLE days
 insert a given day into the days table
 PK - dayID
 */
-CREATE PROCEDURE insertDays(dt DATE)
+CREATE PROCEDURE insertDays(
+	dt DATE
+)
 BEGIN
    INSERT INTO days(day)
    VALUES(dt);
 END$$
 
+DELIMITER $$
 /*
 STORED PROCEDURE loadDays
 A procedure to call loadDays, which will while loop the amount of days and call the insertDays procedure
@@ -278,3 +281,30 @@ BEGIN
    END WHILE;
 END$$
 DELIMITER ;
+
+/*
+STORED PROCEDURE addRemoveDays
+A procedure to add the 31st day and remove the previous day
+*/
+DELIMITER $$
+CREATE PROCEDURE addRemoveDays(
+	yesterday DATE,
+    31stDate DATE
+)
+BEGIN
+	DELETE FROM days WHERE day = yesterday;
+    INSERT INTO days(day) VALUES (31stDate);
+END$$
+DELIMITER ;
+
+/*
+EVENT addRemoveDays
+An event that will update the database removing the previous day and 
+*/
+CREATE EVENT addRemoveDays
+    ON SCHEDULE EVERY 1 DAY
+    STARTS '2024-03-24 00:00:01'
+    DO
+      SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) INTO @yesterday_date;
+	  SELECT DATE_ADD(CURDATE(), INTERVAL 30 DAY) INTO @thirtydays;
+	  CALL addRemoveDays(@yesterday_date, @thirtydays);
