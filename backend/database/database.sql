@@ -19,10 +19,10 @@ CREATE TABLE roles(
 TABLE user
 stores information for all of our users, userID will be the ID that is stored in our login service
 PK - customerID
-FK - customerID (customers)
+FK - rolesID
 */
 CREATE TABLE users(
-    userID INT PRIMARY KEY,
+    userID VARCHAR(100) PRIMARY KEY,
     roleID SMALLINT NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
     fName VARCHAR(20) NOT NULL,
@@ -48,7 +48,7 @@ PK - userID
 FK - userID
 */
 CREATE TABLE customer_credit_info(
-	userID INT PRIMARY KEY,
+	userID VARCHAR(100) PRIMARY KEY,
     hashedCreditNumber VARCHAR(200) NOT NULL,
     hashedSecurity VARCHAR(200) NOT NULL,
     hashedZipcode VARCHAR(200) NOT NULL,
@@ -64,7 +64,7 @@ PK - userID
 FK - userID
 */
 CREATE TABLE suspended_users(
-	userID INT PRIMARY KEY,
+	userID VARCHAR(100) PRIMARY KEY,
     FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
@@ -108,7 +108,7 @@ FK - carID
 */
 CREATE TABLE jobs(
 	taskID INT AUTO_INCREMENT PRIMARY KEY,
-    userID INT,
+    userID VARCHAR(100),
     carID INT NOT NULL,
     task VARCHAR(20) NOT NULL,
     notes VARCHAR(500) NULL,
@@ -142,7 +142,7 @@ CREATE TABLE faq (
     faqID INT PRIMARY KEY AUTO_INCREMENT,
     faqQuestion VARCHAR (500),
     faqAnswer VARCHAR (500),
-    userID INT,
+    userID VARCHAR(100),
     FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
@@ -154,7 +154,7 @@ FK - customerID, carID, locationID, locationIDToReturn
 */
 CREATE TABLE reservation (
     reservationID INT PRIMARY KEY AUTO_INCREMENT,
-    userID INT NOT NULL,
+    userID VARCHAR(100) NOT NULL,
     carID INT NOT NULL,
     dateCreated INT NOT NULL,
     locationID INT NOT NULL,
