@@ -46,7 +46,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPic
   };
 
   // Pages and page links
-  const pages = ["Home", "About Us", "FAQ", "Contact Us", "Logout"];
+  const pages = ["Home", "About Us", "FAQ", "Contact Us"];
   const pagelinks = new Map<string, string>([
     ["Home", "/"],
     ["About Us", "#AboutUs"],
