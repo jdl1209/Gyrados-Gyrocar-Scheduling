@@ -274,26 +274,46 @@ export class DB {
     }
 
     async getAllFAQ() {
-        return new Promise(async (resolve, reject) => {
+        return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
                     'SELECT * FROM faq',
-                    function (err, results, fields) {
+                    function (err: any, results: any, fields: any) {
                         if (err) {
-                            reject(err); // Reject with the error
-                        } else {
-                            resolve(results); // Resolve with the results
+                            reject(err);
                         }
+                        resolve(results);
                     }
                 );
             } catch (err) {
-                reject(err); // Reject if an error occurs synchronously
+                reject(err);
+            }
+        })
+    }
+
+    // Function to get user role by user ID
+    async getUserRole(userID: any) {
+        return new Promise((resolve, reject) => {
+            try {
+                this.connection.query('SELECT roleID FROM users WHERE userId = ?', [userID], (err:any, results:any) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (results.length > 0) {
+                            resolve(results[0].roleID);
+                        } else {
+                            reject(new Error('User not found'));
+                        }
+                    }
+                });
+            } catch (error) {
+                reject(error);
             }
         });
     }
-    
-
 }
+
+
 
 export interface Customer {
     fName: string;
