@@ -218,8 +218,6 @@ export class DB {
             }
         });
     }
-    
-    
 
     //Cars
 
@@ -228,6 +226,24 @@ export class DB {
             try {
                 this.connection.query(
                     'SELECT * FROM cars',
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
+    async getCarCount() {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM cars',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -270,11 +286,101 @@ export class DB {
         });
     }
 
+    // Reservations
+
+    async getReservationByLocationID(locationID: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM reservation WHERE locationID = ?',
+                    [locationID],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async insertReservation(reservation: Reservation) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const values = [
+                    reservation.customerID,
+                    reservation.carID,
+                    reservation.dateCreated,
+                    reservation.locationID,
+                    reservation.locationIDToReturn,
+                    reservation.timeBegin,
+                    reservation.timeEnd,
+                    reservation.paid
+                ];
+    
+                this.connection.execute(
+                    'INSERT INTO reservation(customerID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES (?, ?, , ?, ?, ?, ?, ?)',
+                    values,
+                    function (err:any, results:any, fields:any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            } finally {
+                this.connection.end(); // Close the connection
+            }
+        });
+    }
+
+    async getReservationByID(customerId: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM reservation WHERE customerID = ?',
+                    [customerId],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
     async getAllFAQ() {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
                     'SELECT * FROM faq',
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
+    async getAllDays() {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM cars',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -320,12 +426,23 @@ interface Car {
     sublocationID: number;
   }
   
-  interface Location {
+interface Location {
     sublocationID: number;
     sublocationName: string;
     address: string;
     cityName: string;
     zip: string;
+  }
+
+interface Reservation {
+    customerID: number;
+    carID: number;
+    dateCreated: string;
+    locationID: number;
+    locationIDToReturn: number;
+    timeBegin: string;
+    timeEnd: string;
+    paid: boolean;
   }
   
 
