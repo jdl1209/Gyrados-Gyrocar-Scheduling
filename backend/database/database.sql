@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS ROCHESTER;
 CREATE DATABASE ROCHESTER;
 USE ROCHESTER;
 
+SET SQL_SAFE_UPDATES = 0;
+
 /*
 TABLE roles
 stores role information
@@ -14,95 +16,56 @@ CREATE TABLE roles(
 );
 
 /*
-TABLE customer
-stores all customer information
-PK - customerID (auto incrementing)
-FK - roleID (roles)
+TABLE user
+stores information for all of our users, userID will be the ID that is stored in our login service
+PK - customerID
+FK - customerID (customers)
 */
-CREATE TABLE customer(
-    customerID INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE users(
+    userID INT PRIMARY KEY,
+    roleID SMALLINT NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
     fName VARCHAR(20) NOT NULL,
     mInitial VARCHAR(1),
     lName VARCHAR(50) NOT NULL,
     suffix VARCHAR(10),
-    phoneNum VARCHAR(10) NOT NULL,
-    username VARCHAR(50) NOT NULL UNIQUE,
+    phoneNum VARCHAR(10),
     email VARCHAR(50) NOT NULL,
-    address1 VARCHAR(50) NOT NULL,
+    address1 VARCHAR(50) ,
     address2 VARCHAR (50),
-    city VARCHAR(50) NOT NULL,
-    state VARCHAR(2) NOT NULL,
-    zip VARCHAR(5) NOT NULL,
+    city VARCHAR(50),
+    state VARCHAR(2),
+    zip VARCHAR(5),
     activated SMALLINT,
-    roleID SMALLINT,
-    FOREIGN KEY(roleID) REFERENCES roles(roleID)
-);
-
-/*
-TABLE customer_credit_info
-stores hashed information of the customers credit car and drivers license
-PK - customerID
-FK - customerID (customers)
-*/
-CREATE TABLE customer_credit_info(
-	customerID INT PRIMARY KEY,
-    hashedCreditNumber VARCHAR(200) NOT NULL,
-    hashedSecurity VARCHAR(200) NOT NULL,
-    hashedZipcode VARCHAR(200) NOT NULL,
-    hashedExpiration VARCHAR(200) NOT NULL,
-    hashedDriversID VARCHAR (200) NOT NULL,
-    FOREIGN KEY(customerID) REFERENCES customer(customerID)
-);
-
-/*
-TABLE customer_password
-stores customer hashed password (no looking mr FBI agent)
-PK - customerID
-FK - customerID (customers)
-*/
-CREATE TABLE customer_password(
-	customerID INT PRIMARY KEY,
-    hashedPass VARCHAR(200) NOT NULL,
-    FOREIGN KEY (customerID) REFERENCES customer(customerID) 
-);
-
-/*
-TABLE suspended_users
-stores users who are suspended
-PK - employeeID
-FK - roleID(roles)
-*/
-CREATE TABLE suspended_users(
-	userID INT PRIMARY KEY,
-    suspended VARCHAR (3) NOT NULL,
-    FOREIGN KEY (userID) REFERENCES customer(customerID)
-);
-
-/*
-TABLE employees
-stores employee information like office and username and role
-PK - employeeID
-FK - roleID(roles)
-*/
-CREATE TABLE employees(
-	employeeID INT PRIMARY KEY AUTO_INCREMENT,
-    roleID SMALLINT NOT NULL,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    fullname VARCHAR(100) NOT NULL,
     office VARCHAR(50),
     FOREIGN KEY (roleID) REFERENCES roles(roleID)
 );
 
 /*
-TABLE employee_password
-stores employees hashed password (no looking mr FBI agent)
-PK - employeeID
-FK - roleID(roles)
+TABLE customer_credit_info
+stores hashed information of the customers credit car and drivers license
+PK - userID
+FK - userID
 */
-CREATE TABLE employee_password(
-	employeeID INT PRIMARY KEY,
-    hashedPass VARCHAR(200) NOT NULL,
-    FOREIGN KEY (employeeID) REFERENCES employees(employeeID)
+CREATE TABLE customer_credit_info(
+	userID INT PRIMARY KEY,
+    hashedCreditNumber VARCHAR(200) NOT NULL,
+    hashedSecurity VARCHAR(200) NOT NULL,
+    hashedZipcode VARCHAR(200) NOT NULL,
+    hashedExpiration VARCHAR(200) NOT NULL,
+    hashedDriversID VARCHAR (200) NOT NULL,
+    FOREIGN KEY(userID) REFERENCES users(userID)
+);
+
+/*
+TABLE suspended_users
+stores users who are suspended
+PK - userID
+FK - userID
+*/
+CREATE TABLE suspended_users(
+	userID INT PRIMARY KEY,
+    FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 /*
@@ -111,9 +74,9 @@ stores data for locations for each car stop
 PK - sublocationID
 */
 CREATE TABLE location(
-	sublocationID INT PRIMARY KEY AUTO_INCREMENT,
+	locationID INT PRIMARY KEY AUTO_INCREMENT,
     locationName VARCHAR(400) NOT NULL UNIQUE,
-    sublocationName VARCHAR(100) NOT NULL UNIQUE,
+    locationArea VARCHAR(100) NOT NULL UNIQUE,
     address VARCHAR(400),
     cityName VARCHAR (30) NOT NULL,
     state VARCHAR(2) NOT NULL,
@@ -133,8 +96,8 @@ CREATE TABLE cars(
     battery DECIMAL(5,2) NOT NULL,
     status VARCHAR(20),
     reserved SMALLINT NOT NULL,
-    sublocationID INT NOT NULL,
-    FOREIGN KEY (sublocationID) REFERENCES location(sublocationID)
+    currentLocationID INT NOT NULL,
+    FOREIGN KEY (currentLocationID) REFERENCES location(locationID)
 );
 
 /*
@@ -145,33 +108,13 @@ FK - carID
 */
 CREATE TABLE jobs(
 	taskID INT AUTO_INCREMENT PRIMARY KEY,
-    employeeID INT,
+    userID INT,
     carID INT NOT NULL,
     task VARCHAR(20) NOT NULL,
     notes VARCHAR(500) NULL,
     jTimeDate DATETIME NOT NULL,
     FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (employeeID) REFERENCES employees(employeeID)
-);
-
-/*
-TABLE reservation_history
-stores information of the reservation history for each car
-PK - customerID
-FK - carID, sublocationIDt, sublocationIDr
-*/
-CREATE TABLE reservation_history(
-	customerID INT PRIMARY KEY,
-    carID INT NOT NULL,
-    timeTaken TIME NOT NULL,
-    timeReturned TIME NOT NULL,
-    dateTaken DATE NOT NULL,
-    dateReturned DATE NOT NULL,
-    sublocationIDt INT NOT NULL,
-    sublocationIDr INT NOT NULL,
-    FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (sublocationIDt) REFERENCES location(sublocationID),
-    FOREIGN KEY (sublocationIDr) REFERENCES location(sublocationID)
+    FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 /*
@@ -182,11 +125,11 @@ FK - carID, sublocationID
 */
 CREATE TABLE gps_location (
 	carID INT PRIMARY KEY,
-    sublocationID INT,
+    locationID INT,
     gpsLat DOUBLE NOT NULL,
     gpsLong DOUBLE NOT NULL,
     FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (sublocationID) REFERENCES location(sublocationID)
+    FOREIGN KEY (locationID) REFERENCES location(locationID)
 );
 
 /*
@@ -199,8 +142,8 @@ CREATE TABLE faq (
     faqID INT PRIMARY KEY AUTO_INCREMENT,
     faqQuestion VARCHAR (500),
     faqAnswer VARCHAR (500),
-    employeeAdded INT,
-    FOREIGN KEY (employeeAdded) REFERENCES employees(employeeID)
+    userID INT,
+    FOREIGN KEY (userID) REFERENCES users(userID)
 );
 
 /*
@@ -211,7 +154,7 @@ FK - customerID, carID, locationID, locationIDToReturn
 */
 CREATE TABLE reservation (
     reservationID INT PRIMARY KEY AUTO_INCREMENT,
-    customerID INT NOT NULL,
+    userID INT NOT NULL,
     carID INT NOT NULL,
     dateCreated INT NOT NULL,
     locationID INT NOT NULL,
@@ -219,24 +162,11 @@ CREATE TABLE reservation (
     timeBegin DATETIME NOT NULL,
     timeEnd DATETIME NOT NULL,
     paid BOOLEAN NOT NULL,
-    FOREIGN KEY (customerID) REFERENCES customer(customerID),
+    FOREIGN KEY (userID) REFERENCES users(userID),
     FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (locationID) REFERENCES location(sublocationID),
-    FOREIGN KEY (locationIDToReturn) REFERENCES location(sublocationID)
+    FOREIGN KEY (locationID) REFERENCES location(locationID),
+    FOREIGN KEY (locationIDToReturn) REFERENCES location(locationID)
 );
-
-/*
-CREATE TABLE car_schedule (
-	scheduleID INT PRIMARY KEY AUTO_INCREMENT,
-    carID INT NOT NULL,
-    day DATETIME NOT NULL,
-    locationStart INT NOT NULL,
-    locationEnd INT NOT NULL,
-    FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (locationStart) REFERENCES location(sublocationID),
-    FOREIGN KEY (locationEnd) REFERENCES location(
-);
-*/
 
 /*
 TABLE days
