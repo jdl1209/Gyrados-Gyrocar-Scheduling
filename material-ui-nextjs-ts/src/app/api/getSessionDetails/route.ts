@@ -1,16 +1,20 @@
-// pages/api/getSessionDetails/route.ts
-"use server";
-import { getSession } from '@auth0/nextjs-auth0';
+// import { getSession } from '@auth0/nextjs-auth0';
+// import { User } from '@auth0/nextjs-auth0/dist/auth0-session';
 
-export default async function sessionHandler(req: any, res: any) {
-    console.log("Executing sessionHandler"); // Add a log to check if the route is being executed
+// export default async function ProfileServer() {
+//   const session = await getSession();
+//   const user: User | null = session?.user ?? null;
 
-    try {
-        const session = await getSession();
-        const isSignedIn = !!session && !!session.user;
-        res.status(200).json({ isSignedIn });
-    } catch (error) {
-        console.error("Error checking session:", error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-}
+//   if (user) {
+//     return (
+//       <div>
+//         <img src={user.picture || ''} alt={user.name || ''} />
+//         <h2>{user.name || ''}</h2>
+//         <p>{user.email || ''}</p>
+//       </div>
+//     );
+//   } else {
+//     // Handle case when user is not available
+//     return <div>User not available</div>;
+//   }
+// }
