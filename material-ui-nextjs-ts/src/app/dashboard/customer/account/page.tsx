@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { getSession } from '@auth0/nextjs-auth0';
 import { DB } from '@/lib/db';
+import {Button} from '@mui/material';
+import { Typography } from '@mui/material';
 
 
 
@@ -49,6 +51,14 @@ export default withPageAuthRequired(async function AccountDashboard() {
         <p>Role: {user?.app_metadata?.authorization?.roles}</p> {/* Display user's roles */}
       </div>
       <h1>LocationIDs</h1>
+      <Button
+      href='/api/auth/logout'
+      variant="contained"
+      >
+
+          Logout
+
+      </Button>
       {/* <div>
         {datad.map((item: any, idx: number) => (
           <div key={idx}>
