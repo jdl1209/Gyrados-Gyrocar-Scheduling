@@ -15,8 +15,8 @@ export class DB {
     constructor(){
         // const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
         const host = "localhost";
-        const user = "root";
-        const password = "";
+        const user = "admin";
+        const password = "password";
         const port = 3306;
         const database = "ROCHESTER";
         
@@ -57,14 +57,17 @@ export class DB {
         return new Promise<void>((resolve, reject) => {
           try {
             const values = [
-              location.sublocationName,
+              location.locationName,
+              location.locationArea,
               location.address,
               location.cityName,
-              location.zip
+              location.state,
+              location.lat,
+              location.lon
             ];
       
             this.connection.execute(
-              'INSERT INTO locations(sublocationName, address, cityName, zip) VALUES (?, ?, ?, ?)',
+              'INSERT INTO locations(locationName, locationArea, address, cityName, state, lat, lon) VALUES (?, ?, ?, ?, ?, ?, ?)',
               values,
               function (err: any, results: any, fields: any) {
                 if (err) {
@@ -77,10 +80,29 @@ export class DB {
             reject(err);
           }
         });
-      }
+    }
+
+    async removeLocationByName(locationName: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'DELETE FROM location WHERE locationName = ?',
+                    [locationName],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
       
 
-    async insertCustomer(customer:Customer) {
+    async insertCustomer(customer:User) {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 await this.insertCustomerInfo(customer);
@@ -90,25 +112,25 @@ export class DB {
         })
     }
 
-    async insertCustomerInfo(customer: Customer) {
+    async insertCustomerInfo(customer: User) {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 const values: Array<string | number | null> = [
+                    customer.userID,
+                    1, // Assuming roleID
+                    customer.username,
                     customer.fName,
                     customer.mInitial,
                     customer.lName,
                     customer.suffix,
                     customer.phoneNum,
-                    customer.loginId,
-                    customer.username,
                     customer.email,
                     customer.address1,
                     customer.address2,
                     customer.city,
                     customer.state,
                     customer.zip,
-                    1, // Assuming roleID
-                    1  // Assuming activated
+                    0  // Assuming not activated
                 ];
                 console.log(values);
                 console.log(customer.fName);
@@ -121,7 +143,7 @@ export class DB {
                 }
     
                 this.connection.execute(
-                    'INSERT INTO customer (fName, mInitial, lName, suffix, phoneNum, loginId, username, email, address1, address2, city, state, zip, roleID, activated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    'INSERT INTO users (userID, roleID, username, fName, mInitial, lName, suffix, phoneNum, email, address1, address2, city, state, zip, roleID, activated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     values,
                     function (err: any, results: any, fields: any) {
                         if (err) {
@@ -140,7 +162,7 @@ export class DB {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT fName, lName, phoneNum, username, address1, city, state, zip, customerID FROM customer',
+                    'SELECT * FROM users WHERE roleID = 1',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -154,12 +176,49 @@ export class DB {
         })
     }
 
-    async getCustomerByID(customerId: string) {
+    async getUserByID(userID: string) {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT fName, lName, phoneNum, username, address1, city, state, zip, customerID FROM customer WHERE customerID = ?',
-                    [customerId],
+                    'SELECT * FROM user WHERE userID = ?',
+                    [userID],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async getUserByUsername(username: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM user WHERE username = ?',
+                    [username],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async getUnactivateUsers() {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM user WHERE activated = 0',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -193,18 +252,21 @@ export class DB {
         })
     }
 
-    async insertEmployee(employee: Employee) {
+    async insertEmployee(employee: User) {
         return new Promise(async (resolve, reject) => {
             try {
                 const values = [
+                    employee.userID,
                     employee.roleID,
                     employee.username,
-                    employee.fullname,
+                    employee.fName,
+                    employee.lName,
+                    employee.email,
                     employee.office
                 ];
     
                 this.connection.execute(
-                    'INSERT INTO employees(roleID, username, fullname, office) VALUES (?, ?, ?, ?)',
+                    'INSERT INTO users(userID, roleID, username, fName, lName, email, office) VALUES (?, ?, ?, ?, ?, ?, ?)',
                     values,
                     function (err:any, results:any, fields:any) {
                         if (err) {
@@ -265,7 +327,7 @@ export class DB {
                     car.battery,
                     car.status,
                     car.reserved,
-                    car.sublocationID
+                    car.currentLocationID
                 ];
     
                 this.connection.execute(
@@ -286,9 +348,30 @@ export class DB {
         });
     }
 
+    // Locations
+
+    async getLocationIDByLocationName(locationName: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT locationID FROM location WHERE locationName = ?',
+                    [locationName],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
     // Reservations
 
-    async getReservationByLocationID(locationID: string) {
+    async getReservationsByLocationID(locationID: string) {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
@@ -311,7 +394,7 @@ export class DB {
         return new Promise(async (resolve, reject) => {
             try {
                 const values = [
-                    reservation.customerID,
+                    reservation.userID,
                     reservation.carID,
                     reservation.dateCreated,
                     reservation.locationID,
@@ -322,7 +405,7 @@ export class DB {
                 ];
     
                 this.connection.execute(
-                    'INSERT INTO reservation(customerID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES (?, ?, , ?, ?, ?, ?, ?)',
+                    'INSERT INTO reservation(customerID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES (?, ?, CURDATE(), ?, ?, ?, ?, ?)',
                     values,
                     function (err:any, results:any, fields:any) {
                         if (err) {
@@ -339,12 +422,12 @@ export class DB {
         });
     }
 
-    async getReservationByID(customerId: string) {
+    async getReservationByID(userID: string) {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT * FROM reservation WHERE customerID = ?',
-                    [customerId],
+                    'SELECT * FROM reservation WHERE userID = ?',
+                    [userID],
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -357,6 +440,8 @@ export class DB {
             }
         });
     }
+
+    // FAQ
 
     async getAllFAQ() {
         return new Promise(async (resolve: any, reject: any) => {
@@ -376,11 +461,13 @@ export class DB {
         })
     }
 
+    // Days
+
     async getAllDays() {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT * FROM cars',
+                    'SELECT * FROM days',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -396,26 +483,52 @@ export class DB {
 
 }
 
-export interface Customer {
-    fName: string;
-    mInitial: string;
-    lName: string;
-    suffix: string;
-    phoneNum: string;
-    loginId: string,
-    username: string;
-    email: string;
-    address1: string;
-    address2: string;
-    city: string;
-    state: string;
-    zip: string;
+interface Roles {
+    roleID: number;
+    rName: string;
+    description: string;
 }
-export interface Employee {
+
+export interface User {
+    userID: string;
     roleID: number;
     username: string;
-    fullname: string;
-    office?: string | null; // Optional field
+    fName: string;
+    mInitial: string | null;
+    lName: string;
+    suffix: string | null;
+    phoneNum: string | null;
+    email: string;
+    address1: string | null;
+    address2: string | null;
+    city: string | null;
+    state: string | null;
+    zip: string | null;
+    activated: number | null;
+    office: string | null;
+}
+
+interface CustomerCredit {
+    userID: string;
+    hashedCreditNumber: string;
+    hashedSecurity: string;
+    hashedZipcode: string;
+    hashedExpiration: string;
+    hashedDriversID: string;
+}
+
+interface SuspendedUser {
+    userID: string;
+}
+  
+interface Location {
+    locationName: string;
+    locationArea: string;
+    address: string | null;
+    cityName: string;
+    state: string;
+    lat: number;
+    lon: number;
 }
 
 interface Car {
@@ -423,19 +536,19 @@ interface Car {
     battery: number;
     status: string | null;
     reserved: number;
-    sublocationID: number;
-  }
-  
-interface Location {
-    sublocationID: number;
-    sublocationName: string;
-    address: string;
-    cityName: string;
-    zip: string;
-  }
+    currentLocationID: number;
+}
+
+interface Jobs{
+    userID: string | null;
+    carID: number;
+    task: string;
+    notes: string;
+    jTimeDate: Date;
+}
 
 interface Reservation {
-    customerID: number;
+    userID: string;
     carID: number;
     dateCreated: string;
     locationID: number;
@@ -443,7 +556,17 @@ interface Reservation {
     timeBegin: string;
     timeEnd: string;
     paid: boolean;
-  }
+}
+
+interface FAQ {
+    faqQuestion: string;
+    faqAnswer: string;
+    userID: string;
+}
+
+interface Days {
+    day: Date;
+}
   
 
 // export interface InsertCustomer extends Customer {
