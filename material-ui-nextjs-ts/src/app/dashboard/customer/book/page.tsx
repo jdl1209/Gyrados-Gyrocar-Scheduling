@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 //this is setting up the options for the location selection
 //TODO make this a dynamic function which pulls info from the database
 //TODO decide if the filter goes location first then availible times and dates, or times and dates then availible locations. Right now I'm leaning towards the latter
-const options = ['Location One', 'Location Two', 'Location Three', 'Location Four'];
+const options = ['GyroGoGo Northwest', 'GyroGoGo Northeast', 'GyroGoGo Center City', 'GyroGoGo Southeast', 'GyroGoGo Airport'];
 
 
 type pickupLocationProps = {
