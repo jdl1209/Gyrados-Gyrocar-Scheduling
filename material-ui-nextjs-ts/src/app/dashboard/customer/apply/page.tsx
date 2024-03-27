@@ -30,8 +30,6 @@ interface IFormInput {
   name: string;
   address1: string;
   address2: string;
-  password: string;
-  email: string;
   phone: string;
   city: string;
   state: string;
@@ -62,10 +60,6 @@ const Apply: React.FC = async () => {
     console.log(json);
   };
   
-
-
-  const password = watch("password");
-  const passwordStrength = password ? zxcvbn(password) : { score: 0 };
 
   return (
     <>
@@ -187,27 +181,8 @@ const Apply: React.FC = async () => {
                   autoComplete="licenseNumber"
                 />
                 {/* TODO @Kevin can you fix up this page to remove things like the email and password since this is now accessed from the login */}
-                <TextField
-                  {...register("email")}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  autoComplete="email"
-                />
-                <TextField
-                  {...register("password")}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="password"
-                  label="Password"
-                  type="password"
-                  autoComplete="new-password"
-                />
+                
                 {/* const { password } = this.state; */}
-                <PasswordStrengthBar password={password} />
                 {/* {password && (
       <Typography variant="caption" color={passwordStrength.score < 3 ? 'error' : 'inherit'}>
         Password strength: {passwordStrength.score} ({passwordStrength.feedback.warning})
@@ -236,16 +211,16 @@ const Apply: React.FC = async () => {
                   Apply
                 </Button>
                 <Grid container>
-                  <Grid item xs>
+                  {/* <Grid item xs>
                     <Link href="#" variant="body2">
                       Forgot password?
                     </Link>
-                  </Grid>
-                  <Grid item>
+                  </Grid> */}
+                  {/* <Grid item>
                     <Link href="#" variant="body2">
                       {"Already have an account? Sign In"}
                     </Link>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
                 <Box mt={5}>
                   <Copyright />
