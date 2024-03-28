@@ -81,9 +81,6 @@ const logoStyle = {
 
 export default function Testimonials() {
   //TODO - @Kevin a lot of this looks like it can be removed to clean things up. If that's the case can you do it at some point. Low priority. If not you can just ignore this todo or remove it.
-  //NOTE - I removed these because the theme should be inherited from the parent app component anyway
-  //const theme = useTheme();
-  //const logos = theme.palette.mode === "light" ? darkLogos : whiteLogos;
 
   return (
     <Container
