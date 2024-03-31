@@ -13,7 +13,7 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import AddIcon from '@mui/icons-material/Add';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Explore, Help, MonitorHeart, HistoryEdu, Email, People, DataObject} from '@mui/icons-material';
+import { Explore, Help, MonitorHeart, HistoryEdu, Email, People, DataObject, Approval} from '@mui/icons-material';
 import { List, ListItem, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider';
 
@@ -27,7 +27,7 @@ export const mainListItems = (
     {hasNotApplied ? (
       <ListItemButton href='/dashboard/customer/apply'>
         <ListItemIcon>
-          <AccountCircleIcon />
+          <Approval />
         </ListItemIcon>
         <ListItemText primary="Apply" />
       </ListItemButton>
@@ -62,7 +62,7 @@ export const mainListItems = (
 );
 
 //TODO: try to find a way to pin these to the bottom maybe?
-export const secondaryListItems = (
+export const adminListItems = (
   <React.Fragment>
     <Divider sx={{backgroundColor: "#DEDEDE"}}>
       Admin Items
@@ -98,39 +98,49 @@ export const secondaryListItems = (
       </ListItemIcon>
       <ListItemText primary="Log" />
     </ListItemButton>
+  </React.Fragment>
 
+);
+
+export const customerServiceListItems = (
+  <React.Fragment>
     <Divider sx={{backgroundColor: "#DEDEDE"}}>
       Customer Service Items
     </Divider>
     <ListItemButton href='/dashboard/customerService'>
-      <ListItemIcon>
-        <Email />
-      </ListItemIcon>
-      <ListItemText primary="Customer Service" />
+    <ListItemIcon>
+      <Email />
+    </ListItemIcon>
+    <ListItemText primary="Customer Service" />
     </ListItemButton>
     <ListItemButton href='/dashboard/customerService/applications'>
-      <ListItemIcon>
-        <HistoryEdu />
-      </ListItemIcon>
-      <ListItemText primary="Applications" />
+    <ListItemIcon>
+      <HistoryEdu />
+    </ListItemIcon>
+    <ListItemText primary="Applications" />
     </ListItemButton>
-
-    <Divider sx={{backgroundColor: "#DEDEDE"}}>
-      Mechanic Items
-    </Divider>
-    <ListItemButton href='/dashboard/mechanic/locateCar'>
-      <ListItemIcon>
-        <Explore />
-      </ListItemIcon>
-      <ListItemText primary="Locate A Car" />
-    </ListItemButton>
-    <ListItemButton href='/dashboard/mechanic/reports'>
-      <ListItemIcon>
-        <SummarizeIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItemButton>
-    
 
   </React.Fragment>
 );
+
+export const mechanicListItems = (
+  <React.Fragment>
+    <Divider sx={{backgroundColor: "#DEDEDE"}}>
+    Mechanic Items
+    </Divider>
+    <ListItemButton href='/dashboard/mechanic/locateCar'>
+    <ListItemIcon>
+      <Explore />
+    </ListItemIcon>
+    <ListItemText primary="Locate A Car" />
+    </ListItemButton>
+    <ListItemButton href='/dashboard/mechanic/reports'>
+    <ListItemIcon>
+      <SummarizeIcon />
+    </ListItemIcon>
+    <ListItemText primary="Reports" />
+    </ListItemButton>
+  </React.Fragment>
+);
+
+

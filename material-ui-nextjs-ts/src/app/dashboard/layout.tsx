@@ -1,3 +1,5 @@
+//TODO - remove the admin toggle from this page
+
 //this is needed because some mui functions expecet "client" things
 "use client";
 
@@ -23,7 +25,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   mainListItems,
-  secondaryListItems,
+  adminListItems,
+  customerServiceListItems,
+  mechanicListItems,
 } from "@/components/Dashboard Components/listItems";
 import { useTheme } from "@mui/material/styles";
 
@@ -50,14 +54,18 @@ function Copyright(props: any) {
   );
 }
 
-// TODO: make this check if user is an admin account
+// TODO: make this check for real account roles
 //rn it's just set up as a declared boolean for testing
 const isAdmin = true;
+const isCustomerService = true;
+const isMechanic = true;
+const isCustomer = true;
 
 //set up refernce for theme color
+//TODO - make this check for true on 
 function themeToUse() {
-  if (isAdmin) {
-    return "admin";
+  if (isAdmin || isCustomerService || isMechanic) {
+    return "employee";
   } else {
     return "primary";
   }
@@ -190,11 +198,31 @@ export default function DashboardLayout({
           </Toolbar>
           <Divider>{isAdmin ? "Customer Items" : ""}</Divider>
           <List component="nav">
-            {mainListItems}
+            {isCustomer ||isAdmin ?
+            <React.Fragment>
+              {mainListItems}
+            </React.Fragment>
+            : ""
+            }
+            {/*NOTE - I am using inline conditional rendering to render each series of components based on boolean logic */}
             {isAdmin ? (
               <React.Fragment>
-                <Divider sx={{ my: 1 }}>Admin Items</Divider>
-                {secondaryListItems}
+                {adminListItems}
+              </React.Fragment>
+            ) : (
+              ""
+            )}
+            {/*NOTE - Right now I have things set up so the "admin" role also confers the ability to view all other sections*/}
+            {isAdmin || isCustomerService ? (
+              <React.Fragment>
+                {customerServiceListItems}
+              </React.Fragment>
+            ) : (
+              ""
+            )}
+            {isAdmin || isMechanic ? (
+              <React.Fragment>
+                {mechanicListItems}
               </React.Fragment>
             ) : (
               ""

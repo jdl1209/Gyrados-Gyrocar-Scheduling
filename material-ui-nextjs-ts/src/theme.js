@@ -17,7 +17,7 @@ const theme = createTheme({
     secondary: {
       main: '#FFEB3B',
     },
-    admin: {
+    employee: {
       main: '#cc0325',
       contrastText: 'rgba(243,243,243,0.87)',
     }
