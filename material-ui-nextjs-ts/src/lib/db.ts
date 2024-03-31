@@ -1,6 +1,7 @@
 import getConfig from 'next/config';
 import mysql from 'mysql2';
 // import { Sequelize, DataTypes } from 'sequelize';
+import {databasePassword} from './pass'
 
 
 const { serverRuntimeConfig } = getConfig();
@@ -19,7 +20,7 @@ export class DB {
         // const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
         const host = "localhost";
         const user = "root";
-        const password = "";
+        const password = databasePassword;
         const port = 3306;
         const database = "ROCHESTER";
         

@@ -10,6 +10,7 @@
 // **  All functions are queries called to the database using php      **
 // **********************************************************************
 // **********************************************************************
+include 'pass.php';
 
 class DB {
 
@@ -24,7 +25,7 @@ class DB {
                 PDO::ATTR_EMULATE_PREPARES => false,
             ];
 
-            $this->conn = new PDO($dsn, 'root', 'pass', $options);
+            $this->conn = new PDO($dsn, 'root', $databasePassword, $options);
         } catch (PDOException $e) {
             echo "Connection failed: " . $e->getMessage();
             die(); // Stop script execution on connection failure
