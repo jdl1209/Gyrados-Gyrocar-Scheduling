@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { getSession } from '@auth0/nextjs-auth0';
 import { DB } from '@/lib/db';
-import {Button} from '@mui/material';
+import { Button, Box, Container, Paper } from '@mui/material';
 import { Typography } from '@mui/material';
 
 
@@ -23,7 +23,9 @@ export default withPageAuthRequired(async function AccountDashboard() {
   const session = await getSession();
   
   if (!session || !session.user) {
-    return <div>Invalid session</div>;
+    return <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Typography variant="h6">Invalid session</Typography>
+    </Box>;
   }
 
   console.log(session.user.sub);
@@ -44,21 +46,29 @@ export default withPageAuthRequired(async function AccountDashboard() {
 
   return (
     <>
-      <div>
-        <h1>Welcome, {user.name}</h1>
-        <p>Email: {user.email}</p>
-        <p>ID: {user.sub}</p>
-        <p>Role: {user?.app_metadata?.authorization?.roles}</p> {/* Display user's roles */}
-      </div>
-      <h1>LocationIDs</h1>
-      <Button
-      href='/api/auth/logout'
-      variant="contained"
-      >
-
-          Logout
-
-      </Button>
+      <Container maxWidth="sm">
+      <Paper elevation={3} sx={{ p: 4, mt: 5, mb: 5 }}>
+        <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+          Welcome, {user.name}
+        </Typography>
+        <Box sx={{ mt: 2, mb: 2 }}>
+          <Typography variant="body1">Email: {user.email}</Typography>
+          <Typography variant="body1">ID: {user.sub}</Typography>
+          <Typography variant="body1">Role: {user?.app_metadata?.authorization?.roles}</Typography>
+          {/* Display additional user info or roles here if needed */}
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <Button
+            href='/api/auth/logout'
+            variant="contained"
+            color="primary"
+            sx={{ textTransform: 'none' }}
+          >
+            Logout
+          </Button>
+        </Box>
+      </Paper>
+    </Container>
       {/* <div>
         {datad.map((item: any, idx: number) => (
           <div key={idx}>

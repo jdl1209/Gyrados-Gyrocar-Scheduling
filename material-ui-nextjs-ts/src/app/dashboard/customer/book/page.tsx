@@ -5,10 +5,11 @@ import React from "react";
 
 import { Metadata } from 'next'
 import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
-import { Autocomplete, Box, FormControl, TextField, Button, Stack} from "@mui/material";
+import { Autocomplete, Box, FormControl, TextField, Button, Stack, Typography} from "@mui/material";
 import { useState } from "react";
 import { object } from "prop-types";
 import dayjs, { Dayjs } from 'dayjs';
+
 
 
 var now = dayjs()
@@ -93,72 +94,52 @@ export default function BookingPage() {
 
     return (
       <Box padding={2.5}>
-        <h1>
-            Booking Page
-        </h1>
-        <h4>
-            This is a placeholder
-        </h4>
+        <Typography variant="h4" gutterBottom>
+          Booking Page
+        </Typography>
         {/* TODO implement error checking/form validation */}
         {/* TODO could maybe grey out/make unavailible dates/times which are not availible in the system */}
         <form onSubmit={handleSubmit}>
-          <FormControl>
-            <Stack spacing={1} direction="column">
-              <Box>
-                Pickup Time <br/>
-                <DateTimePicker
-                disablePast={true}
-                value={pickupTime}
-                onChange={(newValue) => setPickupTime(newValue)}
-                /> 
-                {/* TODO implement error message */}
-              </Box>
-              <Box>
-                Dropoff Time <br/>
-                <DateTimePicker
-                disablePast={true}
-                value={dropoffTime}
-                minDateTime={getPickupTime()!.add(15, "minutes")}
-                onChange={(newValue) => setDropoffTime(newValue)}
-                />
-                {/* TODO implement error message */}
-              </Box>
-              <Box>
-              Pickup Location <br/>
-                <Autocomplete
-                  id="PickupLocation"
-                  options={options}
-                  onChange={(event: any, newValue: string | null) => {
-                    setPickupLocation(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} label="Pickup Location" />}
-                >
-                </Autocomplete>
-              </Box>
-              <Box>
-                Dropoff Location <br/>
-                <Autocomplete
-                  id="DropoffLocation"
-                  options={options}
-                  onChange={(event: any, newValue: string | null) => {
-                    setDropoffLocation(newValue);
-                  }}
-                  renderInput={(params) => <TextField {...params} label="Dropoff Location" />}
-                >
-                </Autocomplete>
-              </Box>
-
-              <Button 
-              variant="contained"
-              type="submit"
-              >
-                Submit
-              </Button>
-
-
-            </Stack>
-          </FormControl>
-        </form>
+        <FormControl fullWidth>
+          <Stack spacing={2}>
+            <DateTimePicker
+              label="Pickup Time"
+              disablePast
+              value={pickupTime}
+              onChange={setPickupTime}
+              renderInput={(params) => <TextField {...params} />}
+              //TODO Implement error message
+            />
+            <DateTimePicker
+              label="Dropoff Time"
+              disablePast
+              value={dropoffTime}
+              minDateTime={dayjs(pickupTime).add(15, "minutes")}
+              onChange={setDropoffTime}
+              renderInput={(params) => <TextField {...params} />}
+              //TODO Implement error message
+            />
+            <Autocomplete
+              id="pickup-location"
+              options={options}
+              value={pickupLocation}
+              onChange={(event, newValue) => setPickupLocation(newValue)}
+              renderInput={(params) => <TextField {...params} label="Pickup Location" />}
+            />
+            <Autocomplete
+              id="dropoff-location"
+              options={options}
+              value={dropoffLocation}
+              onChange={(event, newValue) => setDropoffLocation(newValue)}
+              renderInput={(params) => <TextField {...params} label="Dropoff Location" />}
+            />
+            <Button variant="contained" color="primary" type="submit">
+              Submit
+            </Button>
+          </Stack>
+        </FormControl>
+      </form>
       </Box>
     );
   }
+  
