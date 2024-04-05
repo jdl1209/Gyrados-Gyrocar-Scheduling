@@ -33,10 +33,22 @@ INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES (
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 4);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "inactive", 0, 5);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 1, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 2);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 3);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 4);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 5);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "inactive", 0, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 1, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 2);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 3);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 4);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "inactive", 0, 5);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
 
 -- Job Insert
 
-INSERT INTO jobs(userID, carID, task, notes, jTimeDate) VALUES ("google-oauth2|100964910494305773385", 5, "Wheel Air Pressure", "Added air to the front wheel of the Gyrocar.", "2024-01-01 22:10:10");
+-- INSERT INTO jobs(userID, carID, task, notes, jTimeDate) VALUES ("google-oauth2|100964910494305773385", 11, "Wheel Air Pressure", "Added air to the front wheel of the Gyrocar.", "2024-01-01 22:10:10");
 
 -- FAQ Insert
 
@@ -53,3 +65,21 @@ INSERT INTO faq(faqQuestion, faqAnswer, userID) VALUES ("Q: Is there a limit to 
 INSERT INTO faq(faqQuestion, faqAnswer, userID) VALUES ("Q: Can I change the date after I’ve made a reservation?", "A: Yes. You always have the ability to view and edit a reservation when signed into your account.", "google-oauth2|100964910494305773385");
 INSERT INTO faq(faqQuestion, faqAnswer, userID) VALUES ("Q: Can I recharge the gyrocar at an EV recharge station? ", "A: Yes, the gyrocars can be charged at any standard EV station. However, other vehicles cannot access the GyroGoGo chargers; the chargers have a deterrent feature that prevent such use. ", "google-oauth2|100964910494305773385");
 INSERT INTO faq(faqQuestion, faqAnswer, userID) VALUES ("Q: What do I do if there is a mechanical problem during my rental?", "A: Just call our 800 Customer Service number and we will promptly send a mechanic with a replacement vehicle to assist you.", "google-oauth2|100964910494305773385");
+
+-- PRICE INSERT
+
+INSERT INTO price(priceName, priceInCents) VALUES ("Price Per Hour", 2199);
+INSERT INTO price(priceName, priceInCents) VALUES ("Price Capped", 12000);
+
+-- RESERVATION INSERT 
+
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 1, '2024-04-03 12:00:00', '2024-04-03 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|115361504616338795584", 11, CURDATE(), 1, 1, '2024-04-03 7:00:00', '2024-04-03 11:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 12, CURDATE(), 1, 2, '2024-04-03 12:00:00', '2024-04-03 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 13, CURDATE(), 1, 3, '2024-04-04 12:00:00', '2024-04-04 16:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|102615529459675638489", 6, CURDATE(), 1, 4, '2024-04-04 8:00:00', '2024-04-04 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 1, '2024-04-06 12:00:00', '2024-04-07 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|115361504616338795584", 11, CURDATE(), 1, 1, '2024-04-08 7:00:00', '2024-04-08 11:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 2, '2024-04-09 12:00:00', '2024-04-09 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 2, CURDATE(), 2, 1, '2024-04-06 12:00:00', '2024-04-06 16:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|102615529459675638489", 6, CURDATE(), 1, 4, '2024-04-03 8:00:00', '2024-04-03 14:00:00', 1);

@@ -33,7 +33,7 @@ export class DB {
         
     // }
 
-    // Customers
+    // Location stuff
 
     async getAllLocations() {
         return new Promise(async (resolve: any, reject: any) => {
@@ -101,6 +101,7 @@ export class DB {
         });
     }
       
+    // Customer
 
     async insertCustomer(customer:User) {
         return new Promise(async (resolve: any, reject: any) => {
@@ -157,6 +158,8 @@ export class DB {
             }
         });
     }
+
+
 
     async getAllCustomers() {
         return new Promise(async (resolve: any, reject: any) => {
@@ -219,6 +222,51 @@ export class DB {
             try {
                 this.connection.query(
                     'SELECT * FROM user WHERE activated = 0',
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // Suspended Users
+
+    async insertSuspendedUser(user: SuspendedUser) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const values = [
+                    user.userID
+                ];
+    
+                this.connection.execute(
+                    'INSERT INTO suspended_users VALUES (?)',
+                    values,
+                    function (err:any, results:any, fields:any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // Can return the count 
+    async getIfSuspendedUsers(userID: SuspendedUser) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM suspend_user WHERE userID = ?',
+                    [userID],
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -319,6 +367,44 @@ export class DB {
         })
     }
 
+    async getCarCountByLocationID(locationID: string) {
+        return new Promise<any>(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM cars WHERE locationID = ?',
+                    [locationID],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
+    async removeCarByCarID(carID: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'DELETE FROM cars WHERE carID = ?',
+                    [carID],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+    
     async insertCar(car: Car) {
         return new Promise(async (resolve, reject) => {
             try {
@@ -441,6 +527,98 @@ export class DB {
         });
     }
 
+    async getReservationCountByID(userID: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM reservation WHERE userID = ?',
+                    [userID],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    // For booking
+
+    async getReservationCountToReturn(locationID: string, locationIDToReturn: string, timeEnd: string) {
+        return new Promise<number>(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM reservation WHERE locationID != ? AND locationIDToReturn = ? AND timeEnd <= ?',
+                    [locationID, locationIDToReturn, timeEnd],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async getReservationCountNotToReturn(locationIDToReturn: string, locationID: string, timeEnd: string) {
+        return new Promise<number>(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM reservation WHERE locationIDToReturn != ? AND locationID = ? AND timeEnd <= ?',
+                    [locationIDToReturn, locationID, timeEnd],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async checkBookingStatus(locationID: string, bookingTime:string) {
+        return new Promise(async (resolve: any, reject: any) => {
+
+            try{
+                
+                let carCount = this.getCarCountByLocationID(locationID);
+                let reservationCountToreturn = this.getReservationCountToReturn(locationID, locationID, bookingTime);
+                let reservationCountNotReturn = this.getReservationCountNotToReturn(locationID, locationID, bookingTime);
+
+                let totalCarsAvailable = await carCount -  await reservationCountNotReturn + await reservationCountToreturn;
+                if (await carCount === 0){
+
+                    reject("This location does not have bookable cars at this time!");
+
+                }
+                else if (totalCarsAvailable <= 0){
+
+                    reject("This location does not have bookable cars at this time!");
+
+                }
+                else{
+
+                    resolve("This location has cars that are able to be booked!")
+
+                }
+
+            }catch(err){
+                reject(err);
+            }
+        
+        });
+    }
+
     // FAQ
 
     async getAllFAQ() {
@@ -483,6 +661,7 @@ export class DB {
 
 }
 
+// Begin Interfaces
 interface Roles {
     roleID: number;
     rName: string;

@@ -178,6 +178,17 @@ CREATE TABLE days(
     day DATE NOT NULL
 );
 
+/*
+TABLE price
+stores the prices for Gyrocar reservation
+PK - priceID
+*/
+CREATE TABLE price(
+    priceID INT PRIMARY KEY AUTO_INCREMENT,
+    priceName VARCHAR(80),
+    priceInCents BIGINT
+);
+
 DELIMITER $$
 /*
 TABLE days
