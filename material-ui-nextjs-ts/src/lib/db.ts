@@ -15,6 +15,7 @@ export class DB {
     public sequelize:any;
     public db:any;
 
+    
 
     constructor(){
         // const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
@@ -162,7 +163,7 @@ export class DB {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT fName, lName, phoneNum, username, address1, city, state, zip, customerID FROM customer WHERE loginId = ?',
+                    'SELECT * FROM users WHERE userID = ?',
                     [customerId],
                     function (err: any, results: any, fields: any) {
                         if (err) {
@@ -223,8 +224,6 @@ export class DB {
         });
     }
     
-    
-
     //Cars
 
     async getAllCars() {

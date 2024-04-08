@@ -37,12 +37,14 @@ export default withPageAuthRequired(async function AccountDashboard() {
   console.log('Session:', session);
 
   const db = new DB();
-  // const datad: any[] = await db.getCustomerByID(session.user.sub) as any[];
+  const datad: any[] = await db.getCustomerByID(session.user.sub) as any[];
+
   // const data: any[] = await db.getAllLocations() as any[];
   // const data2: any[] = await db.getAllCustomers() as any[];
   // const data3: any[] = await db.getAllEmployees() as any[];
   // const data4: any[] = await db.getAllCars() as any[];
   // const data5: any[] = await db.getAllFAQ() as any[];
+
 
   return (
     <>
@@ -69,11 +71,14 @@ export default withPageAuthRequired(async function AccountDashboard() {
         </Box>
       </Paper>
     </Container>
-      {/* <div>
+      <div>
         {datad.map((item: any, idx: number) => (
           <div key={idx}>
-            <p>Name: {item.fName} {item.mInitial} {item.lName} {item.suffix}</p>
-            <p>Phone: {item.phoneNum}</p>
+            <p>Name: {item.username}</p>
+            <p>Name: {item.zip}</p>
+            <p>Name: {item.email}</p>
+
+            {/* <p>Phone: {item.phoneNum}</p>
             <p>Login ID: {item.loginId}</p>
             <p>Username: {item.username}</p>
             <p>Email: {item.email}</p>
@@ -81,10 +86,10 @@ export default withPageAuthRequired(async function AccountDashboard() {
             {item.address2 && <p>Address Line 2: {item.address2}</p>}
             <p>City: {item.city}</p>
             <p>State: {item.state}</p>
-            <p>Zip: {item.zip}</p>
+            <p>Zip: {item.zip}</p> */}
           </div>
         ))}
-      </div> */}
+      </div>
     </>
   );
 }, { returnTo: '/dashboard/customer/account' });
