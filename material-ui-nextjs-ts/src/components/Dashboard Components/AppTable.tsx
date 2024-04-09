@@ -1,3 +1,4 @@
+// export default ApplicationsTable;
 import React, { useState } from "react";
 import {
   IconButton,
@@ -14,19 +15,46 @@ import {
 } from "@mui/material";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
 
-const columns = [
-  { id: "", label: "", maxWidth: 10 },
+interface Row {
+  name: string;
+  submittedDate: string;
+  stat: string;
+  email: string;
+  numb: string;
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  licenseID: string;
+}
+
+interface Column {
+  id: string;
+  label: string;
+  minWidth: number;
+}
+
+const columns: Column[] = [
+  { id: "", label: "", minWidth: 10 },
   { id: "name", label: "Name", minWidth: 170 },
   { id: "submittedDate", label: "Application submitted on", minWidth: 170 },
   { id: "stat", label: "Status", minWidth: 170 },
 ];
 
-const ApplicationsTable = ({ rows, applyAction }) => {
-  const [expandedRows, setExpandedRows] = useState([]);
+interface ApplicationsTableProps {
+  rows: Row[];
+  applyAction: (rowIndex: number, action: string) => void;
+}
+
+const ApplicationsTable: React.FC<ApplicationsTableProps> = ({
+  rows,
+  applyAction,
+}) => {
+  const [expandedRows, setExpandedRows] = useState<number[]>([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
-  const toggleRowExpansion = (rowIndex) => {
+  const toggleRowExpansion = (rowIndex: number) => {
     setExpandedRows((prevExpandedRows) =>
       prevExpandedRows.includes(rowIndex)
         ? prevExpandedRows.filter((row) => row !== rowIndex)
@@ -34,11 +62,11 @@ const ApplicationsTable = ({ rows, applyAction }) => {
     );
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
