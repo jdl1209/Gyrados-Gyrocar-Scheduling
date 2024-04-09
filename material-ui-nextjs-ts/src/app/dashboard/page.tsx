@@ -1,6 +1,4 @@
 // Import necessary modules
-import AdminDashboard from "@/components/AdminDashboard";
-import CustomerDashboard from "@/components/CustomerDashboard";
 import { DB } from "@/lib/db";
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Box, Typography } from "@mui/material";

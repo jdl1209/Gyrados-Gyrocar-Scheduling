@@ -1,5 +1,3 @@
-//TODO - remove the admin toggle from this page
-
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,21 +19,37 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   mainListItems,
-  adminListItems,
   customerServiceListItems,
   mechanicListItems,
 } from "@/components/Dashboard Components/listItems";
 import { useTheme } from "@mui/material/styles";
 import DashboardNav from "@/components/DashboardNav";
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 
 //main page content
-export default function DashboardLayout(props: { children: React.ReactNode }) {
+export default async function DashboardLayout(props: { children: React.ReactNode }) {
+  //set up session stuff
+  const session = await getSession();
+  if (!session || !session.user) {
+    return (
+      <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography variant="h6">Invalid session</Typography>
+      </Box>
+    );
+  }
+  const user = session.user;
+  const userRoles: string[] = session.user.roles || [];
+  console.log(session.user)
 
 
   //main content
   return (
     <DashboardNav
       children={props.children}
+      isAdmin={true}
+      isCustomer={false}
+      isCustomerService={true}
+      isMechanic={true}
     />
   );
 }

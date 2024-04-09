@@ -62,7 +62,7 @@ export const mainListItems = (
 );
 
 //TODO: try to find a way to pin these to the bottom maybe?
-export const adminListItems = (
+export const employeeListItems = (
   <React.Fragment>
     <Divider sx={{backgroundColor: "#DEDEDE"}}>
       Admin Items

@@ -1,5 +1,3 @@
-//TODO - remove the admin toggle from this page
-
 //this is needed because some mui functions expecet "client" things
 "use client";
 
@@ -26,7 +24,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   mainListItems,
-  adminListItems,
+  employeeListItems,
   customerServiceListItems,
   mechanicListItems,
 } from "@/components/Dashboard Components/listItems";
@@ -52,23 +50,6 @@ function Copyright(props: any) {
       {"."}
     </Typography>
   );
-}
-
-// TODO: make this check for real account roles
-//rn it's just set up as a declared boolean for testing
-const isAdmin = true;
-const isCustomerService = true;
-const isMechanic = true;
-const isCustomer = true;
-
-//set up refernce for theme color
-//TODO - make this check for true on 
-function themeToUse() {
-  if (isAdmin || isCustomerService || isMechanic) {
-    return "employee";
-  } else {
-    return "primary";
-  }
 }
 
 //set up drawer/nav
@@ -120,22 +101,26 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 //main page content
-export default function DashboardNav({
-  children, // will be a page or nested layout
-}: {
-  children: React.ReactNode;
-}) {
+export default function DashboardNav(props: 
+  { children: React.ReactNode, isAdmin: boolean, isCustomerService: boolean, isMechanic: boolean, isCustomer: boolean}
+) {
+
   //set some things up
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  // Function to toggle user role between admin and customer
-  const [isAdmin, setIsAdmin] = React.useState(true); // Default to admin
-  const toggleUserRole = () => {
-    setIsAdmin(!isAdmin);
-  };
+  //set up reference for theme color
+  function themeToUse() {
+    if (props.isAdmin || props.isCustomerService || props.isMechanic) {
+      return "employee";
+    } else {
+      return "primary";
+    }
+  }
+
+ 
 
   //main content
   return (
@@ -170,12 +155,6 @@ export default function DashboardNav({
             >
               User Dashboard
             </Typography>
-            {/* Switch component to toggle between admin and customer roles */}
-            <Switch
-              checked={isAdmin}
-              onChange={toggleUserRole}
-              color="default"
-            />
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
@@ -196,31 +175,31 @@ export default function DashboardNav({
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
-          <Divider>{isAdmin ? "Customer Items" : ""}</Divider>
+          <Divider>{props.isAdmin ? "Customer Items" : ""}</Divider>
           <List component="nav">
-            {isCustomer ||isAdmin ?
+            {props.isCustomer ||props.isAdmin ?
             <React.Fragment>
               {mainListItems}
             </React.Fragment>
             : ""
             }
             {/*NOTE - I am using inline conditional rendering to render each series of components based on boolean logic */}
-            {isAdmin ? (
+            {props.isAdmin ? (
               <React.Fragment>
-                {adminListItems}
+                {employeeListItems}
               </React.Fragment>
             ) : (
               ""
             )}
             {/*NOTE - Right now I have things set up so the "admin" role also confers the ability to view all other sections*/}
-            {isAdmin || isCustomerService ? (
+            {props.isAdmin || props.isCustomerService ? (
               <React.Fragment>
                 {customerServiceListItems}
               </React.Fragment>
             ) : (
               ""
             )}
-            {isAdmin || isMechanic ? (
+            {props.isAdmin || props.isMechanic ? (
               <React.Fragment>
                 {mechanicListItems}
               </React.Fragment>
@@ -238,7 +217,7 @@ export default function DashboardNav({
           }}
         >
           <Toolbar />
-          {children}
+          {props.children}
         </Box>
       </Box>
     </section>
