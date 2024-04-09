@@ -43,6 +43,7 @@ export default async function DashboardLayout(props: { children: React.ReactNode
 
 
   //main content
+  //TODO - make this actually call on the database. feel free to reference page.tsx
   return (
     <DashboardNav
       children={props.children}
