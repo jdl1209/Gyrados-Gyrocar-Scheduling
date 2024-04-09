@@ -619,6 +619,30 @@ export class DB {
         });
     }
 
+    // gets the next available car for booking
+
+    async getNextAvailableCar(locationID: string, timeEnd: string){
+        return new Promise(async (resolve: any, reject: any) => {
+            try{
+
+                this.connection.query(
+                    'SELECT carID FROM cars WHERE EXISTS (SELECT * FROM reservation WHERE cars.carID = reservation.carID AND locationIDToReturn = ? AND timeEnd <= ?) UNION SELECT carID FROM cars WHERE currentLocationID = ? AND NOT EXISTS (SELECT * FROM reservation WHERE cars.carID = reservation.carID AND locationID = ? and locationIDToReturn != ? AND timeEnd <= ? ) ORDER BY carID ASC LIMIT 1;',
+                    [locationID, timeEnd, locationID, locationID, locationID, timeEnd],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+
+        });
+
+    }
+    
     // FAQ
 
     async getAllFAQ() {

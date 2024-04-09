@@ -82,4 +82,3 @@ INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToRetu
 INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|115361504616338795584", 11, CURDATE(), 1, 1, '2024-04-08 7:00:00', '2024-04-08 11:00:00', 1);
 INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 2, '2024-04-09 12:00:00', '2024-04-09 14:00:00', 1);
 INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 2, CURDATE(), 2, 1, '2024-04-06 12:00:00', '2024-04-06 16:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|102615529459675638489", 6, CURDATE(), 1, 4, '2024-04-03 8:00:00', '2024-04-03 14:00:00', 1);
