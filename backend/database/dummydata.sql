@@ -3,7 +3,7 @@ USE ROCHESTER;
 -- Roles inserts
 
 INSERT INTO roles VALUES(1, "Customer", "Customers are basic roles with the ability to apply to the application.");
-INSERT INTO roles VALUES(2, "Employee", "Employees are employees of Gyrogogo and have the ability to approve customers, pull reports, and sign into the business pages.");
+INSERT INTO roles VALUES(2, "Customer Service", "Customer Service employees are employees of Gyrogogo and have the ability to approve customers, pull reports, and sign into the business pages.");
 INSERT INTO roles VALUES(3, "Mechanic", "Mechanics are employees that have the ability to pull reports on services and insert reports of services.");
 INSERT INTO roles VALUES(4, "Manager", "Managers are employees of Gryogogo that have the ability to do everything an employee does and can instruct Mechanics to move cars.");
 INSERT INTO roles VALUES(5, "Business Administrator", "Business Administrators are employees of Gyrogogo who have all abilities managers do, along with updating all cars and locations and making employee accounts.");
@@ -15,6 +15,7 @@ INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, addre
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|118123508030882047205", 3, "eds5597", "Erich", "Snell", "123456789", "eds5997@rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|115361504616338795584", 4, "gyr ados", "Gyro", "GoGo", "123456789", "gyrados960@gmail.com", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|102615529459675638489", 2, "jdl", "Jake", "Lombardo", "123456789", "jdl1209@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
+INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|113918414096424923554", 6, "irp7977", "Isaac", "Prusky", "123456789", "irp7977@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 
 
 -- Location Insert

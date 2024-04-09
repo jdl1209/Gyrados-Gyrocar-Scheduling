@@ -25,11 +25,13 @@ import {
 import { useTheme } from "@mui/material/styles";
 import DashboardNav from "@/components/DashboardNav";
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { DB } from "@/lib/db";
 
 //main page content
 export default async function DashboardLayout(props: { children: React.ReactNode }) {
   //set up session stuff
   const session = await getSession();
+  const db = new DB;
   if (!session || !session.user) {
     return (
       <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -37,9 +39,59 @@ export default async function DashboardLayout(props: { children: React.ReactNode
       </Box>
     );
   }
-  const user = session.user;
-  const userRoles: string[] = session.user.roles || [];
-  console.log(session.user)
+  //set up variables for user roles
+  //default to false
+  //there's probably a more elegant way to do this but whatever lol
+  var isAdmin = false;
+  var isCustomer = false;
+  var isCustomerService = false;
+  var isMechanic = false;
+  //wait to get user role
+  try {
+    // Await the resolution of the Promise returned by db.getUserRole
+    const role = await db.getUserRole(session.user.sub);
+    console.log(role)
+
+    //assign values to isRole variables
+    switch(role){
+      //customer
+      case 1: {
+        isCustomer = true;
+        break;
+      }
+      //customer service
+      case 2: {
+        isCustomerService = true;
+        break;
+      }
+      //mechanic
+      case 3: {
+        isMechanic = true;
+        break;
+      }
+      //manager
+      case 4: {
+        //nothing here yet, are we still using this role?
+        //TODO - if we're not, we should remove it
+        //right now I am letting it fall through to the admin cases
+      }
+      //Business Administrator
+      case 5: {
+        //letting this fall through to the sysadmin case, since we don't have separate defined functions on our end for the schema of this project
+      }
+      //Systems Administrator
+      case 6: {
+        isAdmin = true;
+        break;
+      }
+
+    }
+  } catch (error) {
+    console.error("Error fetching user role:", error);
+  }
+
+  
+  
 
 
   //main content
@@ -47,10 +99,10 @@ export default async function DashboardLayout(props: { children: React.ReactNode
   return (
     <DashboardNav
       children={props.children}
-      isAdmin={true}
-      isCustomer={false}
-      isCustomerService={true}
-      isMechanic={true}
+      isAdmin={isAdmin}
+      isCustomer={isCustomer}
+      isCustomerService={isCustomerService}
+      isMechanic={isMechanic}
     />
   );
 }

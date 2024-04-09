@@ -17,19 +17,19 @@ const DashboardPage = async () => {
     );
   }
 
-  console.log(session.user.sub);
+  //console.log(session.user.sub);
 
   const user = session.user;
   const userRoles: string[] = session.user.roles || [];
 
-  console.log('User roles:', userRoles);
-  console.log('Session:', session);
+  //console.log('User roles:', userRoles);
+  //console.log('Session:', session);
 
   const db = new DB();
   
   try {
     // Await the resolution of the Promise returned by db.getUserRole
-    const role = await db.getUserRole(session.user.sub);
+    const role = await DB.getUserRole(session.user.sub);
 
     // Check if the role is of type string array
     if (Array.isArray(role)) {
