@@ -217,11 +217,49 @@ export class DB {
         });
     }
 
-    async getUnactivateUsers() {
+    async getUnactivatedUsers() {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
                     'SELECT * FROM user WHERE activated = 0',
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async getUnactivateUsersCount(userID: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM user WHERE activated = 0 AND userID = ?',
+                    [userID],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async getActivateUsersCount(userID: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT COUNT(*) FROM user WHERE activated = 1 AND userID = ?',
+                    [userID],
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -265,7 +303,7 @@ export class DB {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT COUNT(*) FROM suspend_user WHERE userID = ?',
+                    'SELECT COUNT(*) FROM suspended_user WHERE userID = ?',
                     [userID],
                     function (err: any, results: any, fields: any) {
                         if (err) {
@@ -286,7 +324,7 @@ export class DB {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT employeeID, roleID, username, fullname, office FROM employees',
+                    'SELECT * FROM users WHERE roleID IN (SELECT roleID FROM roles WHERE roles.roleID != 1)',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -317,6 +355,25 @@ export class DB {
                     'INSERT INTO users(userID, roleID, username, fName, lName, email, office) VALUES (?, ?, ?, ?, ?, ?, ?)',
                     values,
                     function (err:any, results:any, fields:any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
+    async removeEmployeeByID(userID: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'DELETE FROM users WHERE userID = ?',
+                    [userID],
+                    function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
                         }
