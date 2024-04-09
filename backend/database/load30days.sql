@@ -1,0 +1,11 @@
+USE ROCHESTER;
+INSERT INTO days(day) VALUES ("2024-3-23");
+SELECT CAST(CURRENT_DATE() AS CHAR(50)) INTO @today;
+CALL loadDays(@today,30);
+SELECT * FROM days;
+
+
+
+SELECT * FROM days;
+
+
