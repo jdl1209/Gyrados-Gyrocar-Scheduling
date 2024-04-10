@@ -48,30 +48,6 @@ export default async function Home() {
         <AboutUs />
         <div id="FAQ" />
         <FAQ />
-        {/* leave this bit in for now I think? Not sure what to do with it */}
-        <Container>
-          <Typography
-            variant="body1"
-            color="text.secondary"
-          >
-            LEAVING AS PLACEHOLDER TO REMIND MYSELF TO ADD IMAGES TO CLEAN UP THE HOMEPAGE
-          </Typography>
-          <Typography
-            variant="body1"
-            color="text.secondary"
-          >
-            Text that can be used with optional photos on Home or About page:
-            Arrive at your destination in comfort and looking professional regardless of the weather.
-            Navigate city traffic with ease. Parking is a breeze.
-            Five convenient locations for pick up and drop off!
-            Gyrocars are authorized to park in designated motorcycle spaces.
-            Save money! Renting an environmentally friendly gyrocar as needed is far more cost effective than commuting in an automobile that you own and maintain.
-            The bus and the subway just aren’t going to work. Light deliveries are a piece of cake with GyroGoGo!
-            When the bus line is a mile away, enjoy door to door transportation to your destination.
-            Yes, jogging or biking to work may be healthy, but how do you look (and smell!) on arrival?
-            Do you really want to risk your high end auto in traffic like this?
-          </Typography>
-        </Container>
         <Copyright />
       </Box>
     </React.Fragment>
