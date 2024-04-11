@@ -1,6 +1,4 @@
 import CustomerTrips from "@/components/Dashboard Components/customer/CustomerTrips";
-import TableComponent from "@/components/TableComponent";
-import { Card, CardContent, Typography } from "@mui/material";
 import React from "react";
 
 // import { Metadata } from 'next'
@@ -10,10 +8,10 @@ import React from "react";
 //     title: 'Book a Trip',
 //   }
 
-
 export default async function Trips() {
 
   const data = await getData();
+  console.log(data);
   // const columns = Object.keys(data[0]).map(key => ({
   //   id: key,
   //   label: key.charAt(0).toUpperCase() + key.slice(1), // Capitalize the first letter of the key

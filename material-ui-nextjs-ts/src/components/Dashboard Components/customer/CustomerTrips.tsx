@@ -40,7 +40,7 @@ const upcoming = [
   { car: "Gyro #420", date: "04/20/2024", time: "04:20:69 PM" },
 ];
 
-export default async function Trips({data}: {data:any}) {
+export default function Trips({data}: {data:any}) {
     console.log(data);
 
     const columns = [
