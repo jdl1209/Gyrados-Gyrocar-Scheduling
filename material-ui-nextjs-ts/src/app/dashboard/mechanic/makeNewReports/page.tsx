@@ -20,8 +20,8 @@ enum ReportTypeEnum {
 interface IFormInput {
     reportType: ReportTypeEnum
     carID: string;
-    location: string;
-    status: string;
+    locationID: string;
+    reportStatus: string;
     timeSpentLabor: string;
     tasks: string;
     notes: string;
@@ -36,25 +36,23 @@ const Reports: React.FC = () => {
     } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-        console.log(data);
-        fetch("http://localhost:3000/api/createReport", {
-            method: "POST",
-            body: JSON.stringify(data),
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    console.log(res.statusText);
-                }
-                return res.json;
-            })
-            .then((json) => {
-                console.log(json);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
+
+            console.log("Hello" + data);
+            const res = await fetch("http://localhost:3000/api/makeReport", {
+                method: "POST",
+                // headers: {
+                //     "Content-Type": "application/json",
+                // },
+                body: JSON.stringify(data),
             });
-        //const json = await res.json();
-        //console.log(json);
+    
+            if (!res.ok) {
+                throw new Error(`Failed to submit report: ${res.statusText}`);
+            }
+    
+            const json = await res.json();
+            console.log("Report submitted successfully:", json);
+        
     };
 
     return (
@@ -102,7 +100,7 @@ const Reports: React.FC = () => {
                             autoComplete="carID"
                         />
                         <TextField
-                            {...register("location")}
+                            {...register("locationID")}
                             margin="normal"
                             fullWidth
                             id="location"
@@ -110,7 +108,7 @@ const Reports: React.FC = () => {
                             autoComplete="location"
                         />
                         <TextField
-                            {...register("status")}
+                            {...register("reportStatus")}
                             margin="normal"
                             required
                             fullWidth

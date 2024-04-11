@@ -1,5 +1,5 @@
 //this is needed because some mui functions expecet "client" things like being able to use hooks. In this case we need it for the theming
-import SubmitApplication from "@/components/Dashboard Components/SubmitApplication";
+import SubmitApplication from "@/components/Dashboard Components/customer/SubmitApplication";
 import { getSession } from "@auth0/nextjs-auth0";
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";

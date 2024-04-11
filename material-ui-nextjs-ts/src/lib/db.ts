@@ -764,11 +764,11 @@ export class DB {
 
     // Mechanic Report Functions
 
-    async getAllMechanicReports() {
+    async getAllReports() {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT * FROM mechanic_reports',
+                    'SELECT * FROM reports',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
@@ -815,7 +815,7 @@ export class DB {
                 ];
     
                 this.connection.execute(
-                    'INSERT INTO mechanic_reports(reportType, carID, locationID, reportStatus, timeSpentLabor, tasks, notes',
+                    'INSERT INTO reports(reportType, carID, sublocationID, reportStatus, timeSpentLabor, tasks, notes) VALUES (?, ?, ?, ?, ?, ?, ?)',
                     values,
                     function (err:any, results:any, fields:any) {
                         if (err) {
@@ -912,7 +912,6 @@ interface Car {
 }
 
 interface MechanicReport {
-    reportID: number;
     reportType: 'Service Report' | 'Status Report' | 'Damage Report' | 'Miscellaneous';
     carID: number;
     locationID: number;

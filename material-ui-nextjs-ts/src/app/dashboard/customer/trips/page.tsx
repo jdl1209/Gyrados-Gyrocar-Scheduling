@@ -1,4 +1,4 @@
-import CustomerTrips from "@/components/Dashboard Components/CustomerTrips";
+import CustomerTrips from "@/components/Dashboard Components/customer/CustomerTrips";
 import TableComponent from "@/components/TableComponent";
 import { Card, CardContent, Typography } from "@mui/material";
 import React from "react";
