@@ -291,6 +291,24 @@ export class DB {
         })
     }
 
+    async getAllReservations() {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM reservation',
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
     // Function to get user role by user ID
     async getUserRole(userID: any) {
         return new Promise((resolve, reject) => {
