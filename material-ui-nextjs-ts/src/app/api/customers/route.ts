@@ -13,7 +13,7 @@ export async function GET(
   res: Response
 ) {
     const db = new DB();
-    const result = await db.getAllEmployees();
+    const result = await db.getAllCustomers();
     console.log(result);
     return Response.json(result)
 }
