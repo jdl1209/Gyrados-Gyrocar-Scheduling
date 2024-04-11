@@ -6,14 +6,15 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { Paper } from "@mui/material";
+import Link from "next/link";
 //import Image from "mui-image";
 
-export default function ProductHero() {
+export default function ProductHero({isSignedIn}: {isSignedIn: boolean}) {
   return (
     <AppBar position="static">
       <Paper
         sx={{
-          bgcolor: "#34adad",
+          bgcolor: '#45abbf',
           // height: "50vh",
           height: "auto",
           display: "flex",
@@ -119,24 +120,53 @@ export default function ProductHero() {
         >
           GyroGoGo!
         </Typography>
-        <Button
-          style={{
-            borderRadius: 10,
-            //backgroundColor: "#000180",
-            padding: "18px 36px",
-            fontSize: "18px",
-          }}
-          variant="contained"
-          sx={{
-            width: { xs: "40%",sm: "30%", md: "20%" },
-            textAlign: { xs: "center", sm: "center", md: "center" },
-            display: "inline-flex",
-            ml: "7%",
-            mt: "2%",
-          }}
-        >
-          Apply now
-        </Button>
+        {/* conditonal rendering to redirect them to the dashboard if they are signed in */}
+        {isSignedIn ?
+          (
+            <Button
+              component={Link}
+              href="/dashboard/"
+              style={{
+                borderRadius: 10,
+                //backgroundColor: "#000180",
+                padding: "18px 36px",
+                fontSize: "18px",
+              }}
+              variant="contained"
+              sx={{
+                width: { xs: "40%",sm: "30%", md: "20%" },
+                textAlign: { xs: "center", sm: "center", md: "center" },
+                display: "inline-flex",
+                ml: "7%",
+                mt: "2%",
+              }}
+            >
+              Go To My Dashboard
+            </Button>
+          ) : (
+            <Button
+              component={Link}
+              href="/api/auth/login/"
+              style={{
+                borderRadius: 10,
+                //backgroundColor: "#000180",
+                padding: "18px 36px",
+                fontSize: "18px",
+              }}
+              variant="contained"
+              sx={{
+                width: { xs: "40%",sm: "30%", md: "20%" },
+                textAlign: { xs: "center", sm: "center", md: "center" },
+                display: "inline-flex",
+                ml: "7%",
+                mt: "2%",
+              }}
+            >
+              Sign-Up Now!
+            </Button>
+          )
+        }
+        
         <Box
           component="img"
           sx={{

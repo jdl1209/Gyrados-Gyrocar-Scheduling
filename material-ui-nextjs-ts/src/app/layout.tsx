@@ -9,6 +9,7 @@ import theme from '@/theme';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import '../css/global.css'
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (

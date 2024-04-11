@@ -34,7 +34,7 @@ export default async function Home() {
     
     <React.Fragment>
       <ResponsiveAppBar isSignedIn={isSignedIn}></ResponsiveAppBar>
-      <GyroHero />
+      <GyroHero isSignedIn={isSignedIn}/>
       <Box
         sx={{
           my: 4,

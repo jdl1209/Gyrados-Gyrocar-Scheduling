@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import Link from "next/link";
 
 // Define the props interface
 interface ResponsiveAppBarProps {
@@ -49,8 +50,8 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPic
   const pages = ["Home", "About Us", "FAQ", "Contact Us"];
   const pagelinks = new Map<string, string>([
     ["Home", "/"],
-    ["About Us", "#AboutUs"],
-    ["FAQ", "#FAQ"],
+    ["About Us", "/#AboutUs"],
+    ["FAQ", "/#FAQ"],
     ["Contact Us", "contact"],
     ["Dashboard", "dashboard"],
     ["Logout", "/api/auth/logout"]
@@ -146,6 +147,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPic
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
+                component={Link}
                 key={page}
                 href={pagelinks.get(page)}
                 onClick={handleCloseNavMenu}
