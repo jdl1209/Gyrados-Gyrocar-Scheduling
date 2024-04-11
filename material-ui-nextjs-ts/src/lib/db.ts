@@ -21,7 +21,7 @@ export class DB {
         // const { host, port, user, password, database } = serverRuntimeConfig.dbConfig;
         const host = "localhost";
         const user = "root";
-        const password = databasePassword;
+        const password = "Samson@4656";
         const port = 3306;
         const database = "ROCHESTER";
         

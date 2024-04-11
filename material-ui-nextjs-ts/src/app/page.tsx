@@ -24,6 +24,9 @@ export default async function Home() {
     console.log("invalid session");
   }
 
+  const data = await getData()
+
+
   // const user = session.user;
   // console.log(user.picture);
 
@@ -47,9 +50,22 @@ export default async function Home() {
         <div id="AboutUs" />
         <AboutUs />
         <div id="FAQ" />
-        <FAQ />
+        <FAQ data={data}/>
         <Copyright />
       </Box>
     </React.Fragment>
   );
+}
+
+async function getData() {
+  const res = await fetch('http://localhost:3000/api/faqs');
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+ 
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error(`Failed to fetch data ${res.statusText}`);
+  }
+ 
+  return res.json()
 }

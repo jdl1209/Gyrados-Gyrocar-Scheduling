@@ -12,9 +12,8 @@ export async function GET(
   req: Request, 
   res: Response
 ) {
-    const data = await req.json();
     const db = new DB();
     const result = await db.getAllFAQ();
     console.log(result);
-    return Response.json({  })
+    return Response.json(result)
 }

@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export default function FAQ() {
+export default function FAQ({data}: {data:any}) {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -55,7 +55,36 @@ export default function FAQ() {
         </Typography>
         </Typography>
       <Box sx={{ width: "100%" }}>
-        <Accordion
+        {data.map((item: any, idx: any) => {
+          const id = `panel${item.faqID}`;
+
+          return (<Accordion
+            expanded={expanded === id}
+            onChange={handleChange(id)}
+            key={idx}
+          >
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls={`${id}d-content`}
+              id={`${id}d-header`}
+            >
+              <Typography component="h3" variant="subtitle2">
+                {item.faqQuestion}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography
+                variant="body2"
+                gutterBottom
+                textAlign={"justify"}
+                sx={{ maxWidth: { sm: "100%", md: "98%" } }}
+              >
+                {item.faqAnswer}
+              </Typography>
+            </AccordionDetails>
+          </Accordion>);
+        })}
+        {/* <Accordion
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
         >
@@ -398,7 +427,7 @@ export default function FAQ() {
               send a mechanic with a replacement vehicle to assist you.
             </Typography>
           </AccordionDetails>
-        </Accordion>
+        </Accordion> */}
       </Box>
     </Container>
   );

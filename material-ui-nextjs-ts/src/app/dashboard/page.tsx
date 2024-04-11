@@ -29,7 +29,7 @@ const DashboardPage = async () => {
   
   try {
     // Await the resolution of the Promise returned by db.getUserRole
-    const role = await DB.getUserRole(session.user.sub);
+    const role = await db.getUserRole(session.user.sub);
 
     // Check if the role is of type string array
     if (Array.isArray(role)) {
