@@ -15,12 +15,30 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Link from "next/link";
+import UserButton from "./UserButton";
 
 // Define the props interface
 interface ResponsiveAppBarProps {
   isSignedIn: boolean;
   userPicture?: string; // Optional user picture prop
 }
+
+// Pages and page links
+//export so they can be used in other files
+//I hate everything about how this is set up but it's not worth it to change lol
+export const pages = ["Home", "About Us", "FAQ", "Contact Us"];
+export const pageLinks = new Map<string, string>([
+  ["Home", "/"],
+  ["About Us", "/#AboutUs"],
+  ["FAQ", "/#FAQ"],
+  ["Contact Us", "contact"],
+  ["Dashboard", "dashboard"],
+  ["Logout", "/api/auth/logout"],
+  ["Profile", "dashboard/customer/account"]
+]);
+
+// Settings
+export const settings = ["Profile", "Dashboard", "Logout"];
 
 // Define the component
 const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPicture }) => {  console.log("isSignedIn:", isSignedIn); // Console log the value of isSignedIn
@@ -45,20 +63,6 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPic
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  // Pages and page links
-  const pages = ["Home", "About Us", "FAQ", "Contact Us"];
-  const pagelinks = new Map<string, string>([
-    ["Home", "/"],
-    ["About Us", "/#AboutUs"],
-    ["FAQ", "/#FAQ"],
-    ["Contact Us", "contact"],
-    ["Dashboard", "dashboard"],
-    ["Logout", "/api/auth/logout"]
-  ]);
-
-  // Settings
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
   // Render
   return (
@@ -149,7 +153,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPic
               <Button
                 component={Link}
                 key={page}
-                href={pagelinks.get(page)}
+                href={pageLinks.get(page)}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
@@ -162,49 +166,7 @@ const ResponsiveAppBar: React.FC<ResponsiveAppBarProps> = ({ isSignedIn, userPic
           {/* Example of inline conditional rendering */}
           {isSignedIn ? (
             // True condition
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src={userPicture} />
-                </IconButton>
-              </Tooltip>
-
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {settings.map((setting) => (
-                  <MenuItem
-                    key={setting}
-                    // The following function makes it move to a page if a page exists for that and if not it doesn't try, which would result in an error page not found
-                    onClick={() =>
-                      // This is a gross way to handle this but we can fix it later if we want
-                      {
-                        if (pagelinks.get(setting) === undefined) {
-                          handleCloseUserMenu();
-                        } else {
-                          window.location.href = pagelinks.get(setting) as string;
-                        }
-                      }
-                    }
-                  >
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
+            <UserButton />
           ) : (
             // False condition
             <Button
