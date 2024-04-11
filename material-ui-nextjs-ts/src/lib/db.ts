@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 import mysql from 'mysql2';
-import { databasePassword } from '../lib/pass';
 // import { Sequelize, DataTypes } from 'sequelize';
+import {databasePassword} from './pass'
 
 
 const { serverRuntimeConfig } = getConfig();
