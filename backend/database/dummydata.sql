@@ -16,6 +16,7 @@ INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, addre
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|115361504616338795584", 4, "gyr ados", "Gyro", "GoGo", "123456789", "gyrados960@gmail.com", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|102615529459675638489", 2, "jdl", "Jake", "Lombardo", "123456789", "jdl1209@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|113918414096424923554", 6, "irp7977", "Isaac", "Prusky", "123456789", "irp7977@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
+INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("auth0|66171dd7dd8958bcda1e2c42", 4, "mjm6048", "Michael", "McIntosh", "123456789", "mjm6048@rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 
 
 -- Location Insert
@@ -84,3 +85,12 @@ INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToRetu
 INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 2, '2024-04-09 12:00:00', '2024-04-09 14:00:00', 1);
 INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 2, CURDATE(), 2, 1, '2024-04-06 12:00:00', '2024-04-06 16:00:00', 1);
 INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|102615529459675638489", 6, CURDATE(), 1, 4, '2024-04-03 8:00:00', '2024-04-03 14:00:00', 1);
+
+-- REPORTS INSERT
+
+INSERT INTO reports(reportType, carID, sublocationID, reportStatus, timeSpentLabor, tasks, notes) VALUES ("Service Report", 1, 1, "active", "00:30", "Performed Oil Change, routine check ups, etc", "Last client left a french fry under the seat");
+INSERT INTO reports(reportType, carID, sublocationID, reportStatus, timeSpentLabor, tasks, notes) VALUES ("Service Report", 1, 1, "active", "00:30", "", "");
+INSERT INTO reports(reportType, carID, sublocationID, reportStatus, timeSpentLabor, tasks, notes) VALUES ("Service Report", 1, 1, "inactive", "00:30", "", "");
+INSERT INTO reports(reportType, carID, sublocationID, reportStatus, timeSpentLabor, tasks, notes) VALUES ("Service Report", 2, 1, "active", "00:30", "", "");
+INSERT INTO reports(reportType, carID, sublocationID, reportStatus, timeSpentLabor, tasks, notes) VALUES ("Service Report", 3, 1, "active", "00:30", "", "");
+INSERT INTO reports(reportType, carID, sublocationID, reportStatus, timeSpentLabor, tasks, notes) VALUES ("Service Report", 4, 1, "inactive", "15:00", "Replaced windows, reset airbags, replaced tires.", "Serious damage. Sent to shop for repairs to the frame. Will need work later.");

@@ -249,3 +249,24 @@ CREATE EVENT addRemoveDays
       SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) INTO @yesterday_date;
 	  SELECT DATE_ADD(CURDATE(), INTERVAL 30 DAY) INTO @thirtydays;
 	  CALL addRemoveDays(@yesterday_date, @thirtydays);
+
+/*
+TABLE reports
+Stores the reports that mechanics make for the cars. Reports can range from anything to 
+simple check ups, fatal errors, routine maintenance, etc.
+PK - reportID
+FK - carID, sublocationID
+*/
+
+CREATE TABLE reports (
+    reportID INT PRIMARY KEY AUTO_INCREMENT,
+    reportType ENUM('Service Report','Status Report','Damage Report','Miscellaneous') NOT NULL,
+    carID INT NOT NULL,
+    sublocationID INT NOT NULL,
+    reportStatus VARCHAR(20) NOT NULL,
+    timeSpentLabor VARCHAR(6) NOT NULL,
+    tasks VARCHAR(255) NOT NULL,
+    notes VARCHAR(255) NOT NULL,
+    FOREIGN KEY (carID) REFERENCES cars(carID)
+    -- FOREIGN KEY (sublocationID) REFERENCES location(sublocationID)
+);

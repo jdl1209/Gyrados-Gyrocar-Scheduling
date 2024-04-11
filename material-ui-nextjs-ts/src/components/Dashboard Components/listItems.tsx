@@ -140,7 +140,11 @@ export const mechanicListItems = (
     </ListItemIcon>
     <ListItemText primary="Reports" />
     </ListItemButton>
+    <ListItemButton href='/dashboard/mechanic/makeNewReports'>
+    <ListItemIcon>
+      <SummarizeIcon />
+    </ListItemIcon>
+    <ListItemText primary="Make Reports" />
+    </ListItemButton>
   </React.Fragment>
 );
-
-
