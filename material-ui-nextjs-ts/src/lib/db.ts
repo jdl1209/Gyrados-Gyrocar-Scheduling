@@ -1,18 +1,19 @@
 import getConfig from 'next/config';
 import mysql from 'mysql2';
 // import { Sequelize, DataTypes } from 'sequelize';
-import {databasePassword} from './pass'
+// import {databasePassword} from './pass'
 
 
 const { serverRuntimeConfig } = getConfig();
 
 export class DB {
-    getUserByID(sub: any): any[] | PromiseLike<any[]> {
-      throw new Error('Method not implemented.');
-    }
-    map(arg0: (item: any, idx: number) => import("react").JSX.Element): import("react").ReactNode {
-      throw new Error('Method not implemented.');
-    }
+
+    // getUserByID(sub: any): any[] | PromiseLike<any[]> {
+    //   throw new Error('Method not implemented.');
+    // }
+    // map(arg0: (item: any, idx: number) => import("react").JSX.Element): import("react").ReactNode {
+    //   throw new Error('Method not implemented.');
+    // }
 
     public connection:any;
     public sequelize:any;
@@ -162,12 +163,12 @@ export class DB {
         })
     }
 
-    async getCustomerByID(customerId: string) {
+    async getUserByID(userId: string) {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
                     'SELECT * FROM users WHERE userID = ?',
-                    [customerId],
+                    [userId],
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
