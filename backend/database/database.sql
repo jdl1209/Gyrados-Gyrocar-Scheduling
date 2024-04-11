@@ -101,20 +101,24 @@ CREATE TABLE cars(
 );
 
 /*
-TABLE jobs
-stores information on each job done to a car
-PK - employeeID
-FK - carID
+TABLE mechanic_reports
+Stores the reports that mechanics make for the cars. Reports can range from anything to 
+simple check ups, fatal errors, routine maintenance, etc.
+PK - reportID
+FK - carID, locationID
 */
-CREATE TABLE jobs(
-	taskID INT AUTO_INCREMENT PRIMARY KEY,
-    userID VARCHAR(100),
+
+CREATE TABLE mechanic_reports(
+    reportID INT PRIMARY KEY AUTO_INCREMENT,
+    reportType ENUM('Service Report','Status Report','Damage Report','Miscellaneous') NOT NULL,
     carID INT NOT NULL,
-    task VARCHAR(20) NOT NULL,
-    notes VARCHAR(500) NULL,
-    jTimeDate DATETIME NOT NULL,
+    locationID INT NOT NULL,
+    reportStatus VARCHAR(20) NOT NULL,
+    timeSpentLabor TIME NOT NULL,
+    tasks VARCHAR(255) NOT NULL,
+    notes VARCHAR(255) NOT NULL,
     FOREIGN KEY (carID) REFERENCES cars(carID),
-    FOREIGN KEY (userID) REFERENCES users(userID)
+    FOREIGN KEY (locationID) REFERENCES location(locationID)
 );
 
 /*

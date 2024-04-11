@@ -15,7 +15,9 @@ INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, addre
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|118123508030882047205", 3, "eds5597", "Erich", "Snell", "123456789", "eds5997@rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|115361504616338795584", 4, "gyr ados", "Gyro", "GoGo", "123456789", "gyrados960@gmail.com", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|102615529459675638489", 2, "jdl", "Jake", "Lombardo", "123456789", "jdl1209@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
-
+INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|105310749626901388916", 5, "mat5519", "Majd", "Tonbakji", "123456789", "mat5519@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
+INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("auth0|66171dd7dd8958bcda1e2c42", 5, "mjm6048", "Michael", "McIntosh", "123456789", "mjm6048@rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
+INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|113918414096424923554", 6, "irp7977", "Isaac", "Prusky", "123456789", "irp7977@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 
 -- Location Insert
 
