@@ -24,7 +24,7 @@ export default async function Home() {
     console.log("invalid session");
   }
 
-  const data = await getData()
+  const data = await getData();
 
 
   // const user = session.user;

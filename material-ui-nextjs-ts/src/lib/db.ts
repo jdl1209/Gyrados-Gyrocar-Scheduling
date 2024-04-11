@@ -7,6 +7,9 @@ import {databasePassword} from './pass'
 const { serverRuntimeConfig } = getConfig();
 
 export class DB {
+    getUserByID(sub: any): any[] | PromiseLike<any[]> {
+      throw new Error('Method not implemented.');
+    }
     map(arg0: (item: any, idx: number) => import("react").JSX.Element): import("react").ReactNode {
       throw new Error('Method not implemented.');
     }
@@ -184,7 +187,7 @@ export class DB {
         return new Promise(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT employeeID, roleID, username, fullname, office FROM employees',
+                    'SELECT * FROM employees',
                     function (err: any, results: any, fields: any) {
                         if (err) {
                             reject(err);
