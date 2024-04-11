@@ -740,7 +740,97 @@ export class DB {
         })
     }
 
+    // Mechanic Report Functions
+
+    async getAllMechanicReports() {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM mechanic_reports',
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
+    async getAllMechanicReportsByType(reportType: string) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM mechanic_reports WHERE reportType = ?',
+                    [reportType],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
+
+    async insertMechanicReport(mechanicReport: MechanicReport) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const values = [
+                    mechanicReport.reportType,
+                    mechanicReport.carID,
+                    mechanicReport.locationID,
+                    mechanicReport.reportStatus,
+                    mechanicReport.timeSpentLabor,
+                    mechanicReport.tasks,
+                    mechanicReport.notes
+                ];
+    
+                this.connection.execute(
+                    'INSERT INTO mechanic_reports(reportType, carID, locationID, reportStatus, timeSpentLabor, tasks, notes',
+                    values,
+                    function (err:any, results:any, fields:any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            } finally {
+                this.connection.end(); // Close the connection
+            }
+        });
+    }
+
+    async removeMechanicReportByID(reportID: number) {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'DELETE FROM mechanic_reports WHERE reportID = ?',
+                    [reportID],
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        });
+    }
+
 }
+
 
 // Begin Interfaces
 interface Roles {
@@ -799,12 +889,15 @@ interface Car {
     currentLocationID: number;
 }
 
-interface Jobs{
-    userID: string | null;
+interface MechanicReport {
+    reportID: number;
+    reportType: 'Service Report' | 'Status Report' | 'Damage Report' | 'Miscellaneous';
     carID: number;
-    task: string;
+    locationID: number;
+    reportStatus: string;
+    timeSpentLabor: string;
+    tasks: string;
     notes: string;
-    jTimeDate: Date;
 }
 
 interface Reservation {
