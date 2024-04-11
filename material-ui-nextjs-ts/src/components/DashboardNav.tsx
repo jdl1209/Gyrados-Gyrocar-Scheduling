@@ -1,6 +1,8 @@
 //this is needed because some mui functions expecet "client" things
 "use client";
 
+//TODO - solve hydration error on this page
+
 
 import * as React from "react";
 import { styled } from "@mui/material/styles";
@@ -29,6 +31,7 @@ import {
   mechanicListItems,
 } from "@/components/Dashboard Components/listItems";
 import { useTheme } from "@mui/material/styles";
+import UserButton from "./UserButton";
 
 //dashboard layout
 import { Switch } from "@mui/material";
@@ -156,8 +159,10 @@ export default function DashboardNav(props:
               User Dashboard
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
+              {/*TODO - maybe if we have time make this notification work to let the user know their application has been accepted */}
+              <Badge badgeContent={0} color="secondary">
+                <UserButton />
+                
               </Badge>
             </IconButton>
           </Toolbar>
@@ -177,7 +182,9 @@ export default function DashboardNav(props:
           </Toolbar>
           <Divider>{props.isAdmin ? "Customer Items" : ""}</Divider>
           <List component="nav">
-            {props.isCustomer ||props.isAdmin ?
+            {/*NOTE - for now I am just making this show regardless of who is accessing it, we can change that later if we want */}
+            {/*TODO - change this if we want, though we really do not have to */}
+            {props.isCustomer ||props.isAdmin || true ?
             <React.Fragment>
               {mainListItems}
             </React.Fragment>
