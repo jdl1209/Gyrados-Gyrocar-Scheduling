@@ -19,7 +19,7 @@ export async function POST(
         battery: data.battery,
         status: data.status,
         reserved: data.reserved,
-        sublocationID: data.subLocationID
+        currentLocationID: data.currentLocationID
     });
     console.log(result);
     return Response.json({  })

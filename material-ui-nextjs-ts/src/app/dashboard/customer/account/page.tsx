@@ -37,7 +37,7 @@ export default withPageAuthRequired(async function AccountDashboard() {
   console.log('Session:', session);
 
   const db = new DB();
-  const datad: any[] = await db.getCustomerByID(session.user.sub) as any[];
+  const datad: any[] = await db.getUserByID(session.user.sub) as any[];
 
   // const data: any[] = await db.getAllLocations() as any[];
   // const data2: any[] = await db.getAllCustomers() as any[];

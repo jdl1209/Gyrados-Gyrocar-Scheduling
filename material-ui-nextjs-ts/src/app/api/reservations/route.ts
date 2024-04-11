@@ -13,7 +13,7 @@ export async function GET(
   res: Response
 ) {
     const db = new DB();
-    const result = await db.getAllFAQ();
+    const result = await db.getAllReservations();
     console.log(result);
     return Response.json(result)
 }
