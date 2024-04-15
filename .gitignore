@@ -2,3 +2,4 @@
 .DS_Store
 /material-ui-nextjs-ts/node_modules
 /material-ui-nextjs-ts/node_modules
+material-ui-nextjs-ts/src/lib/pass.js
