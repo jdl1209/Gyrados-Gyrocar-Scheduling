@@ -18,6 +18,12 @@ INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, addre
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|105310749626901388916", 5, "mat5519", "Majd", "Tonbakji", "123456789", "mat5519@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("auth0|66171dd7dd8958bcda1e2c42", 5, "mjm6048", "Michael", "McIntosh", "123456789", "mjm6048@rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
 INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, office) VALUES ("google-oauth2|113918414096424923554", 6, "irp7977", "Isaac", "Prusky", "123456789", "irp7977@g.rit.edu", "123 Easy Street", "Rochester", "NY", "14611", "Main Street Office");
+INSERT INTO users(userID, roleID, username, fName, mInitial, lName, phoneNum, email, address1, city, state, zip, activated) VALUES ("auth0|6601da0b5a313d868b8cd2630", 1, "tuser", "Test", "D", "User", "123456789", "tuser@rit.edu", "123 Easy Street", "Rochester", "NY", "14611", 0);
+INSERT INTO users(userID, roleID, username, fName, lName, phoneNum, email, address1, city, state, zip, activated) VALUES ("auth0|6601da0b5a313d868b8cd2660", 1, "sususer", "Suspended", "User", "123456789", "sususer@rit.edu", "123 Easy Street", "Rochester", "NY", "14611", 0);
+
+-- Suspended User Insert
+
+INSERT INTO suspended_users VALUES ("auth0|6601da0b5a313d868b8cd2660");
 
 -- Location Insert
 
@@ -30,27 +36,37 @@ INSERT INTO location(locationName, locationArea, cityName, state, lat, lon) VALU
 -- Car Insert
 
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 2);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 3);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 4);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "inactive", 0, 5);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 1, 1);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 2);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 3);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 4);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 5);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "inactive", 0, 1);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 1, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 2);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 2);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 2);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 2);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 2);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 3);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 3);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 3);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 3);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 3);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 4);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 4);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 4);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 4);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 4);
 INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "inactive", 0, 5);
-INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 1);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 5);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 5);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v1", 100.00, "active", 0, 5);
+INSERT INTO cars(carType, battery, status, reserved, currentLocationID) VALUES ("v2", 100.00, "active", 0, 5);
 
--- Job Insert
+-- Mechanic Report Insert
 
 -- INSERT INTO jobs(userID, carID, task, notes, jTimeDate) VALUES ("google-oauth2|100964910494305773385", 11, "Wheel Air Pressure", "Added air to the front wheel of the Gyrocar.", "2024-01-01 22:10:10");
+INSERT INTO mechanic_reports (reportType, carID, locationID, reportStatus, timeSpentLabor, tasks, notes) VALUES ('Service Report', 3, 1, "Active", "01:00:00", "Changed out the gyro orb", "Took the mechanic about an hour to change out the necessary piece. Left at location 1.");
+
 
 -- FAQ Insert
 
@@ -75,12 +91,15 @@ INSERT INTO price(priceName, priceInCents) VALUES ("Price Capped", 12000);
 
 -- RESERVATION INSERT 
 
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 1, '2024-04-03 12:00:00', '2024-04-03 14:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|115361504616338795584", 11, CURDATE(), 1, 1, '2024-04-03 7:00:00', '2024-04-03 11:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 12, CURDATE(), 1, 2, '2024-04-03 12:00:00', '2024-04-03 14:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 13, CURDATE(), 1, 3, '2024-04-04 12:00:00', '2024-04-04 16:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|102615529459675638489", 6, CURDATE(), 1, 4, '2024-04-04 8:00:00', '2024-04-04 14:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 1, '2024-04-06 12:00:00', '2024-04-07 14:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("google-oauth2|115361504616338795584", 11, CURDATE(), 1, 1, '2024-04-08 7:00:00', '2024-04-08 11:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 2, '2024-04-09 12:00:00', '2024-04-09 14:00:00', 1);
-INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 2, CURDATE(), 2, 1, '2024-04-06 12:00:00', '2024-04-06 16:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 1, '2024-04-20 12:00:00', '2024-04-20 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 1, '2024-04-21 12:00:00', '2024-04-21 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 1, '2024-04-23 12:00:00', '2024-04-23 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 1, CURDATE(), 1, 4, '2024-04-25 12:00:00', '2024-04-25 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 2, CURDATE(), 1, 3, '2024-04-23 12:00:00', '2024-04-23 14:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 7, CURDATE(), 2, 1, '2024-04-20 09:00:00', '2024-04-21 11:00:00', 1);
+INSERT INTO reservation(userID, carID, dateCreated, locationID, locationIDToReturn, timeBegin, timeEnd, paid) VALUES ("auth0|6601da0b5a313d868b8cd265", 7, CURDATE(), 1, 2, '2024-04-24 09:00:00', '2024-04-24 11:00:00', 1);
+
+
+
+
+

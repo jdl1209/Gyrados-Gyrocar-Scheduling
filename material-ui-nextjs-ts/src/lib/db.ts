@@ -609,7 +609,7 @@ export class DB {
         return new Promise<number>(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT COUNT(*) FROM reservation WHERE locationID != ? AND locationIDToReturn = ? AND timeEnd <= ?',
+                    'SELECT COUNT(*) FROM reservation WHERE locationID != ? AND locationIDToReturn = ? AND (timeEnd >= ? AND timeEnd <= ?',
                     [locationID, locationIDToReturn, timeEnd],
                     function (err: any, results: any, fields: any) {
                         if (err) {
@@ -628,7 +628,7 @@ export class DB {
         return new Promise<number>(async (resolve: any, reject: any) => {
             try {
                 this.connection.query(
-                    'SELECT COUNT(*) FROM reservation WHERE locationIDToReturn != ? AND locationID = ? AND timeEnd <= ?',
+                    'SELECT COUNT(*) FROM reservation WHERE locationIDToReturn != ? AND locationID = ? (timeEnd >= ? AND timeEnd <= ?)',
                     [locationIDToReturn, locationID, timeEnd],
                     function (err: any, results: any, fields: any) {
                         if (err) {
