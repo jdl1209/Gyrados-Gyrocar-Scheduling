@@ -67,11 +67,10 @@ export default function BookingPage() {
   );
 
   //map
-  const [devices, setDevices] = useState([]);
-  const [positions, setPositions] = useState([]);
-  const [center, setCenter] = useState([
-    43.108859786505946, -77.55088614659995,
-  ]);
+  const [devices, setDevices] = useState<any[]>([]);
+  const [positions, setPositions] = useState<any[]>([]);
+  const [center, setCenter] = useState<[number, number]>([43.17183227492212, -77.55702962983183]);
+
   const [zoom, setZoom] = useState(10.8);
   //const [pickupTime, setSelectedPickupLocation] = useState<string | null>(null);
 
@@ -141,6 +140,8 @@ export default function BookingPage() {
     event.preventDefault();
     //TODO make this actually submit a request to the server or something, because right now it just logs to console
     console.log(myData);
+    // Redirect to the specified link
+    window.location.href = "https://book.stripe.com/test_bIY29P2561Rr4ZGbIJ";
   };
 
   /*
@@ -233,15 +234,14 @@ export default function BookingPage() {
                 )}
               />
               <Button variant="contained" color="primary" type="submit">
-                Submit
+                Book
               </Button>
             </Stack>
           </FormControl>
         </form>
       </Box>
-      <Box style={{ flex: 1 }}>
+      <Box style={{ flex: 1, height: "100vh" }}>
         <Map
-          height={"100vh"}
           center={center}
           zoom={zoom}
           metaWheelZoom={true}

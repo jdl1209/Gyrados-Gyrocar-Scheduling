@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from "react";
 import { Map, Marker, ZoomControl } from "pigeon-maps";
 import axios from "axios";
+import { Box } from "@mui/material";
 //import { Metadata } from 'next'
 
 // set page metadata
@@ -11,11 +12,38 @@ import axios from "axios";
 //     title: 'Map',
 // }
 
+const options = [
+  "GyroGoGo Northwest",
+  "GyroGoGo Northeast",
+  "GyroGoGo Center City",
+  "GyroGoGo Southeast",
+  "GyroGoGo Airport",
+];
+
+// Function to get the coordinates of a location
+const getLocationCoordinates = (location: string): [number, number] => {
+  switch (location) {
+    case "GyroGoGo Northwest":
+      return [43.20663, -77.68602];
+    case "GyroGoGo Northeast":
+      return [43.21223, -77.45218];
+    case "GyroGoGo Center City":
+      return [43.15752, -77.61197];
+    case "GyroGoGo Southeast":
+      return [43.06997, -77.44159];
+    case "GyroGoGo Airport":
+      return [43.10884, -77.67537];
+    default:
+      return [0, 0]; // Default coordinates, change as needed
+  }
+};
+
+
 const LocateCar = () => {
   // this will show a way to locate a car in the system
-  const [devices, setDevices] = useState([]);
-  const [positions, setPositions] = useState([]);
-  const [center, setCenter] = useState([43.137726, -77.64232]);
+  const [devices, setDevices] = useState<any[]>([]);
+  const [positions, setPositions] = useState<any[]>([]);
+  const [center, setCenter] = useState<[number, number]>([43.17183227492212, -77.55702962983183]);
   const [zoom, setZoom] = useState(11);
 
   useEffect(() => {
@@ -74,11 +102,11 @@ const LocateCar = () => {
                   This is a placeholder
               </h4> */}
         <h1 style={{ textAlign: "center" }}>Car Locator Map</h1>
+        <Box style={{ flex: 1, height: "100vh" }}>
         <Map
-          height={"110vh"}
           center={center}
           zoom={zoom}
-          metaWheelZoom={true} //causes hydration error
+          metaWheelZoom={true}
           onBoundsChanged={({ center, zoom }) => {
             setCenter(center);
             setZoom(zoom);
@@ -90,90 +118,30 @@ const LocateCar = () => {
               key={id}
               anchor={[latitude, longitude]}
               onClick={() => console.log("Clicked on device:", name)}
-              color="#33adad"
+              color={'#33adad'}
             />
           ))}
-          <Marker
-            //width={50}
-            anchor={[43.20663, -77.68602]}
-            color="#000180"
-          >
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "px",
-                borderRadius: "5px",
-                fontSize: "12px",
-              }}
+
+          {/* Map through the options array to generate markers */}
+          {options.map((location, index) => (
+            <Marker
+              key={index}
+              anchor={getLocationCoordinates(location)}
             >
-              {"GyroGoGo Northwest"}
-            </div>
-          </Marker>
-          <Marker
-            //width={50}
-            anchor={[43.21223, -77.45218]}
-            color="#000180"
-          >
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "1px",
-                borderRadius: "5px",
-                fontSize: "12px",
-              }}
-            >
-              {"GyroGoGo Northeast"}
-            </div>
-          </Marker>
-          <Marker
-            //width={50}
-            anchor={[43.15752, -77.61197]}
-            color="#000180"
-          >
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "1px",
-                borderRadius: "5px",
-                fontSize: "12px",
-              }}
-            >
-              {"GyroGoGo Center City"}
-            </div>
-          </Marker>
-          <Marker
-            //width={50}
-            anchor={[43.06997, -77.44159]}
-            color="#000180"
-          >
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "1px",
-                borderRadius: "5px",
-                fontSize: "12px",
-              }}
-            >
-              {"GyroGoGo Southeast"}
-            </div>
-          </Marker>
-          <Marker
-            //width={5}
-            anchor={[43.10884, -77.67537]}
-            color="#000180"
-          >
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "1px",
-                borderRadius: "5px",
-                fontSize: "12px",
-              }}
-            >
-              {"GyroGoGo Airport"}
-            </div>
-          </Marker>
+              <div
+                style={{
+                  backgroundColor: "white",
+                  padding: "1px",
+                  borderRadius: "5px",
+                  fontSize: "12px",
+                }}
+              >
+                {location}
+              </div>
+            </Marker>
+          ))}
         </Map>
+      </Box>
       </React.Fragment>
     );
   } else {
