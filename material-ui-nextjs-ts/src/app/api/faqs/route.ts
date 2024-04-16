@@ -14,6 +14,6 @@ export async function GET(
 ) {
     const db = new DB();
     const result = await db.getAllFAQ();
-    console.log(result);
+
     return Response.json(result)
 }
