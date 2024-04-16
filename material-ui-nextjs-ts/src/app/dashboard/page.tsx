@@ -4,6 +4,13 @@ import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { Box, Typography } from "@mui/material";
 import DashboardLayout from "./layout";
 
+import { Metadata } from "next";
+
+//set title
+export const metadata: Metadata = {
+  title: 'Dashboard',
+};
+
 // `app/page.tsx` is the UI for the `/` URL
 // Wrap the component with `withPageAuthRequired` to require authentication
 const DashboardPage = async () => {

@@ -1,5 +1,10 @@
 import React from "react";
+import { Metadata } from "next";
 
+//set title
+export const metadata: Metadata = {
+  title: 'Reports',
+};
 
 
 export default async function Reports() {

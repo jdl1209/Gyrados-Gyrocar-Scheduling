@@ -10,6 +10,9 @@ import Paper from '@mui/material/Paper';
 //TODO Customize this generic table
 //It needs to be made to accept different data to populate with through props given when it's called
 
+
+//TODO - Are we just deleting this file? If so we should do it
+
 function createData(
   name: string,
   calories: number,

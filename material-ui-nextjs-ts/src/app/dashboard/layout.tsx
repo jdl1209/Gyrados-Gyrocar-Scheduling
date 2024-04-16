@@ -27,6 +27,7 @@ import DashboardNav from "@/components/DashboardNav";
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { DB } from "@/lib/db";
 
+
 //main page content
 export default async function DashboardLayout(props: { children: React.ReactNode }) {
   //set up session stuff
