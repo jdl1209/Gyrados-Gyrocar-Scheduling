@@ -7,6 +7,7 @@ import {databasePassword} from './pass'
 const { serverRuntimeConfig } = getConfig();
 
 export class DB {
+  
 
     public connection:any;
     public sequelize:any;
@@ -35,6 +36,24 @@ export class DB {
     // }
 
     // Location stuff
+
+    async getAllReservations() {
+        return new Promise(async (resolve: any, reject: any) => {
+            try {
+                this.connection.query(
+                    'SELECT * FROM reservation',
+                    function (err: any, results: any, fields: any) {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(results);
+                    }
+                );
+            } catch (err) {
+                reject(err);
+            }
+        })
+    }
 
     async getAllLocations() {
         return new Promise(async (resolve: any, reject: any) => {
