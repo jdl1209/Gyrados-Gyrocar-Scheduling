@@ -861,7 +861,7 @@ interface Roles {
     description: string;
 }
 
-export interface User {
+interface User {
     userID: string;
     roleID: number;
     username: string;
